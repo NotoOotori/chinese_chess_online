@@ -21,19 +21,18 @@ CREATE TABLE platform_user
     # state: store whether is blocked?
 );
 
-CREATE TABLE server_log
+CREATE TABLE server_login_record
 (
+    login_id INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(254),
     server_hostname CHAR(15),
     server_port SMALLINT(4),
-	login_time DATETIME NOT NULL,
-    logout_time DATETIME,
-    # login_time <= logout_time,
-    user_host CHAR(15),
+    user_hostname CHAR(15),
     # CHECK (user_hostname BETWEEN '000.000.000.000' AND '255.255.255.255')
     user_port SMALLINT(4),
     # CHECK (user_port >= 0 AND user_port <= 65535)
-    PRIMARY KEY (email_address, server_hostname, server_port, login_time),
+    login_time DATETIME NOT NULL DEFAULT NOW(),
+    is_successful BOOL,
     FOREIGN KEY (email_address)
         REFERENCES platform_user (email_address)
         ON DELETE RESTRICT
@@ -43,4 +42,14 @@ CREATE TABLE server_log
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );
+
+CREATE TABLE server_logout_record
+(
+    login_id INT(4) UNSIGNED PRIMARY KEY,
+    logout_time DATETIME NOT NULL DEFAULT NOW(),
+    # CHECK logout_time >= login_time
+    FOREIGN KEY (login_id)
+        REFERENCES server_login_record (login_id)
+        ON DELETE RESTRICT
+        ON UPDATE RESTRICT
 );
