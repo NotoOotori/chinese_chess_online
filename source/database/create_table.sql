@@ -35,10 +35,10 @@ CREATE TABLE server_log
     PRIMARY KEY (email_address, server_hostname, server_port, login_time),
 	FOREIGN KEY (email_address)
 		REFERENCES platform_user (email_address)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
 	FOREIGN KEY (server_hostname, server_port)
 		REFERENCES platform_server (server_hostname, server_port)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
 		ON UPDATE CASCADE
 );
