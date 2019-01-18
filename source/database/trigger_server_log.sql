@@ -10,11 +10,11 @@ BEGIN
 			SET MESSAGE_TEXT = 'Please check the logout time.';
 	END IF;
 
-	# CHECK user_host,
+	# CHECK user_hostname,
     IF NOT
     (
-		NEW.user_host >= '000.000.000.000' AND
-		NEW.user_host <= '255.255.255.255'
+		NEW.user_hostname >= '000.000.000.000' AND
+		NEW.user_hostname <= '255.255.255.255'
 	)
 	THEN
 		SIGNAL SQLSTATE '45000'
@@ -43,11 +43,11 @@ BEGIN
 			SET MESSAGE_TEXT = 'Please check the logout time.';
 	END IF;
 
-	# CHECK user_host,
+	# CHECK user_hostname,
     IF NOT
     (
-		NEW.user_host >= '000.000.000.000' AND
-		NEW.user_host <= '255.255.255.255'
+		NEW.user_hostname >= '000.000.000.000' AND
+		NEW.user_hostname <= '255.255.255.255'
 	)
 	THEN
 		SIGNAL SQLSTATE '45000'
