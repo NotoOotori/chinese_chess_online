@@ -24,8 +24,8 @@ BEGIN
     # CHECK user_port,
 	IF NOT
 	(
-		NEW.server_port >= 0 AND
-        NEW.server_port <= 65535
+		NEW.user_port >= 0 AND
+        NEW.user_port <= 65535
 	)
     THEN
 		SIGNAL SQLSTATE '45000'
@@ -57,8 +57,8 @@ BEGIN
     # CHECK user_port,
 	IF NOT
 	(
-		NEW.server_port >= 0 AND
-        NEW.server_port <= 65535
+		NEW.user_port >= 0 AND
+        NEW.user_port <= 65535
 	)
     THEN
 		SIGNAL SQLSTATE '45000'
