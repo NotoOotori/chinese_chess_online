@@ -12,7 +12,8 @@ CREATE TABLE platform_user
 	email_address VARCHAR(254) PRIMARY KEY,
     # CHECK (email_address LIKE '%@%'),
     username VARCHAR(16) NOT NULL,
-    encrypted_password BLOB,
+    encrypted_password BINARY(64) NOT NULL,
+    salt_value BINARY(64) NOT NULL,
     gender CHAR(1),
     # CHECK (gender LIKE '[fm]'),
     birthday DATE
