@@ -13,17 +13,6 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the server hostname.';
     END IF;
-
-    # CHECK server_port
-    IF NOT
-    (
-        NEW.server_port >= 0 AND
-        NEW.server_port <= 65535
-    )
-    THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Please check the server port.';
-    END IF;
 END //
 
 CREATE TRIGGER trigger_platform_server_check_update BEFORE UPDATE
@@ -38,17 +27,6 @@ BEGIN
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the server hostname.';
-    END IF;
-
-    # CHECK server_port
-    IF NOT
-    (
-        NEW.server_port >= 0 AND
-        NEW.server_port <= 65535
-    )
-    THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Please check the server port.';
     END IF;
 END //
 

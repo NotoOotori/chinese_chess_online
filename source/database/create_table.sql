@@ -2,8 +2,7 @@ CREATE TABLE platform_server
 (
     server_hostname CHAR(15),
     # CHECK (server_hostname >= '000.000.000.000' AND server_hostname <= '255.255.255.255')
-    server_port SMALLINT(4),
-    # CHECK (server_port >= 0 AND server_port <= 65535)
+    server_port SMALLINT UNSIGNED,
     PRIMARY KEY (server_hostname, server_port)
 );
 
@@ -26,11 +25,10 @@ CREATE TABLE user_login_record
     login_id INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(254),
     server_hostname CHAR(15),
-    server_port SMALLINT(4),
+    server_port SMALLINT UNSIGNED,
     user_hostname CHAR(15),
     # CHECK (user_hostname BETWEEN '000.000.000.000' AND '255.255.255.255')
-    user_port SMALLINT(4),
-    # CHECK (user_port >= 0 AND user_port <= 65535)
+    user_port SMALLINT UNSIGNED,
     login_time DATETIME NOT NULL DEFAULT NOW(),
     is_successful BOOL,
     FOREIGN KEY (email_address)
