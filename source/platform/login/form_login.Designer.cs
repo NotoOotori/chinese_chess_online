@@ -1,4 +1,4 @@
-﻿namespace platform
+﻿namespace login
 {
     partial class form_login
     {

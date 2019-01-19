@@ -16,7 +16,7 @@ namespace platform
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new form_login());
+            Application.Run(new login.form_login());
         }
     }
 }

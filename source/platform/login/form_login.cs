@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace platform
+namespace login
 {
     public partial class form_login : Form
     {
