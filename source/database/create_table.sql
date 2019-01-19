@@ -22,7 +22,7 @@ CREATE TABLE platform_user
 
 CREATE TABLE user_login_record
 (
-    login_id INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    login_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(254),
     server_hostname CHAR(15),
     server_port SMALLINT UNSIGNED,
@@ -43,7 +43,7 @@ CREATE TABLE user_login_record
 
 CREATE TABLE user_logout_record
 (
-    login_id INT(4) UNSIGNED PRIMARY KEY,
+    login_id INT UNSIGNED PRIMARY KEY,
     logout_time DATETIME NOT NULL DEFAULT NOW(),
     # CHECK logout_time >= login_time
     FOREIGN KEY (login_id)
