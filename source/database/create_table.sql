@@ -29,7 +29,7 @@ CREATE TABLE user_login_record
     user_hostname CHAR(15),
     # CHECK (user_hostname BETWEEN '000.000.000.000' AND '255.255.255.255')
     user_port SMALLINT UNSIGNED,
-    login_time DATETIME NOT NULL DEFAULT NOW(),
+    login_time TIMESTAMP DEFAULT NOW(),
     status_code TINYINT UNSIGNED,
     FOREIGN KEY (email_address)
         REFERENCES platform_user (email_address)
@@ -44,7 +44,7 @@ CREATE TABLE user_login_record
 CREATE TABLE user_logout_record
 (
     login_id INT UNSIGNED PRIMARY KEY,
-    logout_time DATETIME NOT NULL DEFAULT NOW(),
+    logout_time TIMESTAMP DEFAULT NOW(),
     # CHECK logout_time >= login_time
     FOREIGN KEY (login_id)
         REFERENCES user_login_record (login_id)

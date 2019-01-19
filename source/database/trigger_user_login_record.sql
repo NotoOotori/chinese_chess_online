@@ -12,10 +12,9 @@ BEGIN
 
     # CHECK user_hostname
     IF NOT
-    (
-        NEW.user_hostname >= '000.000.000.000' AND
-        NEW.user_hostname <= '255.255.255.255'
-    )
+        INET_ATON(NEW.user_hostname) BETWEEN
+            INET_ATON('000.000.000.000') AND
+            INET_ATON('255.255.255.255')
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the user hostname.';
@@ -34,10 +33,9 @@ BEGIN
 
     # CHECK user_hostname
     IF NOT
-    (
-        NEW.user_hostname >= '000.000.000.000' AND
-        NEW.user_hostname <= '255.255.255.255'
-    )
+        INET_ATON(NEW.user_hostname) BETWEEN
+            INET_ATON('000.000.000.000') AND
+            INET_ATON('255.255.255.255')
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the user hostname.';

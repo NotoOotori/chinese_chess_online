@@ -5,10 +5,9 @@ ON platform_server FOR EACH ROW
 BEGIN
     # CHECK server_hostname
     IF NOT
-    (
-        NEW.server_hostname >= '000.000.000.000' AND
-        NEW.server_hostname <= '255.255.255.255'
-    )
+        INET_ATON(NEW.server_hostname) BETWEEN
+            INET_ATON('000.000.000.000') AND
+            INET_ATON('255.255.255.255')
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the server hostname.';
@@ -20,10 +19,9 @@ ON platform_server FOR EACH ROW
 BEGIN
     # CHECK server_hostname
     IF NOT
-    (
-        NEW.server_hostname >= '000.000.000.000' AND
-        NEW.server_hostname <= '255.255.255.255'
-    )
+        INET_ATON(NEW.server_hostname) BETWEEN
+            INET_ATON('000.000.000.000') AND
+            INET_ATON('255.255.255.255')
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the server hostname.';
