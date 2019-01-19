@@ -30,7 +30,7 @@ CREATE TABLE user_login_record
     # CHECK (user_hostname BETWEEN '000.000.000.000' AND '255.255.255.255')
     user_port SMALLINT UNSIGNED,
     login_time DATETIME NOT NULL DEFAULT NOW(),
-    is_successful BOOL,
+    status_code TINYINT UNSIGNED,
     FOREIGN KEY (email_address)
         REFERENCES platform_user (email_address)
         ON DELETE RESTRICT
