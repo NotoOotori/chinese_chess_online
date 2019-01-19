@@ -21,7 +21,7 @@ CREATE TABLE platform_user
     # state: store whether is blocked?
 );
 
-CREATE TABLE server_login_record
+CREATE TABLE user_login_record
 (
     login_id INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(254),
@@ -43,13 +43,13 @@ CREATE TABLE server_login_record
         ON UPDATE CASCADE
 );
 
-CREATE TABLE server_logout_record
+CREATE TABLE user_logout_record
 (
     login_id INT(4) UNSIGNED PRIMARY KEY,
     logout_time DATETIME NOT NULL DEFAULT NOW(),
     # CHECK logout_time >= login_time
     FOREIGN KEY (login_id)
-        REFERENCES server_login_record (login_id)
+        REFERENCES user_login_record (login_id)
         ON DELETE RESTRICT
         ON UPDATE RESTRICT
 );
