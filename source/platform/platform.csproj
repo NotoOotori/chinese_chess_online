@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chess_lobby\chess_lobby.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\chess_lobby.Designer.cs">
+      <DependentUpon>chess_lobby.cs</DependentUpon>
+    </Compile>
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +64,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
+      <DependentUpon>chess_lobby.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login\form_login.resx">
       <DependentUpon>form_login.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,8 +93,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="chess_lobby\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
