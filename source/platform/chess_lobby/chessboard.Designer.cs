@@ -37,7 +37,6 @@
             this.BackgroundImage = global::platform.Properties.Resources.wood_grain;
             this.Name = "Chessboard";
             this.Size = new System.Drawing.Size(520, 576);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.on_paint);
             this.ResumeLayout(false);
 
         }

@@ -62,6 +62,11 @@
     <Compile Include="chess_lobby\chess_lobby.Designer.cs">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </Compile>
+    <Compile Include="chess_lobby\coordinate.cs" />
+    <Compile Include="chess_lobby\grid_panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\grid_panel_tag.cs" />
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,22 +130,6 @@
     <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="chess_lobby\resources\middle\wr1.png" />
-    <None Include="chess_lobby\resources\middle\wp1.png" />
-    <None Include="chess_lobby\resources\wood_grain1.png" />
-    <None Include="chess_lobby\resources\middle\wn1.png" />
-    <None Include="chess_lobby\resources\middle\wk1.png" />
-    <None Include="chess_lobby\resources\middle\wc1.png" />
-    <None Include="chess_lobby\resources\middle\wb1.png" />
-    <None Include="chess_lobby\resources\middle\wa1.png" />
-    <None Include="chess_lobby\resources\middle\mm1.png" />
-    <None Include="chess_lobby\resources\middle\br1.png" />
-    <None Include="chess_lobby\resources\middle\bp1.png" />
-    <None Include="chess_lobby\resources\middle\bn1.png" />
-    <None Include="chess_lobby\resources\middle\bk1.png" />
-    <None Include="chess_lobby\resources\middle\bc1.png" />
-    <None Include="chess_lobby\resources\middle\bb1.png" />
-    <None Include="chess_lobby\resources\middle\ba1.png" />
     <Content Include="extensions\MySql.Data.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

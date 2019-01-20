@@ -18,13 +18,34 @@ namespace platform.chess_lobby
         public Chessboard()
         {
             InitializeComponent();
+
+            #region ' Initialize Grid Panels '
+
+            GridPanel[,] _grid_panels = new GridPanel[9, 10];
+            for (Int32 x = 0; x < 9; x++)
+                for (Int32 y = 0; y < 10; y++)
+                {
+                    _grid_panels[x, y] = new GridPanel()
+                    {
+                        Size = new Size(
+                            this.grid_side_length, this.grid_side_length),
+                        Location = new Point(
+                            this.grid_points[x, y].X - this.grid_side_length / 2,
+                            this.grid_points[x, y].Y - this.grid_side_length / 2),
+                        BackColor = Color.Transparent,
+                        Tag = new GridPanelTag(((char)('a' + x)).ToString() + y.ToString()),
+                    };
+                    this.Controls.Add(_grid_panels[x, y]);
+                }
+
+            #endregion
         }
 
         #endregion
 
         #region ' Properties '
 
-        private Int32 gird_side_length
+        private Int32 grid_side_length
         {
             get
             {
@@ -78,8 +99,7 @@ namespace platform.chess_lobby
         /// 兵炮位置标记线的长度
         /// </summary>
         private Int32 cross_length { get { return 10; } }
-
-
+        
         #endregion
 
         #region ' Intermediate Properties '
@@ -101,10 +121,10 @@ namespace platform.chess_lobby
             get
             {
                 Int32[] xs = new Int32[9];
-                xs[0] = (this.Width - this.gird_side_length * 8) / 2;
+                xs[0] = (this.Width - this.grid_side_length * 8) / 2;
                 for(Int32 i = 1; i < 9; i++)
                 {
-                    xs[i] = xs[i - 1] + this.gird_side_length;
+                    xs[i] = xs[i - 1] + this.grid_side_length;
                 }
                 return xs;
             }
@@ -115,10 +135,10 @@ namespace platform.chess_lobby
             get
             {
                 Int32[] ys = new Int32[10];
-                ys[0] = (this.Height - this.gird_side_length * 9) / 2;
+                ys[0] = (this.Height - this.grid_side_length * 9) / 2;
                 for (Int32 i = 1; i < 10; i++)
                 {
-                    ys[i] = ys[i - 1] + this.gird_side_length;
+                    ys[i] = ys[i - 1] + this.grid_side_length;
                 }
                 Array.Reverse(ys);
                 return ys;
@@ -150,10 +170,11 @@ namespace platform.chess_lobby
 
         #region ' Painting '
 
-        public void on_paint(object sender, PaintEventArgs pe)
+        protected override void OnPaint(PaintEventArgs pe)
         {
             Graphics graphics = pe.Graphics;
             this.paint_board(graphics);
+            base.OnPaint(pe);
         }
 
         private void paint_board(Graphics graphics)
