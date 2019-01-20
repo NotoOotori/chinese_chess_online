@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace platform.chess_lobby
 {
-    public partial class chess_lobby : Form
+    public partial class ChessLobby : Form
     {
-        public chess_lobby()
+        public ChessLobby()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace platform.chess_lobby
 {
-    partial class chess_lobby
+    partial class ChessLobby
     {
         /// <summary>
         /// Required designer variable.
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // chess_lobby
+            // ChessLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1540, 845);
-            this.Name = "chess_lobby";
+            this.Name = "ChessLobby";
             this.Text = "chess_lobby";
             this.ResumeLayout(false);
 
