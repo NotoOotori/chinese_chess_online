@@ -33,7 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Oracle\MySQL Connector Net 8.0.13\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -122,6 +125,22 @@
     <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="chess_lobby\resources\middle\wr1.png" />
+    <None Include="chess_lobby\resources\middle\wp1.png" />
+    <None Include="chess_lobby\resources\wood_grain1.png" />
+    <None Include="chess_lobby\resources\middle\wn1.png" />
+    <None Include="chess_lobby\resources\middle\wk1.png" />
+    <None Include="chess_lobby\resources\middle\wc1.png" />
+    <None Include="chess_lobby\resources\middle\wb1.png" />
+    <None Include="chess_lobby\resources\middle\wa1.png" />
+    <None Include="chess_lobby\resources\middle\mm1.png" />
+    <None Include="chess_lobby\resources\middle\br1.png" />
+    <None Include="chess_lobby\resources\middle\bp1.png" />
+    <None Include="chess_lobby\resources\middle\bn1.png" />
+    <None Include="chess_lobby\resources\middle\bk1.png" />
+    <None Include="chess_lobby\resources\middle\bc1.png" />
+    <None Include="chess_lobby\resources\middle\bb1.png" />
+    <None Include="chess_lobby\resources\middle\ba1.png" />
     <Content Include="extensions\MySql.Data.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

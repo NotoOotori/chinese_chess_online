@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessLobby));
+            this.chessboard1 = new platform.chess_lobby.Chessboard();
             this.SuspendLayout();
+            // 
+            // chessboard1
+            // 
+            this.chessboard1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("chessboard1.BackgroundImage")));
+            this.chessboard1.Location = new System.Drawing.Point(0, 0);
+            this.chessboard1.Name = "chessboard1";
+            this.chessboard1.Size = new System.Drawing.Size(520, 576);
+            this.chessboard1.TabIndex = 0;
             // 
             // ChessLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1540, 845);
+            this.Controls.Add(this.chessboard1);
             this.Name = "ChessLobby";
             this.Text = "chess_lobby";
             this.ResumeLayout(false);
@@ -42,5 +53,7 @@
         }
 
         #endregion
+
+        private Chessboard chessboard1;
     }
 }
