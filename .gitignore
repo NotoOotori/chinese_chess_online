@@ -52,6 +52,8 @@ MANIFEST
 !/packages/*/lib/*.dll
 # Include dlls if they're in the CommonReferences directory
 !*CommonReferences/*.dll
+# Include dlls if they're in the extensions directory
+!**/extensions/*.dll
 
 # VS Upgrade stuff #
 _UpgradeReport_Files/
