@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chess_lobby\chessboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\chessboard.Designer.cs">
+      <DependentUpon>chessboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\chess_lobby.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="chess_lobby\chessboard.resx">
+      <DependentUpon>chessboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +84,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,7 +99,28 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="chess_lobby\resources\buttons\left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\most-left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\most-right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\ba.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\br.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\mm.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wa.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\wr.png" />
+    <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="extensions\MySql.Data.dll" />
   </ItemGroup>
