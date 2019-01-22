@@ -29,7 +29,7 @@ namespace platform.chess_lobby
 
         protected override void OnClick(EventArgs e)
         {
-            MessageBox.Show((this.Tag as GridPanelTag).coordinate.ToString());
+            MessageBox.Show((this.Tag as GridPanelTag).piece.ToString());
             base.OnClick(e);
         }
 
@@ -81,13 +81,7 @@ namespace platform.chess_lobby
         /// <summary>
         /// 格子上棋子的简化字符格式('[bw][abcknpr]')
         /// </summary>
-        public String piece_str
-        {
-            get { return this._piece_str; }
-            set { this._piece_str = piece_str; }
-        }
-
-        private String _piece_str { get; set; }
+        public Piece piece { get; set; }
 
         #endregion
     }

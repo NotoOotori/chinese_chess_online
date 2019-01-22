@@ -79,6 +79,7 @@
     <Compile Include="chess_lobby\grid_panel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="chess_lobby\player_colour.cs" />
     <Compile Include="chess_lobby\piece.cs" />
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>

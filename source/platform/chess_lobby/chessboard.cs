@@ -446,6 +446,8 @@ namespace platform.chess_lobby
             this.grid_side_length = grid_side_length;
             this.grid_points = grid_points;
 
+            #region ' Initialize GridPanels '
+
             for (Int32 x = 0; x < 9; x++)
                 for (Int32 y = 0; y < 10; y++)
                 {
@@ -458,26 +460,47 @@ namespace platform.chess_lobby
                             this.grid_points[x, y].X - this.grid_side_length / 2,
                             this.grid_points[x, y].Y - this.grid_side_length / 2),
                         BackColor = Color.Transparent,
+                        BackgroundImageLayout = ImageLayout.Center,
                         Tag = new GridPanelTag(x, y),
                     };
                     this.Controls.Add(grid_panel);
                     grid_panel.BringToFront();
                     this.Add(coordinate, grid_panel);
                 }
+
+            #endregion
+
+            #region ' Initialize Pieces '
+            
+            this.chess_positions = new List<ChessPosition>();
+            ChessPosition chess_position = new ChessPosition();
+            this.chess_positions.Add(chess_position);
+            foreach(Coordinate coordinate in Coordinate.get_coordinates())
+            {
+                if (chess_position[coordinate] == null)
+                    continue;
+                this[coordinate].BackgroundImage =
+                    chess_position[coordinate].bitmap;
+                (this[coordinate].Tag as GridPanelTag).piece =
+                    chess_position[coordinate];
+            }
+
+            #endregion
         }
 
         #endregion
 
         #region ' Properties '
 
-        private IDictionary<Coordinate, GridPanel> dict { get; set; }
-            = new Dictionary<Coordinate, GridPanel>();
+        private List<ChessPosition> chess_positions { get; set; }
         private Control control { get; set; }
         private Int32 grid_side_length { get; set; }
         private Point[,] grid_points { get; set; }
 
         #region ' Decorator '
 
+        private IDictionary<Coordinate, GridPanel> dict { get; set; }
+            = new Dictionary<Coordinate, GridPanel>();
         public GridPanel this[Coordinate key]
         {
             get

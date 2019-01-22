@@ -82,14 +82,61 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
+        /// <summary>
+        /// 返回2位坐标字符串.
+        /// </summary>
+        /// <returns></returns>
         public override String ToString()
         {
             return this.x.ToString() + this.y.ToString();
         }
 
-        public (Int32, Int32) ToTuple()
+        /// <summary>
+        /// 返回横坐标和纵坐标数值.
+        /// </summary>
+        /// <returns></returns>
+        public (Int32, Int32) ToValueTuple()
         {
             return (this.x.value, this.y.value);
+        }
+
+        /// <summary>
+        /// 返回遍历所有坐标的<see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Coordinate> get_coordinates()
+        {
+            List<Coordinate> coordinates = new List<Coordinate>();
+            for (Int32 x = 0; x < 9; x++)
+                for (Int32 y = 0; y < 10; y++)
+                    coordinates.Add(new Coordinate(x, y));
+            return coordinates;
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the current
+        /// <see cref="Coordinate"/> object is equal to a specified object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override Boolean Equals(Object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+                return false;
+            Coordinate cdn = obj as Coordinate;
+            if (this.x.value == cdn.x.value && this.y.value == cdn.y.value)
+                return true;
+            return false;
+        }
+
+    /// <summary>
+    /// Returns the hash code for the current
+    /// <see cref="Coordinate"/> object.
+    /// </summary>
+    /// <returns></returns>
+    public override Int32 GetHashCode()
+        {
+            return this.x.value + this.y.value * 9;
         }
 
         #endregion
