@@ -18,11 +18,16 @@ namespace platform.chess_lobby
         public Chessboard()
         {
             InitializeComponent();
+
+            #region ' Set Control Styles '
+
             this.SetStyle(
                 ControlStyles.OptimizedDoubleBuffer |
                 ControlStyles.ResizeRedraw |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.SupportsTransparentBackColor, true);
+
+            #endregion
 
             #region ' Initialize the Background '
 
@@ -40,32 +45,17 @@ namespace platform.chess_lobby
             this.Controls.Add(this.background);
 
             #endregion
-            
-            this.SuspendLayout();
 
             #region ' Initialize Grid Panels '
 
-            GridPanel[,] _grid_panels = new GridPanel[9, 10];
-            for (Int32 x = 0; x < 9; x++)
-                for (Int32 y = 0; y < 10; y++)
-                {
-                    _grid_panels[x, y] = new GridPanel()
-                    {
-                        Size = new Size(
-                            this.grid_side_length, this.grid_side_length),
-                        Location = new Point(
-                            this.grid_points[x, y].X - this.grid_side_length / 2,
-                            this.grid_points[x, y].Y - this.grid_side_length / 2),
-                        BackColor = Color.Transparent,
-                        Tag = new GridPanelTag(((char)('a' + x)).ToString() + y.ToString()),
-                    };
-                    this.Controls.Add(_grid_panels[x, y]);
-                    _grid_panels[x, y].BringToFront();
-                }
+            this.SuspendLayout();
+
+            this.grid_panels = new GridPanelContainer(
+                this, this.grid_side_length, this.grid_points);
+            
+            this.ResumeLayout(true);
 
             #endregion
-
-            this.ResumeLayout(true);
         }
 
         #endregion
@@ -74,7 +64,15 @@ namespace platform.chess_lobby
 
         #region ' Children '
 
+        /// <summary>
+        /// 棋盘背景
+        /// </summary>
         private PictureBox background { get; set; }
+
+        /// <summary>
+        /// 装有<see cref="GridPanel"/>们的控件
+        /// </summary>
+        private GridPanelContainer grid_panels { get; set; }
 
         #endregion
 
