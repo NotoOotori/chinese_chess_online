@@ -87,6 +87,11 @@ namespace platform.chess_lobby
             return this.x.ToString() + this.y.ToString();
         }
 
+        public (Int32, Int32) ToTuple()
+        {
+            return (this.x.value, this.y.value);
+        }
+
         #endregion
     }
 
@@ -128,6 +133,10 @@ namespace platform.chess_lobby
         #region ' Properties '
 
         private Int32 _col_num { get; set; }
+        /// <summary>
+        /// 坐标数字
+        /// </summary>
+        public Int32 value { get { return this._col_num; } }
 
         #endregion
 
@@ -179,6 +188,10 @@ namespace platform.chess_lobby
         #region ' Properties '
 
         private Int32 _row_num { get; set; }
+        /// <summary>
+        /// 坐标数字
+        /// </summary>
+        public Int32 value { get { return this._row_num; } }
 
         #endregion
 
