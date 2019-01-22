@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -11,11 +12,14 @@ using System.Windows.Forms;
 
 namespace platform.chess_lobby
 {
-    public partial class Chessboard : UserControl
+    /// <summary>
+    /// 装有<see cref="Chessboard"/>的<see cref="UserControl"/>.
+    /// </summary>
+    public partial class ChessboardContainer : UserControl
     {
         #region ' Constructors '
  
-        public Chessboard()
+        public ChessboardContainer()
         {
             InitializeComponent();
 
@@ -29,29 +33,29 @@ namespace platform.chess_lobby
 
             #endregion
 
-            #region ' Initialize the Background '
+            #region ' Prepaint the Board '
+            
+            Bitmap bitmap = new Bitmap(this.Size.Width, this.Size.Height);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            this.paint_board(graphics);
 
-            this.background = new PictureBox()
+            #endregion
+
+            #region ' Initialize the Chessboard '
+
+            this.SuspendLayout();
+
+            this.grid_panels = new Chessboard(
+                this.grid_side_length, this.grid_points)
             {
                 Size = this.Size,
                 Location = new Point(0, 0),
                 BackgroundImage = global::platform.Properties.Resources.wood_grain,
                 BackgroundImageLayout = ImageLayout.Tile,
+                Image = bitmap
             };
-            Bitmap bitmap = new Bitmap(this.Size.Width, this.Size.Height);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            this.paint_board(graphics);
-            this.background.Image = bitmap;
-            this.Controls.Add(this.background);
-
-            #endregion
-
-            #region ' Initialize Grid Panels '
-
-            this.SuspendLayout();
-
-            this.grid_panels = new GridPanelContainer(
-                this, this.grid_side_length, this.grid_points);
+            this.Controls.Add(this.grid_panels);
+            this.grid_panels.BringToFront();
             
             this.ResumeLayout(true);
 
@@ -65,14 +69,9 @@ namespace platform.chess_lobby
         #region ' Children '
 
         /// <summary>
-        /// 棋盘背景
-        /// </summary>
-        private PictureBox background { get; set; }
-
-        /// <summary>
         /// 装有<see cref="GridPanel"/>们的控件
         /// </summary>
-        private GridPanelContainer grid_panels { get; set; }
+        private Chessboard grid_panels { get; set; }
 
         #endregion
 
@@ -411,6 +410,255 @@ namespace platform.chess_lobby
             fat_pen.Dispose();
 
             #endregion
+        }
+
+        #endregion
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 背景+图片是棋盘, 棋盘上每个格点都是<see cref="GridPanel"/>.
+    /// </summary>
+    public class Chessboard : PictureBox, IDictionary<Coordinate, GridPanel>
+    {
+        #region ' Constructors '
+
+        /// <summary>
+        /// 初始化<see cref="chess_lobby.Chessboard"/>类的新实例
+        /// </summary>
+        /// <param name="control">父控件</param>
+        /// <param name="grid_side_length">格子的边长</param>
+        /// <param name="grid_points">格点的坐标</param>
+        public Chessboard(
+            Int32 grid_side_length, Point[,] grid_points)
+        {
+            #region ' Set Control Styles '
+
+            this.SetStyle(
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.SupportsTransparentBackColor, true);
+
+            #endregion
+
+            this.grid_side_length = grid_side_length;
+            this.grid_points = grid_points;
+
+            for (Int32 x = 0; x < 9; x++)
+                for (Int32 y = 0; y < 10; y++)
+                {
+                    Coordinate coordinate = new Coordinate(x, y);
+                    GridPanel grid_panel = new GridPanel()
+                    {
+                        Size = new Size(
+                            this.grid_side_length, this.grid_side_length),
+                        Location = new Point(
+                            this.grid_points[x, y].X - this.grid_side_length / 2,
+                            this.grid_points[x, y].Y - this.grid_side_length / 2),
+                        BackColor = Color.Transparent,
+                        Tag = new GridPanelTag(x, y),
+                    };
+                    this.Controls.Add(grid_panel);
+                    grid_panel.BringToFront();
+                    this.Add(coordinate, grid_panel);
+                }
+        }
+
+        #endregion
+
+        #region ' Properties '
+
+        private IDictionary<Coordinate, GridPanel> dict { get; set; }
+            = new Dictionary<Coordinate, GridPanel>();
+        private Control control { get; set; }
+        private Int32 grid_side_length { get; set; }
+        private Point[,] grid_points { get; set; }
+
+        #region ' Decorator '
+
+        public GridPanel this[Coordinate key]
+        {
+            get
+            {
+                return this.dict[key];
+            }
+            set
+            {
+                this.dict[key] = this[key];
+
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of elements contained in the
+        /// <see cref="ICollection{T}"/>.
+        /// </summary>
+        public Int32 Count
+        {
+            get
+            {
+                return this.dict.Count;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the
+        /// <see cref="ICollection{T}"/> is read-only.
+        /// </summary>
+        public Boolean IsReadOnly
+        {
+            get
+            {
+                return this.dict.IsReadOnly;
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="ICollection{T}"/> containing the keys of the
+        /// <see cref="IDictionary{TKey, TValue}"/>.
+        /// </summary>
+        public ICollection<Coordinate> Keys
+        {
+            get
+            {
+                return this.dict.Keys;
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="ICollection{T}"/> containing the values in the
+        /// <see cref="IDictionary{TKey, TValue}"/>.
+        /// </summary>
+        public ICollection<GridPanel> Values
+        {
+            get
+            {
+                return this.dict.Values;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region ' Methods '
+
+        #region ' Decorator '
+
+        /// <summary>
+        /// Adds the specified key and value to the
+        /// <see cref="IDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void Add(Coordinate key, GridPanel value)
+        {
+            this.dict.Add(key, value);
+        }
+
+        /// <summary>
+        /// Adds an item to the <see cref="ICollection{T}"/>.
+        /// </summary>
+        /// <param name="pair"></param>
+        public void Add(KeyValuePair<Coordinate, GridPanel> item)
+        {
+            this.dict.Add(item);
+        }
+
+        /// <summary>
+        /// Removes all items from
+        /// <see cref="ICollection{T}"/>.
+        /// </summary>
+        public void Clear()
+        {
+            this.dict.Clear();
+        }
+
+        /// <summary>
+        /// Determines whether the <see cref="ICollection{T}"/>
+        /// contains a specific value.
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <returns></returns>
+        public Boolean Contains(KeyValuePair<Coordinate, GridPanel> item)
+        {
+            return this.dict.Contains(item);
+        }
+
+        /// <summary>
+        /// Determines whether the <see cref="IDictionary{TKey, TValue}"/>
+        /// contains the specified key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Boolean ContainsKey(Coordinate key)
+        {
+            return this.dict.ContainsKey(key);
+        }
+
+        /// <summary>
+        /// Copies the elements of the <see cref="ICollection{T}"/>
+        /// to an <see cref="Array"/>, starting at a particular
+        /// <see cref="Array"/> index.
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="array_index"></param>
+        public void CopyTo(KeyValuePair<Coordinate, GridPanel>[] array, Int32 array_index)
+        {
+            this.dict.CopyTo(array, array_index);
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<KeyValuePair<Coordinate, GridPanel>> GetEnumerator()
+        {
+            return this.dict.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.dict.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Removes the value with the specified key from the
+        /// <see cref="IDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Boolean Remove(Coordinate key)
+        {
+            return this.dict.Remove(key);
+        }
+
+        /// <summary>
+        /// Removes the first occurrence of a specific object
+        /// from the <see cref="ICollection{T}"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public Boolean Remove(KeyValuePair<Coordinate, GridPanel> item)
+        {
+            return this.dict.Remove(item);
+        }
+
+        /// <summary>
+        /// Gets the value associated with the specified key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Boolean TryGetValue(Coordinate key, out GridPanel value)
+        {
+            return this.dict.TryGetValue(key, out value);
         }
 
         #endregion

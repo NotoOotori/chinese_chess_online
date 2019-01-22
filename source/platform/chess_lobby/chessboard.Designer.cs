@@ -1,6 +1,6 @@
 ﻿namespace platform.chess_lobby
 {
-    partial class Chessboard
+    partial class ChessboardContainer
     {
         /// <summary> 
         /// Required designer variable.

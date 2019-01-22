@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessLobby));
-            this.chessboard = new platform.chess_lobby.Chessboard();
+            this.chessboard = new platform.chess_lobby.ChessboardContainer();
             this.SuspendLayout();
             // 
             // chessboard
@@ -55,6 +55,6 @@
 
         #endregion
 
-        private Chessboard chessboard;
+        private ChessboardContainer chessboard;
     }
 }
