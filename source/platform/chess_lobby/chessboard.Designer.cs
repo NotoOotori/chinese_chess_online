@@ -34,7 +34,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::platform.Properties.Resources.wood_grain;
             this.Name = "Chessboard";
             this.Size = new System.Drawing.Size(520, 576);
             this.ResumeLayout(false);

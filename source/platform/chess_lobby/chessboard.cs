@@ -18,6 +18,30 @@ namespace platform.chess_lobby
         public Chessboard()
         {
             InitializeComponent();
+            this.SetStyle(
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.SupportsTransparentBackColor, true);
+
+            #region ' Initialize the Background '
+
+            this.background = new PictureBox()
+            {
+                Size = this.Size,
+                Location = new Point(0, 0),
+                BackgroundImage = global::platform.Properties.Resources.wood_grain,
+                BackgroundImageLayout = ImageLayout.Tile,
+            };
+            Bitmap bitmap = new Bitmap(this.Size.Width, this.Size.Height);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            this.paint_board(graphics);
+            this.background.Image = bitmap;
+            this.Controls.Add(this.background);
+
+            #endregion
+            
+            this.SuspendLayout();
 
             #region ' Initialize Grid Panels '
 
@@ -36,14 +60,23 @@ namespace platform.chess_lobby
                         Tag = new GridPanelTag(((char)('a' + x)).ToString() + y.ToString()),
                     };
                     this.Controls.Add(_grid_panels[x, y]);
+                    _grid_panels[x, y].BringToFront();
                 }
 
             #endregion
+
+            this.ResumeLayout(true);
         }
 
         #endregion
 
         #region ' Properties '
+
+        #region ' Children '
+
+        private PictureBox background { get; set; }
+
+        #endregion
 
         private Int32 grid_side_length
         {
@@ -99,8 +132,6 @@ namespace platform.chess_lobby
         /// 兵炮位置标记线的长度
         /// </summary>
         private Int32 cross_length { get { return 10; } }
-        
-        #endregion
 
         #region ' Intermediate Properties '
 
@@ -122,7 +153,7 @@ namespace platform.chess_lobby
             {
                 Int32[] xs = new Int32[9];
                 xs[0] = (this.Width - this.grid_side_length * 8) / 2;
-                for(Int32 i = 1; i < 9; i++)
+                for (Int32 i = 1; i < 9; i++)
                 {
                     xs[i] = xs[i - 1] + this.grid_side_length;
                 }
@@ -168,17 +199,23 @@ namespace platform.chess_lobby
 
         #endregion
 
-        #region ' Painting '
+        #endregion
 
-        protected override void OnPaint(PaintEventArgs pe)
-        {
-            Graphics graphics = pe.Graphics;
-            this.paint_board(graphics);
-            base.OnPaint(pe);
-        }
+        #region ' Methods '
+
+        #region ' Painting '
 
         private void paint_board(Graphics graphics)
         {
+            #region ' Setup Graphics '
+
+            // 高质量
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            // 高像素偏移质量
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            #endregion
+
             #region ' Declare Pens '
 
             Pen slim_pen = new Pen(Brushes.Black)
@@ -369,10 +406,16 @@ namespace platform.chess_lobby
 
             #endregion
 
+            #region ' Dispose Pens ' 
+
             slim_pen.Dispose();
             medium_pen.Dispose();
             fat_pen.Dispose();
+
+            #endregion
         }
+
+        #endregion
 
         #endregion
     }

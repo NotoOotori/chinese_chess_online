@@ -28,6 +28,7 @@ namespace platform.chess_lobby
 
         protected override void OnClick(EventArgs e)
         {
+            MessageBox.Show((this.Tag as GridPanelTag).coordinate.coordinate_str);
             base.OnClick(e);
         }
 

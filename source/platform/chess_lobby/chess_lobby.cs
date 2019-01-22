@@ -15,6 +15,11 @@ namespace platform.chess_lobby
         public ChessLobby()
         {
             InitializeComponent();
+            this.SetStyle(
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.ResizeRedraw |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.SupportsTransparentBackColor, true);
         }
     }
 }
