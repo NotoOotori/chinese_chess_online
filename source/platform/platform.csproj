@@ -134,13 +134,13 @@
     <EmbeddedResource Include="chess_lobby\resources\middle\bp.png" />
     <EmbeddedResource Include="chess_lobby\resources\middle\br.png" />
     <EmbeddedResource Include="chess_lobby\resources\middle\mm.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wa.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wb.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wc.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wk.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wn.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wp.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\wr.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\ra.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rr.png" />
     <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
   </ItemGroup>
   <ItemGroup>

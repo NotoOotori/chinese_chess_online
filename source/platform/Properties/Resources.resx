@@ -142,28 +142,28 @@
   <data name="mm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chess_lobby\resources\middle\mm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\ra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="rb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="rc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="rk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="rn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\middle\rr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wood_grain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chess_lobby\resources\wood_grain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\middle\wr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
