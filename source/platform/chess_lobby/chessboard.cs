@@ -36,8 +36,15 @@ namespace platform.chess_lobby
             #region ' Prepaint the Board '
             
             Bitmap bitmap = new Bitmap(this.Size.Width, this.Size.Height);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            this.paint_board(graphics);
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                // 高质量
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                // 高像素偏移质量
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                this.paint_board(graphics);
+            }
 
             #endregion
 
@@ -204,15 +211,6 @@ namespace platform.chess_lobby
 
         private void paint_board(Graphics graphics)
         {
-            #region ' Setup Graphics '
-
-            // 高质量
-            graphics.SmoothingMode = SmoothingMode.HighQuality;
-            // 高像素偏移质量
-            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            #endregion
-
             #region ' Declare Pens '
 
             Pen slim_pen = new Pen(Brushes.Black)
@@ -446,7 +444,7 @@ namespace platform.chess_lobby
             this.grid_side_length = grid_side_length;
             this.grid_points = grid_points;
 
-            #region ' Initialize GridPanels '
+            #region ' Initialize GridPanels and the Position '
 
             for (Int32 x = 0; x < 9; x++)
                 for (Int32 y = 0; y < 10; y++)
@@ -475,15 +473,7 @@ namespace platform.chess_lobby
             this.chess_positions = new List<ChessPosition>();
             ChessPosition chess_position = new ChessPosition();
             this.chess_positions.Add(chess_position);
-            foreach(Coordinate coordinate in Coordinate.get_coordinates())
-            {
-                if (chess_position[coordinate] == null)
-                    continue;
-                this[coordinate].BackgroundImage =
-                    chess_position[coordinate].bitmap;
-                (this[coordinate].Tag as GridPanelTag).piece =
-                    chess_position[coordinate];
-            }
+            this.refresh_pieces();
 
             #endregion
         }
@@ -567,6 +557,30 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Methods '
+
+        /// <summary>
+        /// 刷新棋子的图像
+        /// </summary>
+        private void refresh_pieces()
+        {
+            this.refresh_pieces(this.chess_positions.Last());
+        }
+
+        /// <summary>
+        /// 刷新格点的状态
+        /// </summary>
+        /// <param name="chess_position">当前棋局</param>
+        private void refresh_pieces(ChessPosition chess_position)
+        {
+            foreach (Coordinate coordinate in Coordinate.get_coordinates())
+            {
+                if (chess_position[coordinate] == null)
+                    continue;
+                (this[coordinate].Tag as GridPanelTag).piece =
+                    chess_position[coordinate];
+                this[coordinate].refresh_image();
+            }
+        }
 
         #region ' Decorator '
 

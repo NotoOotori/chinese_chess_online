@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace platform.chess_lobby
 {
@@ -22,36 +25,11 @@ namespace platform.chess_lobby
         {
             if (!Char.IsLetter(piece_char))
                 throw new ArgumentOutOfRangeException("棋子字符不是字母!");
-            if (Char.IsUpper(piece_char))
-                this._colour = PlayerColour.RED;
-            else
-                this._colour = PlayerColour.BLACK;
-            switch (Char.ToLower(piece_char))
-            {
-                default:
-                    throw new ArgumentOutOfRangeException("棋子种类错误!");
-                case 'k':
-                    this._type = PieceType.KING;
-                    break;
-                case 'a':
-                    this._type = PieceType.ADVISOR;
-                    break;
-                case 'b':
-                    this._type = PieceType.BISHOP;
-                    break;
-                case 'n':
-                    this._type = PieceType.KNIGHT;
-                    break;
-                case 'r':
-                    this._type = PieceType.ROOK;
-                    break;
-                case 'c':
-                    this._type = PieceType.CANNON;
-                    break;
-                case 'p':
-                    this._type = PieceType.PAWN;
-                    break;
-            }
+            this._colour = (PlayerColour)Convert.ToInt32(Char.IsLower(piece_char));
+            Char piece_lower = Char.ToLower(piece_char);
+            if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_lower)))
+                throw new ArgumentOutOfRangeException("棋子字母错误!");
+            this._type = (PieceType)piece_lower;
         }
 
         /// <summary>
@@ -63,43 +41,12 @@ namespace platform.chess_lobby
             piece_str = piece_str.ToLower();
             if (piece_str.Length != 2)
                 throw new ArgumentOutOfRangeException("棋子字符串长度不匹配!");
-            switch (piece_str[0])
-            {
-                default:
-                    throw new ArgumentOutOfRangeException("棋子颜色错误!");
-                case 'r':
-                    this._colour = PlayerColour.RED;
-                    break;
-                case 'b':
-                    this._colour = PlayerColour.BLACK;
-                    break;
-            }
-            switch (piece_str[1])
-            {
-                default:
-                    throw new ArgumentOutOfRangeException("棋子种类错误!");
-                case 'k':
-                    this._type = PieceType.KING;
-                    break;
-                case 'a':
-                    this._type = PieceType.ADVISOR;
-                    break;
-                case 'b':
-                    this._type = PieceType.BISHOP;
-                    break;
-                case 'n':
-                    this._type = PieceType.KNIGHT;
-                    break;
-                case 'r':
-                    this._type = PieceType.ROOK;
-                    break;
-                case 'c':
-                    this._type = PieceType.CANNON;
-                    break;
-                case 'p':
-                    this._type = PieceType.PAWN;
-                    break;
-            }
+            if(!Regex.IsMatch(piece_str.Substring(0, 1), "[br]"))
+                throw new ArgumentOutOfRangeException("棋子颜色错误!");
+            this._colour = (PlayerColour)Convert.ToInt32(piece_str[0] != 'r');
+            if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_str[1])))
+                throw new ArgumentOutOfRangeException("棋子字母错误!");
+            this._type = (PieceType)piece_str[1];
         }
 
         /// <summary>
@@ -128,6 +75,7 @@ namespace platform.chess_lobby
         /// 棋子种类
         /// </summary>
         public PieceType type { get { return this._type; } }
+        public Boolean masked { get; set; } = false;
         /// <summary>
         /// 棋子图片
         /// </summary>
@@ -135,8 +83,22 @@ namespace platform.chess_lobby
         {
             get
             {
-                return (Bitmap)Properties.Resources.
+                Bitmap piece = (Bitmap)Properties.Resources.
                     ResourceManager.GetObject(this.ToString());
+                if (!this.masked)
+                    return piece;
+                Bitmap mask = (Bitmap)Properties.Resources.
+                    ResourceManager.GetObject("mm");
+                using (Graphics graphics = Graphics.FromImage(piece))
+                {
+                    // 高质量
+                    graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    // 高像素偏移质量
+                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                    graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                }
+                return piece;
             }
         } 
 
@@ -153,10 +115,9 @@ namespace platform.chess_lobby
         /// <returns></returns>
         public Char ToChar()
         {
-            Char c = this.type.ToString()[0];
-            if (this.type == PieceType.KNIGHT)
-                c = 'N';
-            return this.colour == PlayerColour.RED ? c : Char.ToLower(c);
+            Char c = Convert.ToChar(this.type);
+            return this.colour == PlayerColour.RED ? Char.ToUpper(c)
+                : Char.ToLower(c);
         }
 
         /// <summary>
@@ -166,7 +127,7 @@ namespace platform.chess_lobby
         public override String ToString()
         {
             return (this.colour.ToString().Substring(0, 1) +
-                this.ToChar()).ToLower();
+                this.ToChar().ToString()).ToLower();
         }
 
         #endregion
@@ -180,30 +141,34 @@ namespace platform.chess_lobby
         /// <summary>
         /// 帥/將
         /// </summary>
-        KING = 1,
+        KING = 'k',
         /// <summary>
         /// 仕/士
         /// </summary>
-        ADVISOR = 2,
+        ADVISOR = 'a',
         /// <summary>
         /// 相/象
         /// </summary>
-        BISHOP = 3,
+        BISHOP = 'b',
         /// <summary>
         /// 傌/馬
         /// </summary>
-        KNIGHT = 4,
+        KNIGHT = 'n',
         /// <summary>
         /// 俥/車
         /// </summary>
-        ROOK = 5,
+        ROOK = 'r',
         /// <summary>
         /// 炮/砲
         /// </summary>
-        CANNON = 6,
+        CANNON = 'c',
         /// <summary>
         /// 兵/卒
         /// </summary>
-        PAWN = 7
+        PAWN = 'p',
+        /// <summary>
+        /// NULL
+        /// </summary>
+        NULL = 0
     }
 }

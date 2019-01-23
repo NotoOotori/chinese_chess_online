@@ -25,12 +25,43 @@ namespace platform.chess_lobby
 
         #endregion
 
+        #region ' Properties '
+
+        private GridPanelTag tag { get { return this.Tag as GridPanelTag; } }
+        /// <summary>
+        /// 该格点的坐标
+        /// </summary>
+        public Coordinate coordinate { get { return this.tag.coordinate; } }
+        /// <summary>
+        /// 该格点上的棋子
+        /// </summary>
+        public Piece piece { get { return this.tag.piece; } }
+
+        #endregion
+
         #region ' Methods '
 
         protected override void OnClick(EventArgs e)
         {
-            MessageBox.Show((this.Tag as GridPanelTag).piece.ToString());
+            if (this.piece == null)
+                MessageBox.Show("NULL!");
+            else
+            {
+                MessageBox.Show(this.piece.ToString());
+                this.piece.masked = true;
+                this.refresh_image();
+            }
             base.OnClick(e);
+        }
+
+        /// <summary>
+        /// 刷新棋子图像
+        /// </summary>
+        public void refresh_image()
+        {
+            if (this.piece == null)
+                return;
+            this.BackgroundImage = this.piece.bitmap;
         }
 
         #endregion
