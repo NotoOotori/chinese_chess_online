@@ -25,7 +25,7 @@ namespace platform.chess_lobby
         {
             if (!Char.IsLetter(piece_char))
                 throw new ArgumentOutOfRangeException("棋子字符不是字母!");
-            this._colour = (PlayerColour)Convert.ToInt32(Char.IsLower(piece_char));
+            this._colour = (ChessColour)Convert.ToInt32(Char.IsLower(piece_char));
             Char piece_lower = Char.ToLower(piece_char);
             if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_lower)))
                 throw new ArgumentOutOfRangeException("棋子字母错误!");
@@ -43,7 +43,7 @@ namespace platform.chess_lobby
                 throw new ArgumentOutOfRangeException("棋子字符串长度不匹配!");
             if(!Regex.IsMatch(piece_str.Substring(0, 1), "[br]"))
                 throw new ArgumentOutOfRangeException("棋子颜色错误!");
-            this._colour = (PlayerColour)Convert.ToInt32(piece_str[0] != 'r');
+            this._colour = (ChessColour)Convert.ToInt32(piece_str[0] != 'r');
             if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_str[1])))
                 throw new ArgumentOutOfRangeException("棋子字母错误!");
             this._type = (PieceType)piece_str[1];
@@ -54,7 +54,7 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="colour">棋子颜色</param>
         /// <param name="type">棋子种类</param>
-        public Piece(PlayerColour colour, PieceType type)
+        public Piece(ChessColour colour, PieceType type)
         {
             this._colour = colour;
             this._type = type;
@@ -64,13 +64,13 @@ namespace platform.chess_lobby
 
         #region ' Properties '
 
-        private PlayerColour _colour { get; set; }
+        private ChessColour _colour { get; set; }
         private PieceType _type { get; set; }
 
         /// <summary>
         /// 棋子颜色
         /// </summary>
-        public PlayerColour colour { get { return this._colour; } }
+        public ChessColour colour { get { return this._colour; } }
         /// <summary>
         /// 棋子种类
         /// </summary>
@@ -116,7 +116,7 @@ namespace platform.chess_lobby
         public Char ToChar()
         {
             Char c = Convert.ToChar(this.type);
-            return this.colour == PlayerColour.RED ? Char.ToUpper(c)
+            return this.colour == ChessColour.RED ? Char.ToUpper(c)
                 : Char.ToLower(c);
         }
 
@@ -169,6 +169,6 @@ namespace platform.chess_lobby
         /// <summary>
         /// NULL
         /// </summary>
-        NULL = 0
+        NONE = 0
     }
 }

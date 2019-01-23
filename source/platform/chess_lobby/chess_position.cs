@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using FastDeepCloner;
 
 namespace platform.chess_lobby
 {
@@ -23,6 +25,10 @@ namespace platform.chess_lobby
             String[] strings = fen.Split(' ');
             if (strings.Length != 6)
                 throw new ArgumentOutOfRangeException("FEN值长度错误!");
+            if (!Regex.IsMatch(strings[1], "[br]"))
+                throw new ArgumentOutOfRangeException("走子方字符有误!");
+            this.current_player = (ChessColour)Convert.ToInt32(
+                Char.IsLower(strings[1][0]));
             this.noncapture_moves = Int32.Parse(strings[4]);
             this.total_rounds = Int32.Parse(strings[5]);
             String[] rows = strings[0].Split('/');
@@ -71,14 +77,56 @@ namespace platform.chess_lobby
         /// 棋局的回合数
         /// </summary>
         private Int32 total_rounds { get; set; }
+        /// <summary>
+        /// 轮到走子的那一方
+        /// </summary>
+        private ChessColour current_player { get; set; }
 
         #endregion
 
         #region ' Methods '
 
+        /// <summary>
+        /// 判断棋步是否合法
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
+        public Boolean is_move(Coordinate start, Coordinate end)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 完成棋子的移动以及回合数的更新
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
         public ChessPosition move(Coordinate start, Coordinate end)
         {
-            return this;
+            ChessPosition new_position = DeepCloner.Clone(this);
+
+            #region ' Update the Stats '
+
+            new_position.current_player = ~new_position.current_player;
+            if (this[end] == null)
+                new_position.noncapture_moves += 1;
+            else
+                new_position.noncapture_moves = 0;
+            if (this.current_player == ChessColour.BLACK)
+                new_position.total_rounds += 1;
+
+            #endregion
+
+            #region ' Move the Piece ' 
+
+            new_position[end] = this[start];
+            new_position[start] = null;
+
+            #endregion
+
+            return new_position;
         }
 
         /// <summary>

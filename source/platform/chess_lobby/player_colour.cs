@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace platform.chess_lobby
 {
     [Flags]
-    public enum PlayerColour
+    public enum ChessColour
     {
         RED = 0,
         BLACK = 1,

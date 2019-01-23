@@ -78,7 +78,7 @@ namespace platform.chess_lobby
         /// <summary>
         /// 装有<see cref="GridPanel"/>们的控件
         /// </summary>
-        private Chessboard grid_panels { get; set; }
+        public Chessboard grid_panels { get; set; }
 
         #endregion
 
@@ -487,6 +487,24 @@ namespace platform.chess_lobby
         private Int32 grid_side_length { get; set; }
         private Point[,] grid_points { get; set; }
 
+        #region ' Reflection '
+
+        private ReflectionType _reflection_type { get; set; } = ReflectionType.None;
+        public ReflectionType reflection_type
+        {
+            get
+            {
+                return this._reflection_type;
+            }
+            set
+            {
+                this._reflection_type = value;
+                this.refresh_pieces();
+            }
+        }
+
+        #endregion
+
         #region ' Decorator '
 
         private IDictionary<Coordinate, GridPanel> dict { get; set; }
@@ -495,12 +513,11 @@ namespace platform.chess_lobby
         {
             get
             {
-                return this.dict[key];
+                return this.dict[key.reflect(this.reflection_type)];
             }
             set
             {
                 this.dict[key] = this[key];
-
             }
         }
 
@@ -559,6 +576,16 @@ namespace platform.chess_lobby
         #region ' Methods '
 
         /// <summary>
+        /// 反射棋盘.
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public void reflect(ReflectionType type)
+        {
+            this._reflection_type = this._reflection_type ^ type;
+            this.refresh_pieces();
+        }
+
+        /// <summary>
         /// 刷新棋子的图像
         /// </summary>
         private void refresh_pieces()
@@ -572,7 +599,7 @@ namespace platform.chess_lobby
         /// <param name="chess_position">当前棋局</param>
         private void refresh_pieces(ChessPosition chess_position)
         {
-            foreach (Coordinate coordinate in Coordinate.get_coordinates())
+            foreach (Coordinate coordinate in this.Keys)
             {
                 if (chess_position[coordinate] == null)
                     continue;
@@ -701,5 +728,23 @@ namespace platform.chess_lobby
         #endregion
 
         #endregion
+    }
+
+    [Flags]
+    public enum ReflectionType
+    {
+        None = 0,
+        /// <summary>
+        /// 上下翻转
+        /// </summary>
+        VerticalReflection = 1,
+        /// <summary>
+        /// 左右翻转
+        /// </summary>
+        HorizontalReflection = 2,
+        /// <summary>
+        /// 旋转180°
+        /// </summary>
+        PointReflection = 3
     }
 }

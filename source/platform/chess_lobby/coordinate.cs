@@ -15,7 +15,7 @@ namespace platform.chess_lobby
         #region ' Constructors '
 
         /// <summary>
-        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例
+        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例.
         /// </summary>
         /// <param name="cdn_str">坐标的字符串格式</param>
         public Coordinate(String cdn_str)
@@ -26,10 +26,21 @@ namespace platform.chess_lobby
         }
 
         /// <summary>
-        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例
+        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例.
+        /// </summary>
+        /// <param name="col">横坐标</param>
+        /// <param name="row">纵坐标</param>
+        public Coordinate(ColumnCoordinate col, RowCoordinate row)
+            : base(col, row)
+        {
+            ;
+        }
+
+        /// <summary>
+        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例.
         /// </summary>
         /// <param name="col_num">横坐标的数字</param>
-        /// <param name="row_num">列坐标的数字</param>
+        /// <param name="row_num">纵坐标的数字</param>
         public Coordinate(Int32 col_num, Int32 row_num)
             : base(new ColumnCoordinate(col_num),
                    new RowCoordinate(row_num))
@@ -48,10 +59,10 @@ namespace platform.chess_lobby
         {
             get
             {
-                return base.Item1;
+                return this.Item1;
             }
         }
-
+        
         /// <summary>
         /// 所在行的坐标
         /// </summary>
@@ -59,7 +70,7 @@ namespace platform.chess_lobby
         {
             get
             {
-                return base.Item2;
+                return this.Item2;
             }
         }
 
@@ -81,6 +92,15 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Methods '
+
+        /// <summary>
+        /// 反射坐标
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public Coordinate reflect(ReflectionType type)
+        {
+            return new Coordinate(this.x.reflect(type), this.y.reflect(type));
+        }
 
         /// <summary>
         /// 返回2位坐标字符串.
@@ -129,18 +149,18 @@ namespace platform.chess_lobby
             return false;
         }
 
-    /// <summary>
-    /// Returns the hash code for the current
-    /// <see cref="Coordinate"/> object.
-    /// </summary>
-    /// <returns></returns>
-    public override Int32 GetHashCode()
-        {
-            return this.x.value + this.y.value * 9;
-        }
+        /// <summary>
+        /// Returns the hash code for the current
+        /// <see cref="Coordinate"/> object.
+        /// </summary>
+        /// <returns></returns>
+        public override Int32 GetHashCode()
+            {
+                return this.x.value + this.y.value * 10;
+            }
 
         #endregion
-    }
+        }
 
     /// <summary>
     /// 表示格点横坐标的类
@@ -178,20 +198,32 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Properties '
-
+        
         private Int32 _col_num { get; set; }
         /// <summary>
         /// 坐标数字
         /// </summary>
-        public Int32 value { get { return this._col_num; } }
+        public Int32 value { get { return _col_num; } }
 
         #endregion
 
         #region ' Methods '
 
+        /// <summary>
+        /// 反射棋子
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public ColumnCoordinate reflect(ReflectionType type)
+        {
+            if ((type & ReflectionType.HorizontalReflection)
+                != ReflectionType.HorizontalReflection)
+                return new ColumnCoordinate(this._col_num);
+            return new ColumnCoordinate(8 - this._col_num);
+        }
+
         public override String ToString()
         {
-            return Convert.ToChar(this._col_num + 'a').ToString();
+            return Convert.ToChar(this.value + 'a').ToString();
         }
 
         #endregion
@@ -233,7 +265,7 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Properties '
-
+        
         private Int32 _row_num { get; set; }
         /// <summary>
         /// 坐标数字
@@ -244,9 +276,21 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
+        /// <summary>
+        /// 反射棋子
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public RowCoordinate reflect(ReflectionType type)
+        {
+            if ((type & ReflectionType.VerticalReflection)
+                   != ReflectionType.VerticalReflection)
+                return new RowCoordinate(this._row_num);
+            return new RowCoordinate(9 - this._row_num);
+        }
+
         public override String ToString()
         {
-            return this._row_num.ToString();
+            return this.value.ToString();
         }
 
         #endregion

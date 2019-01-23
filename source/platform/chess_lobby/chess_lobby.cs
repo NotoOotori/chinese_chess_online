@@ -25,6 +25,8 @@ namespace platform.chess_lobby
                 ControlStyles.SupportsTransparentBackColor, true);
 
             #endregion
+
+            this.chessboard.grid_panels.reflect(ReflectionType.VerticalReflection);
         }
     }
 }

@@ -55,6 +55,15 @@ namespace platform.chess_lobby
         }
 
         /// <summary>
+        /// 反射棋子
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public void reflect(ReflectionType type)
+        {
+            this.tag.coordinate.reflect(type);
+        }
+
+        /// <summary>
         /// 刷新棋子图像
         /// </summary>
         public void refresh_image()
@@ -114,6 +123,10 @@ namespace platform.chess_lobby
         /// </summary>
         public Piece piece { get; set; }
 
+        #endregion
+
+        #region ' Methods '
+        
         #endregion
     }
 }
