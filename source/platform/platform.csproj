@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>platform</RootNamespace>
     <AssemblyName>platform</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,9 +34,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="FastDeepCloner, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.14.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.14\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,12 +63,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chess_lobby\chessboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\chessboard.Designer.cs">
+      <DependentUpon>chessboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\chess_lobby.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="chess_lobby\chess_lobby.Designer.cs">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </Compile>
+    <Compile Include="chess_lobby\chess_position.cs" />
+    <Compile Include="chess_lobby\coordinate.cs" />
+    <Compile Include="chess_lobby\grid_panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\misc.cs" />
+    <Compile Include="chess_lobby\piece.cs" />
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +90,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="chess_lobby\chessboard.resx">
+      <DependentUpon>chessboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,7 +107,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -89,9 +123,30 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="extensions\MySql.Data.dll" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\most-left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\most-right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\buttons\right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\ba.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\bp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\br.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\mm.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\ra.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\middle\rr.png" />
+    <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

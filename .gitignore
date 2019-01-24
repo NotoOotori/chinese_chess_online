@@ -48,8 +48,6 @@ MANIFEST
 *.dll.config
 *.cache
 *.suo
-# Include dlls if they¡¯re in the NuGet packages directory
-!/packages/*/lib/*.dll
 # Include dlls if they're in the CommonReferences directory
 !*CommonReferences/*.dll
 # Include dlls if they're in the extensions directory
@@ -71,7 +69,7 @@ TestResults/
 *.ReSharper.*
 
 # Packages #
-# it¡¯s better to unpack these files and commit the raw source
+# it is better to unpack these files and commit the raw source
 # git has its own built in compression methods
 *.7z
 *.dmg
