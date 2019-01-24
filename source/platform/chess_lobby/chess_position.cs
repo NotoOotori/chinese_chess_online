@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using FastDeepCloner;
 
 namespace platform.chess_lobby
 {
@@ -20,15 +19,14 @@ namespace platform.chess_lobby
         /// 初始化<see cref="ChessPosition"/>的新实例
         /// </summary>
         /// <param name="fen">棋局的FEN串</param>
-        public ChessPosition(String fen=InitialFEN.value)
+        public ChessPosition(String fen = InitialFEN.value)
         {
             String[] strings = fen.Split(' ');
             if (strings.Length != 6)
                 throw new ArgumentOutOfRangeException("FEN值长度错误!");
             if (!Regex.IsMatch(strings[1], "[br]"))
-                throw new ArgumentOutOfRangeException("走子方字符有误!");
-            this.current_player = (ChessColour)Convert.ToInt32(
-                Char.IsLower(strings[1][0]));
+                throw new ArgumentOutOfRangeException("走子方字符长度有误!");
+            this._current_player = MyConvert.to_chess_colour(strings[1][0]);
             this.noncapture_moves = Int32.Parse(strings[4]);
             this.total_rounds = Int32.Parse(strings[5]);
             String[] rows = strings[0].Split('/');
@@ -48,7 +46,7 @@ namespace platform.chess_lobby
                             if (x > 8)
                                 throw new ArgumentOutOfRangeException(
                                     "横坐标越界!");
-                            this.Add(new Coordinate(x++, y), null);
+                            this.Add(new Coordinate(x++, y), new Piece());
                         }
                         continue;
                     }
@@ -63,6 +61,16 @@ namespace platform.chess_lobby
                 }
                 y--;
             }
+        }
+
+        /// <summary>
+        /// 初始化<see cref="ChessPosition"/>的新实例
+        /// </summary>
+        /// <param name="chess_position"></param>
+        public ChessPosition(ChessPosition chess_position)
+            : this(chess_position.ToString())
+        {
+            ;
         }
 
         #endregion
@@ -80,19 +88,27 @@ namespace platform.chess_lobby
         /// <summary>
         /// 轮到走子的那一方
         /// </summary>
-        private ChessColour current_player { get; set; }
-
-        #endregion
-
-        #region ' Methods '
-
+        private ChessColour _current_player { get; set; }
         /// <summary>
-        /// 判断棋步是否合法
+        /// 轮到走子的那一方
         /// </summary>
-        /// <param name="start">起始坐标</param>
-        /// <param name="end">终止坐标</param>
-        /// <returns></returns>
-        public Boolean is_move(Coordinate start, Coordinate end)
+        public ChessColour current_player { get { return this._current_player; } }
+        /// <summary>
+        /// 棋局的fen串
+        /// </summary>
+        public String fen { get { return this.ToString(); } }
+
+    #endregion
+
+    #region ' Methods '
+
+    /// <summary>
+    /// 判断棋步是否合法
+    /// </summary>
+    /// <param name="start">起始坐标</param>
+    /// <param name="end">终止坐标</param>
+    /// <returns></returns>
+    public Boolean is_move(Coordinate start, Coordinate end)
         {
             return true;
         }
@@ -105,16 +121,17 @@ namespace platform.chess_lobby
         /// <returns></returns>
         public ChessPosition move(Coordinate start, Coordinate end)
         {
-            ChessPosition new_position = DeepCloner.Clone(this);
+            ChessPosition new_position = new ChessPosition(this);
 
             #region ' Update the Stats '
 
-            new_position.current_player = ~new_position.current_player;
+            new_position._current_player =
+                ChessColour.NONE ^ new_position._current_player;
             if (this[end] == null)
                 new_position.noncapture_moves += 1;
             else
                 new_position.noncapture_moves = 0;
-            if (this.current_player == ChessColour.BLACK)
+            if (this._current_player == ChessColour.BLACK)
                 new_position.total_rounds += 1;
 
             #endregion
@@ -122,7 +139,7 @@ namespace platform.chess_lobby
             #region ' Move the Piece ' 
 
             new_position[end] = this[start];
-            new_position[start] = null;
+            new_position[start] = new Piece();
 
             #endregion
 
@@ -135,7 +152,32 @@ namespace platform.chess_lobby
         /// <returns></returns>
         public override String ToString()
         {
-            return base.ToString();
+            String fen_0 = "";
+            for (Int32 y = 9; y >= 0; y--)
+            {
+                Int32 empty = 0;
+                for (Int32 x = 0; x < 9; x++)
+                {
+                    Coordinate cdn = new Coordinate(x, y);
+                    if (this[cdn].type == PieceType.NONE)
+                    {
+                        empty++;
+                        continue;
+                    }
+                    if (empty != 0)
+                    {
+                        fen_0 += empty.ToString();
+                        empty = 0;
+                    }
+                    fen_0 += this[cdn].ToChar().ToString();
+                }
+                if (empty != 0)
+                    fen_0 += empty.ToString();
+                if (y != 0)
+                    fen_0 += "/";
+            }
+            return $"{fen_0} {Char.ToLower(this.current_player.ToString()[0])} " +
+                $"- - {this.noncapture_moves} {this.total_rounds}";
         }
 
         #endregion

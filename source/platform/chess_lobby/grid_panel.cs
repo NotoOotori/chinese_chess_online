@@ -36,6 +36,13 @@ namespace platform.chess_lobby
         /// 该格点上的棋子
         /// </summary>
         public Piece piece { get { return this.tag.piece; } }
+        /// <summary>
+        /// 棋子是否为masked状态
+        /// </summary>
+        public Boolean masked {
+            get { return this.piece.masked; }
+            set { this.piece.masked = value; this.refresh_image(); }
+        }
 
         #endregion
 
@@ -43,24 +50,7 @@ namespace platform.chess_lobby
 
         protected override void OnClick(EventArgs e)
         {
-            if (this.piece == null)
-                MessageBox.Show("NULL!");
-            else
-            {
-                MessageBox.Show(this.piece.ToString());
-                this.piece.masked = true;
-                this.refresh_image();
-            }
-            base.OnClick(e);
-        }
-
-        /// <summary>
-        /// 反射棋子
-        /// </summary>
-        /// <param name="type">反射类型</param>
-        public void reflect(ReflectionType type)
-        {
-            this.tag.coordinate.reflect(type);
+            (this.Parent as Chessboard).on_child_click(this.coordinate);
         }
 
         /// <summary>
@@ -68,8 +58,8 @@ namespace platform.chess_lobby
         /// </summary>
         public void refresh_image()
         {
-            if (this.piece == null)
-                return;
+            if (this.piece.type == PieceType.NONE)
+                this.BackgroundImage = null;
             this.BackgroundImage = this.piece.bitmap;
         }
 
@@ -121,7 +111,7 @@ namespace platform.chess_lobby
         /// <summary>
         /// 格子上棋子的简化字符格式('[bw][abcknpr]')
         /// </summary>
-        public Piece piece { get; set; }
+        public Piece piece { get; set; } = new Piece();
 
         #endregion
 

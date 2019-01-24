@@ -84,3 +84,15 @@ It will be an online platform and database of chinese chess.
       > | Author(s)      | Microsoft               |
       > | Date published | Wednesday, May 30, 2018 |
       > | Project URL    | <https://dot.net/>      |
+  * Tools
+    * NoComment
+      > Hides comments and replaces them with a callout icon.
+      > Comments are shown as tooltip and when editing them.
+      > | Attribute         | Value                |
+      > | ----------------- | -------------------- |
+      > | Version           | 1.1                  |
+      > | Released on       | 2017/1/19 6:55:33 pm |
+      > | Last updated      | 2017/2/8 11:32:17 pm |
+      > | Publisher         | 3dGrabber            |
+      >
+      > <https://marketplace.visualstudio.com/items?itemName=3dGrabber.NoComment>

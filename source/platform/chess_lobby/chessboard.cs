@@ -78,7 +78,7 @@ namespace platform.chess_lobby
         /// <summary>
         /// 装有<see cref="GridPanel"/>们的控件
         /// </summary>
-        public Chessboard grid_panels { get; set; }
+        private Chessboard grid_panels { get; set; }
 
         #endregion
 
@@ -206,6 +206,15 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Methods '
+
+        /// <summary>
+        /// 反射棋盘.
+        /// </summary>
+        /// <param name="type">反射类型</param>
+        public void reflect(ReflectionType type)
+        {
+            this.grid_panels.reflect(type);
+        }
 
         #region ' Painting '
 
@@ -425,7 +434,6 @@ namespace platform.chess_lobby
         /// <summary>
         /// 初始化<see cref="chess_lobby.Chessboard"/>类的新实例
         /// </summary>
-        /// <param name="control">父控件</param>
         /// <param name="grid_side_length">格子的边长</param>
         /// <param name="grid_points">格点的坐标</param>
         public Chessboard(
@@ -483,27 +491,53 @@ namespace platform.chess_lobby
         #region ' Properties '
 
         private List<ChessPosition> chess_positions { get; set; }
-        private Control control { get; set; }
+        private ChessPosition chess_position { get
+            { return this.chess_positions[this.turns]; } }
+
         private Int32 grid_side_length { get; set; }
         private Point[,] grid_points { get; set; }
 
         #region ' Reflection '
 
-        private ReflectionType _reflection_type { get; set; } = ReflectionType.None;
-        public ReflectionType reflection_type
+        private ReflectionType _reflection { get; set; } = ReflectionType.None;
+        public ReflectionType reflection
         {
             get
             {
-                return this._reflection_type;
+                return this._reflection;
             }
             set
             {
-                this._reflection_type = value;
+                this._reflection = value;
                 this.refresh_pieces();
             }
         }
 
         #endregion
+
+        #region ' On Click '
+
+        /// <summary>
+        /// 上一个有效点击的子的原始坐标, 在成功move时清空.
+        /// 成功click的时候, 若该值为空, 则清理所有mask.
+        /// </summary>
+        private Coordinate last_click { get; set; }
+        /// <summary>
+        /// 存储被mask的<see cref="GridPanel"/>的原始坐标.
+        /// </summary>
+        private List<Coordinate> masked_panels { get; } = new List<Coordinate>();
+
+        #endregion
+
+        /// <summary>
+        /// 已经进行的半回合数.
+        /// </summary>
+        private Int32 turns { get; set; } = 0;
+        /// <summary>
+        /// 轮到走子的那一方
+        /// </summary>
+        private ChessColour current_player { get
+            { return this.chess_position.current_player; } }
 
         #region ' Decorator '
 
@@ -513,7 +547,7 @@ namespace platform.chess_lobby
         {
             get
             {
-                return this.dict[key.reflect(this.reflection_type)];
+                return this.dict[key];
             }
             set
             {
@@ -575,39 +609,114 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
+        public void move(Coordinate start, Coordinate end)
+        {
+            this.chess_positions =
+                this.chess_positions.Take(this.turns + 1).Append(
+                    this.chess_positions[this.turns].move(start, end)).ToList();
+            this.turns++;
+            this.last_click = null;
+            this.refresh_pieces();
+        }
+
+        /// <summary>
+        /// 响应<see cref="GridPanel"/>的Click事件./>
+        /// </summary>
+        /// <param name="click">实际坐标</param>
+        public void on_child_click(Coordinate click)
+        {
+            Coordinate abs_click = click.reflect(this.reflection);
+            if (this.last_click == null)
+            { 
+                // 如果点击合法则清空mask, 并添加新的mask, 否则直接return.
+                if (this[click].piece.colour != this.current_player)
+                    return;
+                foreach (Coordinate cdn in new List<Coordinate>(this.masked_panels))
+                {
+                    this.remove_mask(cdn);
+                }
+                this.set_mask(abs_click);
+            }
+            else
+            {
+                // 如果是自己的棋子则清除上一个mask, 并添加新的mask.
+                if (this[click].piece.colour == this.current_player)
+                {
+                    this.remove_mask(last_click);
+                    this.set_mask(abs_click);
+                }
+                // 如果是对方的棋子或空格, 则判断是否是move.
+                // 是, 则move后return. 不是, 则直接return.
+                else
+                {
+                    if(this.chess_position.is_move(this.last_click, abs_click))
+                        this.move(this.last_click, abs_click);
+                    return;
+                }
+            }
+            this.last_click = click.reflect(this.reflection);
+        }
+
         /// <summary>
         /// 反射棋盘.
         /// </summary>
         /// <param name="type">反射类型</param>
         public void reflect(ReflectionType type)
         {
-            this._reflection_type = this._reflection_type ^ type;
+            this._reflection = this._reflection ^ type;
             this.refresh_pieces();
         }
+
+        #region ' Masks '
+
+        /// <summary>
+        /// 设置mask
+        /// </summary>
+        /// <param name="cdn">原始坐标</param>
+        private void set_mask(Coordinate cdn)
+        {
+            this[cdn.reflect(this.reflection)].masked = true;
+            this.masked_panels.Add(cdn);
+        }
+
+        /// <summary>
+        /// 解除mask
+        /// </summary>
+        /// <param name="cdn">原始坐标</param>
+        private void remove_mask(Coordinate cdn)
+        {
+            this[cdn.reflect(this.reflection)].masked = false;
+            this.masked_panels.Remove(cdn);
+        }
+
+        #endregion
+
+        #region ' Refreshing '
 
         /// <summary>
         /// 刷新棋子的图像
         /// </summary>
         private void refresh_pieces()
         {
-            this.refresh_pieces(this.chess_positions.Last());
+            this.refresh_pieces(this.chess_position);
         }
 
         /// <summary>
-        /// 刷新格点的状态
+        /// 刷新格点的Tag.
         /// </summary>
         /// <param name="chess_position">当前棋局</param>
         private void refresh_pieces(ChessPosition chess_position)
         {
             foreach (Coordinate coordinate in this.Keys)
             {
-                if (chess_position[coordinate] == null)
-                    continue;
-                (this[coordinate].Tag as GridPanelTag).piece =
+                Coordinate reflected_cdn = coordinate.reflect(this.reflection);
+                (this[reflected_cdn].Tag as GridPanelTag).piece =
                     chess_position[coordinate];
-                this[coordinate].refresh_image();
+                this[reflected_cdn].refresh_image();
             }
         }
+
+        #endregion
 
         #region ' Decorator '
 
@@ -728,23 +837,5 @@ namespace platform.chess_lobby
         #endregion
 
         #endregion
-    }
-
-    [Flags]
-    public enum ReflectionType
-    {
-        None = 0,
-        /// <summary>
-        /// 上下翻转
-        /// </summary>
-        VerticalReflection = 1,
-        /// <summary>
-        /// 左右翻转
-        /// </summary>
-        HorizontalReflection = 2,
-        /// <summary>
-        /// 旋转180°
-        /// </summary>
-        PointReflection = 3
     }
 }

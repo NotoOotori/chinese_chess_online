@@ -20,12 +20,20 @@ namespace platform.chess_lobby
         /// <summary>
         /// 初始化<see cref="Piece"/>类的新实例
         /// </summary>
+        public Piece()
+        {
+            ;
+        }
+
+        /// <summary>
+        /// 初始化<see cref="Piece"/>类的新实例
+        /// </summary>
         /// <param name="piece_char">棋子字符(1位)</param>
         public Piece(Char piece_char)
         {
             if (!Char.IsLetter(piece_char))
                 throw new ArgumentOutOfRangeException("棋子字符不是字母!");
-            this._colour = (ChessColour)Convert.ToInt32(Char.IsLower(piece_char));
+            this._colour = MyConvert.to_chess_colour(Char.IsUpper(piece_char));
             Char piece_lower = Char.ToLower(piece_char);
             if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_lower)))
                 throw new ArgumentOutOfRangeException("棋子字母错误!");
@@ -43,7 +51,7 @@ namespace platform.chess_lobby
                 throw new ArgumentOutOfRangeException("棋子字符串长度不匹配!");
             if(!Regex.IsMatch(piece_str.Substring(0, 1), "[br]"))
                 throw new ArgumentOutOfRangeException("棋子颜色错误!");
-            this._colour = (ChessColour)Convert.ToInt32(piece_str[0] != 'r');
+            this._colour = MyConvert.to_chess_colour(piece_str[0] == 'r');
             if (!Enum.IsDefined(typeof(PieceType), Convert.ToInt32(piece_str[1])))
                 throw new ArgumentOutOfRangeException("棋子字母错误!");
             this._type = (PieceType)piece_str[1];
@@ -64,8 +72,8 @@ namespace platform.chess_lobby
 
         #region ' Properties '
 
-        private ChessColour _colour { get; set; }
-        private PieceType _type { get; set; }
+        private ChessColour _colour { get; set; } = ChessColour.NONE;
+        private PieceType _type { get; set; } = PieceType.NONE;
 
         /// <summary>
         /// 棋子颜色
