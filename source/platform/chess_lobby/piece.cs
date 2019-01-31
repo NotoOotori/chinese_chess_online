@@ -188,4 +188,41 @@ namespace platform.chess_lobby
         /// </summary>
         NONE = 0
     }
+
+    /// <summary>
+    /// 呈现棋子的<see cref="PictureBox"/>.
+    /// </summary>
+    public class PieceBox : PictureBox
+    {
+        #region ' Constructors '
+
+        /// <summary>
+        /// 初始化<see cref="PieceBox/>的新实例
+        /// </summary>
+        public PieceBox()
+        {
+            this.MouseClick += PieceBox_MouseClick;
+        }
+
+        #endregion
+
+        #region ' Fields and Properties '
+
+        public event MouseEventHandler GridClick;
+
+        #endregion
+
+        #region ' Methods '
+
+        protected virtual void OnGridClick(MouseEventArgs e)
+        {
+            GridClick?.Invoke(this, e);
+        }
+        private void PieceBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnGridClick(e);
+        }
+
+        #endregion
+    }
 }

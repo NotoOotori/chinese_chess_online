@@ -28,6 +28,8 @@ namespace platform.chess_lobby
 
         #region ' Properties '
 
+        private Image _image { get; set; }
+
         /// <summary>
         /// 该格点的图片
         /// </summary>
@@ -35,11 +37,17 @@ namespace platform.chess_lobby
         {
             set
             {
-                if (value == null)
-                    this.picture_box = null;
+                if (value == _image)
+                {
+                    ;
+                }
+                else if (value == null)
+                {
+                    this.piece_box = null;
+                }
                 else
                 {
-                    this.picture_box = new PictureBox()
+                    this.piece_box = new PieceBox()
                     {
                         Width = Convert.ToInt32(this.width),
                         Height = Convert.ToInt32(this.height),
@@ -50,37 +58,39 @@ namespace platform.chess_lobby
                         Image = value,
                         Parent = parent,
                     };
-                    this.picture_box.BringToFront();
+                    this.piece_box.GridClick += this.parent.Chessboard_MouseClick;
+                    this.piece_box.BringToFront();
                 }
+                this._image = value;
             }
         }
 
         /// <summary>
         /// 该格点上的<see cref="PictureBox"/>.
         /// </summary>
-        private PictureBox picture_box
+        private PieceBox piece_box
         {
-            get { return this._picture_box; }
+            get { return this._piece_box; }
             set
             {
                 try
                 {
-                    this._picture_box.Dispose();
+                    this._piece_box.Dispose();
                 }
                 catch(NullReferenceException)
                 {
                     ;
                 }
-                this._picture_box = value;
+                this._piece_box = value;
             }
         }
 
-        private PictureBox _picture_box { get; set; }
+        private PieceBox _piece_box { get; set; }
 
         /// <summary>
         /// 父控件<see cref="Chessboard"/>.
         /// </summary>
-        public Control parent { get; set; }
+        public Chessboard parent { get; set; }
 
         /// <summary>
         /// 标签

@@ -216,6 +216,41 @@ namespace platform.chess_lobby
             this.grid_panels.reflect(type);
         }
 
+        /// <summary>
+        /// 输出对应该点的实际坐标
+        /// </summary>
+        /// <param name="point">点</param>
+        /// <returns></returns>
+        public Coordinate point_to_coordinate(Point point)
+        {
+            Int32 x = -1;
+            Int32 y = -1;
+            for (Int32 i = 0; i < 9; i++)
+                if(is_near_x(_grid_xs[i]))
+                {
+                    x = i;
+                    break;
+                }
+            for (Int32 i = 0; i < 10; i++)
+                if (is_near_y(_grid_ys[i]))
+                {
+                    y = i;
+                    break;
+                }
+            return new Coordinate(x, y);
+
+            Boolean is_near_x(Int32 grid_x)
+            {
+                return point.X - grid_x >= -this.grid_side_length / 2
+                    && point.X - grid_x < this.grid_side_length / 2;
+            }
+            Boolean is_near_y(Int32 grid_y)
+            {
+                return point.Y - grid_y >= -this.grid_side_length / 2
+                    && point.Y - grid_y < this.grid_side_length / 2;
+            }
+        }
+
         #region ' Painting '
 
         private void paint_board(Graphics graphics)
@@ -479,6 +514,8 @@ namespace platform.chess_lobby
             this.refresh_pieces();
 
             #endregion
+
+            this.MouseClick += Chessboard_MouseClick;
         }
 
         #endregion
@@ -611,14 +648,26 @@ namespace platform.chess_lobby
                     this.chess_positions[this.turns].move(start, end)).ToList();
             this.turns++;
             this.last_click = null;
-            this.refresh_pieces();
+            this.refresh_pieces(new[] { start, end });
+        }
+
+        public void Chessboard_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                this.on_click(
+                    (this.Parent as ChessboardContainer).point_to_coordinate(
+                        PointToClient(Cursor.Position)));
+            }
+            catch(ArgumentOutOfRangeException)
+            {; }
         }
 
         /// <summary>
         /// 响应<see cref="GridRect"/>的Click事件./>
         /// </summary>
         /// <param name="click">实际坐标</param>
-        public void on_child_click(Coordinate click)
+        public void on_click(Coordinate click)
         {
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)
@@ -706,6 +755,22 @@ namespace platform.chess_lobby
         private void refresh_pieces(ChessPosition chess_position)
         {
             foreach (Coordinate cdn in this.Keys)
+            {
+                Coordinate reflected_cdn = cdn.reflect(this.reflection);
+                this[reflected_cdn].tag.piece = chess_position[cdn];
+                Boolean masked = this.masked_panels.Contains(cdn);
+                this[reflected_cdn].masked = masked;
+                this[reflected_cdn].refresh_image();
+            }
+        }
+
+        /// <summary>
+        /// 刷新部分棋子
+        /// </summary>
+        /// <param name="coordinates">待刷新棋子的绝对坐标</param>
+        private void refresh_pieces(IEnumerable<Coordinate> coordinates)
+        {
+            foreach (Coordinate cdn in coordinates)
             {
                 Coordinate reflected_cdn = cdn.reflect(this.reflection);
                 this[reflected_cdn].tag.piece = chess_position[cdn];
