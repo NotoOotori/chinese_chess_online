@@ -76,7 +76,7 @@ namespace platform.chess_lobby
         #region ' Children '
 
         /// <summary>
-        /// 装有<see cref="GridPanel"/>们的控件
+        /// 装有<see cref="GridRect"/>们的控件
         /// </summary>
         private Chessboard grid_panels { get; set; }
 
@@ -425,9 +425,9 @@ namespace platform.chess_lobby
     }
 
     /// <summary>
-    /// 背景+图片是棋盘, 棋盘上每个格点都是<see cref="GridPanel"/>.
+    /// 背景+图片是棋盘, 棋盘上每个格点都是<see cref="GridRect"/>.
     /// </summary>
-    public class Chessboard : PictureBox, IDictionary<Coordinate, GridPanel>
+    public class Chessboard : PictureBox, IDictionary<Coordinate, GridRect>
     {
         #region ' Constructors '
 
@@ -452,26 +452,21 @@ namespace platform.chess_lobby
             this.grid_side_length = grid_side_length;
             this.grid_points = grid_points;
 
-            #region ' Initialize GridPanels and the Position '
+            #region ' Initialize GridRects and the Position '
 
             for (Int32 x = 0; x < 9; x++)
                 for (Int32 y = 0; y < 10; y++)
                 {
                     Coordinate coordinate = new Coordinate(x, y);
-                    GridPanel grid_panel = new GridPanel()
+                    GridRect grid_rect = new GridRect(
+                        this.grid_side_length, this.grid_side_length)
                     {
-                        Size = new Size(
-                            this.grid_side_length, this.grid_side_length),
-                        Location = new Point(
-                            this.grid_points[x, y].X - this.grid_side_length / 2,
-                            this.grid_points[x, y].Y - this.grid_side_length / 2),
-                        BackColor = Color.Transparent,
-                        BackgroundImageLayout = ImageLayout.Center,
-                        Tag = new GridPanelTag(x, y),
+                        centerx = this.grid_points[x, y].X,
+                        centery = this.grid_points[x, y].Y,
+                        tag = new GridRectTag(x, y),
+                        parent = this
                     };
-                    this.Controls.Add(grid_panel);
-                    grid_panel.BringToFront();
-                    this.Add(coordinate, grid_panel);
+                    this.Add(coordinate, grid_rect);
                 }
 
             #endregion
@@ -523,7 +518,7 @@ namespace platform.chess_lobby
         /// </summary>
         private Coordinate last_click { get; set; }
         /// <summary>
-        /// 存储被mask的<see cref="GridPanel"/>的原始坐标.
+        /// 存储被mask的<see cref="GridRect"/>的原始坐标.
         /// </summary>
         private List<Coordinate> masked_panels { get; } = new List<Coordinate>();
 
@@ -541,9 +536,9 @@ namespace platform.chess_lobby
 
         #region ' Decorator '
 
-        private IDictionary<Coordinate, GridPanel> dict { get; set; }
-            = new Dictionary<Coordinate, GridPanel>();
-        public GridPanel this[Coordinate key]
+        private IDictionary<Coordinate, GridRect> dict { get; set; }
+            = new Dictionary<Coordinate, GridRect>();
+        public GridRect this[Coordinate key]
         {
             get
             {
@@ -595,7 +590,7 @@ namespace platform.chess_lobby
         /// Gets a <see cref="ICollection{T}"/> containing the values in the
         /// <see cref="IDictionary{TKey, TValue}"/>.
         /// </summary>
-        public ICollection<GridPanel> Values
+        public ICollection<GridRect> Values
         {
             get
             {
@@ -620,7 +615,7 @@ namespace platform.chess_lobby
         }
 
         /// <summary>
-        /// 响应<see cref="GridPanel"/>的Click事件./>
+        /// 响应<see cref="GridRect"/>的Click事件./>
         /// </summary>
         /// <param name="click">实际坐标</param>
         public void on_child_click(Coordinate click)
@@ -713,8 +708,7 @@ namespace platform.chess_lobby
             foreach (Coordinate cdn in this.Keys)
             {
                 Coordinate reflected_cdn = cdn.reflect(this.reflection);
-                (this[reflected_cdn].Tag as GridPanelTag).piece =
-                    chess_position[cdn];
+                this[reflected_cdn].tag.piece = chess_position[cdn];
                 Boolean masked = this.masked_panels.Contains(cdn);
                 this[reflected_cdn].masked = masked;
                 this[reflected_cdn].refresh_image();
@@ -731,7 +725,7 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void Add(Coordinate key, GridPanel value)
+        public void Add(Coordinate key, GridRect value)
         {
             this.dict.Add(key, value);
         }
@@ -740,7 +734,7 @@ namespace platform.chess_lobby
         /// Adds an item to the <see cref="ICollection{T}"/>.
         /// </summary>
         /// <param name="pair"></param>
-        public void Add(KeyValuePair<Coordinate, GridPanel> item)
+        public void Add(KeyValuePair<Coordinate, GridRect> item)
         {
             this.dict.Add(item);
         }
@@ -760,7 +754,7 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="pair"></param>
         /// <returns></returns>
-        public Boolean Contains(KeyValuePair<Coordinate, GridPanel> item)
+        public Boolean Contains(KeyValuePair<Coordinate, GridRect> item)
         {
             return this.dict.Contains(item);
         }
@@ -783,7 +777,7 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="array"></param>
         /// <param name="array_index"></param>
-        public void CopyTo(KeyValuePair<Coordinate, GridPanel>[] array, Int32 array_index)
+        public void CopyTo(KeyValuePair<Coordinate, GridRect>[] array, Int32 array_index)
         {
             this.dict.CopyTo(array, array_index);
         }
@@ -792,7 +786,7 @@ namespace platform.chess_lobby
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<KeyValuePair<Coordinate, GridPanel>> GetEnumerator()
+        public IEnumerator<KeyValuePair<Coordinate, GridRect>> GetEnumerator()
         {
             return this.dict.GetEnumerator();
         }
@@ -823,7 +817,7 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public Boolean Remove(KeyValuePair<Coordinate, GridPanel> item)
+        public Boolean Remove(KeyValuePair<Coordinate, GridRect> item)
         {
             return this.dict.Remove(item);
         }
@@ -834,7 +828,7 @@ namespace platform.chess_lobby
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Boolean TryGetValue(Coordinate key, out GridPanel value)
+        public Boolean TryGetValue(Coordinate key, out GridRect value)
         {
             return this.dict.TryGetValue(key, out value);
         }

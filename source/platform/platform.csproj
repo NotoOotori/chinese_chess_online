@@ -77,11 +77,10 @@
     </Compile>
     <Compile Include="chess_lobby\chess_position.cs" />
     <Compile Include="chess_lobby\coordinate.cs" />
-    <Compile Include="chess_lobby\grid_panel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
+    <Compile Include="chess_lobby\rect.cs" />
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
