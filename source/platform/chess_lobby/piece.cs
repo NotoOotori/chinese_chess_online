@@ -85,28 +85,37 @@ namespace platform.chess_lobby
         public PieceType type { get { return this._type; } }
         public Boolean masked { get; set; } = false;
         /// <summary>
-        /// 棋子图片
+        /// 棋子图片(可能为空)
         /// </summary>
         public Bitmap bitmap
         {
             get
             {
-                Bitmap piece = (Bitmap)Properties.Resources.
-                    ResourceManager.GetObject(this.ToString());
-                if (!this.masked)
-                    return piece;
                 Bitmap mask = (Bitmap)Properties.Resources.
                     ResourceManager.GetObject("mm");
-                using (Graphics graphics = Graphics.FromImage(piece))
+                try
                 {
-                    // 高质量
-                    graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    // 高像素偏移质量
-                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    Bitmap piece = (Bitmap)Properties.Resources.
+                        ResourceManager.GetObject(this.ToString());
+                    if (!this.masked)
+                        return piece;
+                    using (Graphics graphics = Graphics.FromImage(piece))
+                    {
+                        // 高质量
+                        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                        // 高像素偏移质量
+                        graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                        graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                    }
+                    return piece;
                 }
-                return piece;
+                catch(ArgumentNullException)
+                {
+                    if (this.masked)
+                        return mask;
+                    return null;
+                }
             }
         } 
 
@@ -178,5 +187,42 @@ namespace platform.chess_lobby
         /// NULL
         /// </summary>
         NONE = 0
+    }
+
+    /// <summary>
+    /// 呈现棋子的<see cref="PictureBox"/>.
+    /// </summary>
+    public class PieceBox : PictureBox
+    {
+        #region ' Constructors '
+
+        /// <summary>
+        /// 初始化<see cref="PieceBox/>的新实例
+        /// </summary>
+        public PieceBox()
+        {
+            this.MouseClick += PieceBox_MouseClick;
+        }
+
+        #endregion
+
+        #region ' Fields and Properties '
+
+        public event MouseEventHandler GridClick;
+
+        #endregion
+
+        #region ' Methods '
+
+        protected virtual void OnGridClick(MouseEventArgs e)
+        {
+            GridClick?.Invoke(this, e);
+        }
+        private void PieceBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnGridClick(e);
+        }
+
+        #endregion
     }
 }
