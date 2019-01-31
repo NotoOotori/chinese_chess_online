@@ -58,8 +58,6 @@ namespace platform.chess_lobby
         /// </summary>
         public void refresh_image()
         {
-            if (this.piece.type == PieceType.NONE)
-                this.BackgroundImage = null;
             this.BackgroundImage = this.piece.bitmap;
         }
 

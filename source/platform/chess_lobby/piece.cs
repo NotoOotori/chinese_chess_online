@@ -85,28 +85,37 @@ namespace platform.chess_lobby
         public PieceType type { get { return this._type; } }
         public Boolean masked { get; set; } = false;
         /// <summary>
-        /// 棋子图片
+        /// 棋子图片(可能为空)
         /// </summary>
         public Bitmap bitmap
         {
             get
             {
-                Bitmap piece = (Bitmap)Properties.Resources.
-                    ResourceManager.GetObject(this.ToString());
-                if (!this.masked)
-                    return piece;
                 Bitmap mask = (Bitmap)Properties.Resources.
                     ResourceManager.GetObject("mm");
-                using (Graphics graphics = Graphics.FromImage(piece))
+                try
                 {
-                    // 高质量
-                    graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    // 高像素偏移质量
-                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    Bitmap piece = (Bitmap)Properties.Resources.
+                        ResourceManager.GetObject(this.ToString());
+                    if (!this.masked)
+                        return piece;
+                    using (Graphics graphics = Graphics.FromImage(piece))
+                    {
+                        // 高质量
+                        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                        // 高像素偏移质量
+                        graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                        graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                    }
+                    return piece;
                 }
-                return piece;
+                catch(ArgumentNullException)
+                {
+                    if (this.masked)
+                        return mask;
+                    return null;
+                }
             }
         } 
 

@@ -627,7 +627,7 @@ namespace platform.chess_lobby
         {
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)
-            { 
+            {
                 // 如果点击合法则清空mask, 并添加新的mask, 否则直接return.
                 if (this[click].piece.colour != this.current_player)
                     return;
@@ -649,8 +649,11 @@ namespace platform.chess_lobby
                 // 是, 则move后return. 不是, 则直接return.
                 else
                 {
-                    if(this.chess_position.is_move(this.last_click, abs_click))
+                    if (this.chess_position.is_move(this.last_click, abs_click))
+                    {
                         this.move(this.last_click, abs_click);
+                        this.set_mask(abs_click);
+                    }
                     return;
                 }
             }
@@ -707,11 +710,13 @@ namespace platform.chess_lobby
         /// <param name="chess_position">当前棋局</param>
         private void refresh_pieces(ChessPosition chess_position)
         {
-            foreach (Coordinate coordinate in this.Keys)
+            foreach (Coordinate cdn in this.Keys)
             {
-                Coordinate reflected_cdn = coordinate.reflect(this.reflection);
+                Coordinate reflected_cdn = cdn.reflect(this.reflection);
                 (this[reflected_cdn].Tag as GridPanelTag).piece =
-                    chess_position[coordinate];
+                    chess_position[cdn];
+                Boolean masked = this.masked_panels.Contains(cdn);
+                this[reflected_cdn].masked = masked;
                 this[reflected_cdn].refresh_image();
             }
         }

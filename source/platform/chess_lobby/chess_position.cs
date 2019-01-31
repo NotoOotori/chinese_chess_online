@@ -138,8 +138,8 @@ namespace platform.chess_lobby
 
             #region ' Move the Piece ' 
 
-            new_position[end] = this[start];
             new_position[start] = new Piece();
+            new_position[end] = new Piece(this[start].ToString());
 
             #endregion
 
