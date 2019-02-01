@@ -653,14 +653,9 @@ namespace platform.chess_lobby
 
         public void Chessboard_MouseClick(object sender, MouseEventArgs e)
         {
-            try
-            {
-                this.on_click(
-                    (this.Parent as ChessboardContainer).point_to_coordinate(
-                        PointToClient(Cursor.Position)));
-            }
-            catch(ArgumentOutOfRangeException)
-            {; }
+            this.on_click(
+                (this.Parent as ChessboardContainer).point_to_coordinate(
+                    PointToClient(Cursor.Position)));
         }
 
         /// <summary>
