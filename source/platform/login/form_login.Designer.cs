@@ -1,6 +1,6 @@
-﻿namespace login
+﻿namespace platform.login
 {
-    partial class form_login
+    partial class FormLogin
     {
         /// <summary>
         /// Required designer variable.
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // form_login
+            // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 361);
-            this.Name = "form_login";
+            this.Name = "FormLogin";
             this.Text = "form_login";
             this.ResumeLayout(false);
 

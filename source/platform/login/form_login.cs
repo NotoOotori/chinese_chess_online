@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace login
+namespace platform.login
 {
-    public partial class form_login : Form
+    public partial class FormLogin : Form
     {
-        public form_login()
+        public FormLogin()
         {
             InitializeComponent();
         }
