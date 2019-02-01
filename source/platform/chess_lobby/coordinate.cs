@@ -15,7 +15,7 @@ namespace platform.chess_lobby
         #region ' Constructors '
 
         /// <summary>
-        /// 初始化<see cref="chess_lobby.Coordinate"/>的新实例.
+        /// 初始化<see cref="Coordinate"/>的新实例.
         /// </summary>
         /// <param name="cdn_str">坐标的字符串格式</param>
         public Coordinate(String cdn_str)
@@ -133,6 +133,17 @@ namespace platform.chess_lobby
             return coordinates;
         }
 
+        public static CoordinateDelta operator -(Coordinate end, Coordinate start)
+        {
+            return new CoordinateDelta(end, start);
+        }
+
+        public static Coordinate operator +(Coordinate start, CoordinateDelta delta)
+        {
+            return new Coordinate(start.x + delta.x, start.y + delta.y);
+        }
+
+
         /// <summary>
         /// Returns a value that indicates whether the current
         /// <see cref="Coordinate"/> object is equal to a specified object
@@ -226,6 +237,16 @@ namespace platform.chess_lobby
             return Convert.ToChar(this.value + 'a').ToString();
         }
 
+        public static Int32 operator -(ColumnCoordinate end, ColumnCoordinate start)
+        {
+            return end.value - start.value;
+        }
+
+        public static ColumnCoordinate operator +(ColumnCoordinate start, Int32 delta)
+        {
+            return new ColumnCoordinate(start.value + delta);
+        }
+
         #endregion
     }
 
@@ -291,6 +312,134 @@ namespace platform.chess_lobby
         public override String ToString()
         {
             return this.value.ToString();
+        }
+
+        public static Int32 operator -(RowCoordinate end, RowCoordinate start)
+        {
+            return end.value - start.value;
+        }
+
+        public static RowCoordinate operator +(RowCoordinate start, Int32 delta)
+        {
+            return new RowCoordinate(start.value + delta);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 表示坐标之间差的类
+    /// </summary>
+    public class CoordinateDelta : Tuple<Int32, Int32>
+    {
+        #region ' Constructors '
+
+        /// <summary>
+        /// 初始化<see cref="CoordinateDelta"/>的新实例.
+        /// </summary>
+        /// <param name="delta_x">横坐标之差</param>
+        /// <param name="delta_y">纵坐标之差</param>
+        public CoordinateDelta(Int32 delta_x, Int32 delta_y)
+            : base(delta_x, delta_y)
+        {; }
+
+        /// <summary>
+        /// 初始化<see cref="CoordinateDelta"/>的新实例.
+        /// </summary>
+        /// <param name="end">终点坐标</param>
+        /// <param name="start">起点坐标</param>
+        public CoordinateDelta(Coordinate end, Coordinate start)
+            : base(end.x - start.x, end.y - start.y)
+        {; }
+
+        #endregion
+
+        #region ' Properties '
+
+        private new Int32 Item1 { get { return base.Item1; } }
+        private new Int32 Item2 { get { return base.Item2; } }
+
+        public Int32 x { get { return this.Item1; } }
+        public Int32 y { get { return this.Item2; } }
+
+        #endregion
+
+        #region ' Methods '
+
+        public CoordinateDelta abs()
+        {
+            return new CoordinateDelta(Math.Abs(this.x), Math.Abs(this.y));
+        }
+        
+        /// <summary>
+        /// 仅从偏移量角度来筛选出不合法走子,
+        /// 不考虑子所在的位置, 不考虑兵的前进后退.
+        /// </summary>
+        /// <param name="delta">偏移量</param>
+        /// <param name="piece">棋子种类</param>
+        /// <returns></returns>
+        public static Boolean is_valid(CoordinateDelta delta, PieceType piece)
+        {
+            switch (piece)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("棋子种类越界!");
+                case PieceType.ADVISOR:
+                    if (delta.abs().Equals(new CoordinateDelta(1, 1)))
+                        return true;
+                    return false;
+                case PieceType.BISHOP:
+                    if (delta.abs().Equals(new CoordinateDelta(2, 2)))
+                        return true;
+                    return false;
+                case PieceType.CANNON:
+                case PieceType.ROOK:
+                    if (delta.x == 0 || delta.y == 0)
+                        return true;
+                    return false;
+                case PieceType.KING:
+                case PieceType.PAWN:
+                    if (delta.abs().Equals(new CoordinateDelta(1, 0))
+                        || delta.abs().Equals(new CoordinateDelta(0, 1)))
+                        return true;
+                    return false;
+                case PieceType.KNIGHT:
+                    if (delta.abs().Equals(new CoordinateDelta(2, 1))
+                        || delta.abs().Equals(new CoordinateDelta(1, 2)))
+                        return true;
+                    return false;
+            }
+        }
+
+        public static CoordinateDelta operator /(CoordinateDelta delta, Int32 divisor)
+        {
+            return new CoordinateDelta(delta.x / divisor, delta.y / divisor);
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the current
+        /// <see cref="CoordinateDelta"/> object is equal to a specified object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override Boolean Equals(Object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+                return false;
+            CoordinateDelta delta = obj as CoordinateDelta;
+            if (this.x == delta.x && this.y == delta.y)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the hash code for the current
+        /// <see cref="CoordinateDelta"/> object.
+        /// </summary>
+        /// <returns></returns>
+        public override Int32 GetHashCode()
+        {
+            return 8 + this.x + this.y * 17;
         }
 
         #endregion
