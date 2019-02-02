@@ -1,8 +1,12 @@
 INSERT INTO platform_server
     VALUE ('45.32.82.133', 21567);
+INSERT INTO platform_server
+    VALUE ('127.0.0.1', 21567);
 
 DELETE FROM platform_server
     WHERE hostname = '45.32.82.133';
+DELETE FROM platform_server
+    WHERE hostname = '127.0.0.1';
 
 CALL procedure_sign_up('345238563@qq.com', 'noto_ootori', '123pzy', 'f', '1999-04-01');
 
