@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chess_lobby\audio.cs" />
     <Compile Include="chess_lobby\chessboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -109,19 +110,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -132,29 +133,34 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="chess_lobby\resources\buttons\left.png" />
-    <EmbeddedResource Include="chess_lobby\resources\buttons\most-left.png" />
-    <EmbeddedResource Include="chess_lobby\resources\buttons\most-right.png" />
-    <EmbeddedResource Include="chess_lobby\resources\buttons\right.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\ba.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\bb.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\bc.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\bk.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\bn.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\bp.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\br.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\mm.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\ra.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rb.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rc.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rk.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rn.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rp.png" />
-    <EmbeddedResource Include="chess_lobby\resources\middle\rr.png" />
-    <EmbeddedResource Include="chess_lobby\resources\wood_grain.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\buttons\left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\buttons\most-left.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\buttons\most-right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\buttons\right.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\ba.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\bb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\bc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\bk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\bn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\bp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\br.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\mm.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\ra.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rb.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rc.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rk.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rn.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rp.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\middle\rr.png" />
+    <EmbeddedResource Include="chess_lobby\resources\images\wood_grain.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="chess_lobby\resources\audio\capture.wav" />
+    <Content Include="chess_lobby\resources\audio\check.wav" />
+    <Content Include="chess_lobby\resources\audio\checkmate.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -265,6 +265,23 @@ namespace platform.chess_lobby
         }
 
         /// <summary>
+        /// 判断棋步是否合法
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
+        public MoveType get_move_type(Coordinate start, Coordinate end)
+        {
+            if(is_move(start, end))
+            {
+                if (this[end].type != PieceType.NONE)
+                    return MoveType.CAPTURE;
+                return MoveType.NORMAL_MOVE;
+            }
+            return MoveType.INVALID_MOVE;
+        }
+
+        /// <summary>
         /// 完成棋子的移动以及回合数的更新
         /// </summary>
         /// <param name="start">起始坐标</param>
