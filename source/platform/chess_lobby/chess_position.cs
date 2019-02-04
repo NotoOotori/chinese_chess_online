@@ -41,7 +41,7 @@ namespace platform.chess_lobby
                         throw new ArgumentOutOfRangeException("纵坐标越界!");
                     if (Char.IsDigit(c))
                     {
-                        for (int i = 0; i < Char.GetNumericValue(c); i++)
+                        for (Int32 i = 0; i < Char.GetNumericValue(c); i++)
                         {
                             if (x > 8)
                                 throw new ArgumentOutOfRangeException(

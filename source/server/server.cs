@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -42,6 +44,7 @@ namespace server
 
         public void mainloop()
         {
+            Console.WriteLine("Server started.");
             while (true)
             {
                 Socket client_socket = server_socket.Accept();
@@ -57,6 +60,7 @@ namespace server
             Socket client_socket = client_socket_para as Socket;
             User user = new User(client_socket);
             String ep = client_socket.RemoteEndPoint.ToString();
+            Console.WriteLine($"{ep} connected.");
             try
             {
                 while (true)
@@ -67,18 +71,84 @@ namespace server
                         arr_data, 0, length);
                     if (str_data == null)
                     {
-                        Console.WriteLine($"{ep} disconnected.");
                         break;
                     }
-                    Int32 code = user.log_in("345238563@qq.com", "123pzy");
-                    client_socket.Send(Encoding.UTF8.GetBytes(code.ToString()));
+                    Dictionary<String, String> dict =
+                        DataEncoding.get_dictionary(str_data);
+                    switch(dict["identifier"])
+                    {
+                        default:
+                            throw new DataEncodingException("Invalid identifier.");
+                        case "login":
+                            check_login(user, dict);
+                            break;
+                    }
                 }
             }
-            catch(SocketException)
+            catch(SocketException) {; }
+            catch(ObjectDisposedException) {; }
+            catch(DataEncodingException e)
             {
-                client_socket.Close();
+                send(client_socket, new Dictionary<String, String>()
+                {
+                    ["identifier"] = "error",
+                    ["message"] = e.Message
+                });
+            }
+
+            user.log_out();
+            client_socket.Close();
+            Console.WriteLine($"{ep} disconnected.");
+        }
+
+        #region ' Sending '
+
+        private void send(Socket client, Byte[] arr_data)
+        {
+            client.Send(arr_data);
+        }
+
+        private void send(Socket client, String str_data)
+        {
+            client.Send(Encoding.UTF8.GetBytes(str_data));
+        }
+
+        private void send(Socket client, Dictionary<String, String> dict)
+        {
+            client.Send(DataEncoding.get_bytes(dict));
+        }
+
+        #endregion
+
+        #region ' Login '
+
+        private void check_login(
+            User user, Dictionary<String, String> dict)
+        {
+            Socket client_socket = user.socket;
+            String email = dict["email"];
+            String password = dict["password"];
+            Int32 code = user.log_in(email, password);
+            send(client_socket, new Dictionary<String, String>()
+            {
+                ["identifier"] = "login",
+                ["response"] = code.ToString()
+            });
+            switch(code)
+            {
+                default:
+                    Console.WriteLine($"{user.client_end_point} " +
+                        "failed to log in.");
+                    user.socket.Close(10);
+                    break;
+                case 0:
+                    Console.WriteLine($"{user.client_end_point} " +
+                        "logged in successfully.");
+                    break;
             }
         }
+
+        #endregion
 
         #endregion
     }

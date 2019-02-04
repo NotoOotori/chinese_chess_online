@@ -12,7 +12,7 @@ namespace server
 
         public User(Socket socket)
         {
-            this.socket = socket;
+            this._socket = socket;
         }
 
         #endregion
@@ -26,26 +26,23 @@ namespace server
             "port = 3306; " +
             "password = 123PengZiYu@";
 
-        private Socket socket { get; set; }
+        private Socket _socket { get; set; }
+        public Socket socket { get { return _socket; } }
         public IPEndPoint client_end_point
         {
-            get { return socket.RemoteEndPoint as IPEndPoint; }
+            get { return _socket.RemoteEndPoint as IPEndPoint; }
         }
         public IPEndPoint server_end_point
         {
-            get { return socket.LocalEndPoint as IPEndPoint; }
+            get { return _socket.LocalEndPoint as IPEndPoint; }
         }
 
         #region ' Login '
 
-        /// <summary>
-        /// If login is failed, then set the value to 0.
-        /// </summary>
-        private UInt32 _login_id { get; set; }
-        /// <summary>
-        /// If login is failed, then set the value to 0.
-        /// </summary>
+        private UInt32 _login_id { get; set; } = 0;
         public UInt32 login_id { get { return _login_id; } }
+
+        private String email_address { get; set; }
 
         #endregion
 
@@ -139,10 +136,50 @@ namespace server
                         case 0:
                             this._login_id = UInt32.Parse(
                                 _login_id.Value.ToString());
+                            this.email_address = email_address;
                             return 0;
                     }
 
                     #endregion
+                }
+            }
+        }
+
+        public void log_out()
+        {
+            if (login_id == 0)
+                return;
+            using (MySqlConnection connection =
+                  new MySqlConnection(CONNECTION_STRING))
+            {
+                using (MySqlCommand command = new MySqlCommand(
+                    "procedure_log_out", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    #region ' Add Parameters '
+
+                    MySqlParameter _email_address = new MySqlParameter(
+                        "_email_address", MySqlDbType.VarString, 254)
+                    {
+                        Value = email_address,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _login_id = new MySqlParameter(
+                        "_login_id", MySqlDbType.UInt32)
+                    {
+                        Value = login_id,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    command.Parameters.Add(_email_address);
+                    command.Parameters.Add(_login_id);
+
+                    #endregion
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
                 }
             }
         }
