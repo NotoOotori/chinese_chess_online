@@ -688,10 +688,16 @@ namespace platform.chess_lobby
                 // 是, 则move后return. 不是, 则直接return.
                 else
                 {
-                    if (this.chess_position.is_move(this.last_click, abs_click))
-                    {
+                    MoveType move_type = this.chess_position.get_move_type(
+                        this.last_click, abs_click);
+                    if ((move_type & MoveType.NORMAL_MOVE) == MoveType.NORMAL_MOVE)
+                    { 
                         this.move(this.last_click, abs_click);
                         this.set_mask(abs_click);
+                    }
+                    if ((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
+                    {
+                        Audio.play("capture");
                     }
                     return;
                 }

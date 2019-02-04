@@ -41,7 +41,7 @@ namespace platform.chess_lobby
                         throw new ArgumentOutOfRangeException("纵坐标越界!");
                     if (Char.IsDigit(c))
                     {
-                        for (int i = 0; i < Char.GetNumericValue(c); i++)
+                        for (Int32 i = 0; i < Char.GetNumericValue(c); i++)
                         {
                             if (x > 8)
                                 throw new ArgumentOutOfRangeException(
@@ -262,6 +262,23 @@ namespace platform.chess_lobby
                         return true;
                     return false;
             }
+        }
+
+        /// <summary>
+        /// 判断棋步是否合法
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
+        public MoveType get_move_type(Coordinate start, Coordinate end)
+        {
+            if(is_move(start, end))
+            {
+                if (this[end].type != PieceType.NONE)
+                    return MoveType.CAPTURE;
+                return MoveType.NORMAL_MOVE;
+            }
+            return MoveType.INVALID_MOVE;
         }
 
         /// <summary>
