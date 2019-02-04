@@ -81,6 +81,7 @@
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
+    <Compile Include="common\data_encoding.cs" />
     <Compile Include="glossy_button.cs">
       <SubType>UserControl</SubType>
     </Compile>
