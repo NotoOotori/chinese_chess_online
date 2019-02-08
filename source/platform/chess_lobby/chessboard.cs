@@ -690,15 +690,19 @@ namespace platform.chess_lobby
                 {
                     MoveType move_type = this.chess_position.get_move_type(
                         this.last_click, abs_click);
+                    List<String> audios = new List<String>();
                     if ((move_type & MoveType.NORMAL_MOVE) == MoveType.NORMAL_MOVE)
-                    { 
+                    {
+                        audios.Add(chess_position.get_audio_string(
+                            last_click, abs_click));
                         this.move(this.last_click, abs_click);
                         this.set_mask(abs_click);
                     }
-                    if ((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
+                    if((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
                     {
-                        Audio.play("capture");
+                        audios.Add("capture");
                     }
+                    Audio.play(audios);
                     return;
                 }
             }

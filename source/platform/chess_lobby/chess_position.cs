@@ -188,21 +188,37 @@ namespace platform.chess_lobby
             throw new ArgumentOutOfRangeException("不是直线移动!");
         }
 
-        private static Boolean is_backward(CoordinateDelta delta, ChessColour player)
+        private static MoveDirection get_move_direction(
+            CoordinateDelta delta, ChessColour player)
         {
             switch (player)
             {
                 default:
                     throw new ArgumentOutOfRangeException("选手颜色越界!");
                 case ChessColour.BLACK:
-                    if (delta.y > 0)
-                        return true;
-                    return false;
-                case ChessColour.RED:
                     if (delta.y < 0)
-                        return true;
-                    return false;
+                        return MoveDirection.FORWARD;
+                    if (delta.y == 0)
+                        return MoveDirection.SIDEWARD;
+                    return MoveDirection.BACKWARD;
+                case ChessColour.RED:
+                    if (delta.y > 0)
+                        return MoveDirection.FORWARD;
+                    if (delta.y == 0)
+                        return MoveDirection.SIDEWARD;
+                    return MoveDirection.BACKWARD;
             }
+        }
+
+        private static VerticalLine get_vertical_line(
+            Coordinate cdn, ChessColour player)
+        {
+            return new VerticalLine(cdn.x.value, player);
+        }
+
+        private PieceIdentifier get_identifier(Coordinate cdn)
+        {
+            return PieceIdentifier.NONE;
         }
 
         #endregion
@@ -251,7 +267,8 @@ namespace platform.chess_lobby
                         return true;
                     return false;
                 case PieceType.PAWN:
-                    if (ChessPosition.is_backward(delta, player))
+                    if (ChessPosition.get_move_direction(delta, player) ==
+                        MoveDirection.BACKWARD)
                         return false;
                     if (ChessPosition.is_castle_side(start, player))
                         if (!delta.abs().Equals(new CoordinateDelta(0, 1)))
@@ -261,6 +278,55 @@ namespace platform.chess_lobby
                     if (this.count_piece(start, delta) == 0)
                         return true;
                     return false;
+            }
+        }
+
+        /// <summary>
+        /// 获得棋步的音频字符串
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
+        public String get_audio_string(Coordinate start, Coordinate end)
+        {
+            ChessColour player = this.current_player;
+            PieceType piece = this[start].type;
+            CoordinateDelta delta = end - start;
+            VerticalLine start_line = ChessPosition.get_vertical_line(
+                start, player);
+            VerticalLine end_line = ChessPosition.get_vertical_line(
+                end, player);
+            MoveDirection direction = ChessPosition.get_move_direction(
+                delta, player);
+            PieceIdentifier id;
+
+            switch (piece)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("棋子种类越界!");
+                case PieceType.ADVISOR:
+                case PieceType.BISHOP:
+                    return ChessMove.to_audio_name(
+                        player, piece, start_line, direction, end_line);
+                case PieceType.CANNON:
+                case PieceType.ROOK:
+                case PieceType.PAWN:
+                    id = this.get_identifier(start);
+                    if (direction == MoveDirection.SIDEWARD)
+                        return ChessMove.to_audio_name(
+                            id, player, piece, start_line, direction, end_line);
+                    return ChessMove.to_audio_name(
+                        id, player, piece, start_line, direction, delta);
+                case PieceType.KING:
+                    if (direction == MoveDirection.SIDEWARD)
+                        return ChessMove.to_audio_name(
+                            player, piece, start_line, direction, end_line);
+                    return ChessMove.to_audio_name(
+                        player, piece, start_line, direction, delta);
+                case PieceType.KNIGHT:
+                    id = this.get_identifier(start);
+                    return ChessMove.to_audio_name(
+                        id, player, piece, start_line, direction, end_line);
             }
         }
 
@@ -358,5 +424,103 @@ namespace platform.chess_lobby
     {
         public const String value  = "rnbakabnr/9/1c5c1/p1p1p1p1p/" +
             "9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR r - - 0 1";
+    }
+
+    /// <summary>
+    /// 进平退
+    /// </summary>
+    public enum MoveDirection
+    {
+        FORWARD = '+',
+        BACKWARD = '-',
+        SIDEWARD = '_'
+    }
+
+    public class ChessMove
+    {
+        /// <summary>
+        /// 相三进五型
+        /// </summary>
+        /// <returns></returns>
+        public static String to_audio_name
+        (
+            ChessColour player,
+            PieceType piece,
+            VerticalLine start,
+            MoveDirection direction,
+            VerticalLine end
+        )
+        {
+            if (player == ChessColour.NONE || piece == PieceType.NONE)
+                throw new ArgumentOutOfRangeException("越界!");
+            return ($"{player.ToString()[0]}{(char)piece}{start.value}" +
+                $"{direction.to_audio_string()}{end.value}").ToLower();
+        }
+
+        /// <summary>
+        /// 前炮平五型或相三进五型
+        /// </summary>
+        /// <returns></returns>
+        public static String to_audio_name
+        (
+            PieceIdentifier id,
+            ChessColour player,
+            PieceType piece,
+            VerticalLine start,
+            MoveDirection direction,
+            VerticalLine end
+        )
+        {
+            if (id == PieceIdentifier.NONE)
+                return to_audio_name(
+                    player, piece, start, direction, end);
+            if (player == ChessColour.NONE || piece == PieceType.NONE)
+                throw new ArgumentOutOfRangeException("越界!");
+            return ($"{id.to_audio_string()}{player.ToString()[0]}{(char)piece}" +
+                $"{direction.to_audio_string()}{end.value}").ToLower();
+        }
+
+        /// <summary>
+        /// 帅五进一型
+        /// </summary>
+        /// <returns></returns>
+        public static String to_audio_name
+        (
+            ChessColour player,
+            PieceType piece,
+            VerticalLine start,
+            MoveDirection direction,
+            CoordinateDelta delta
+        )
+        {
+            if (player == ChessColour.NONE || piece == PieceType.NONE)
+                throw new ArgumentOutOfRangeException("越界!");
+            return ($"{player.ToString()[0]}{(char)piece}{start.value}" +
+                $"{direction.to_audio_string()}{Math.Abs(delta.y)}")
+                .ToLower();
+        }
+
+        /// <summary>
+        /// 前炮进一型或炮五进一型
+        /// </summary>
+        /// <returns></returns>
+        public static String to_audio_name
+        (
+            PieceIdentifier id,
+            ChessColour player,
+            PieceType piece,
+            VerticalLine start,
+            MoveDirection direction,
+            CoordinateDelta delta
+        )
+        {
+            if (id == PieceIdentifier.NONE)
+                return to_audio_name(
+                    player, piece, start, direction, delta);
+            if (player == ChessColour.NONE || piece == PieceType.NONE)
+                throw new ArgumentOutOfRangeException("越界!");
+            return ($"{id.to_audio_string()}{player.ToString()[0]}{(char)piece}" +
+                $"{direction.to_audio_string()}{Math.Abs(delta.y)}").ToLower();
+        }
     }
 }

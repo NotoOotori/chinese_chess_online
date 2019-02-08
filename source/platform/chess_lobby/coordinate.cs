@@ -444,4 +444,54 @@ namespace platform.chess_lobby
 
         #endregion
     }
+
+    /// <summary>
+    /// 表示棋子所在纵线的类
+    /// </summary>
+    public class VerticalLine : ColumnCoordinate
+    {
+        #region ' Constructor '
+
+        public VerticalLine(Int32 col_num, ChessColour player)
+            : base(col_num)
+        {
+            if (player == ChessColour.NONE)
+                throw new ArgumentOutOfRangeException("选手颜色越界!");
+            this.player = player;
+        }
+
+        #endregion
+
+        #region ' Properties '
+        
+        private Int32 col_num { get { return base.value; } }
+        public ChessColour player { get; }
+        /// <summary>
+        /// 纵线的数字
+        /// </summary>
+        public new Int32 value
+        {
+            get
+            {
+                return player == ChessColour.RED ? 9 - col_num : col_num + 1;
+            }
+        }
+
+        #endregion
+
+        #region ' Methods '
+
+        /// <summary>
+        /// 转化为中文纵线格式中的纵线.
+        /// </summary>
+        /// <returns></returns>
+        public String to_chinese_format()
+        {
+            if (player == ChessColour.RED)
+                return "一二三四五六七八九".Substring(value - 1, 1);
+            return "１２３４５６７８９".Substring(value - 1, 1);
+        }
+
+        #endregion
+    }
 }
