@@ -92,11 +92,23 @@
       <DependentUpon>glossy_button.cs</DependentUpon>
     </Compile>
     <Compile Include="chess_lobby\rect.cs" />
+    <Compile Include="login\form_forgetpassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\form_forgetpassword.Designer.cs">
+      <DependentUpon>form_forgetpassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="login\form_login.Designer.cs">
       <DependentUpon>form_login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="login\form_signup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\form_signup.Designer.cs">
+      <DependentUpon>form_signup.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,8 +121,14 @@
     <EmbeddedResource Include="glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="login\form_forgetpassword.resx">
+      <DependentUpon>form_forgetpassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login\form_login.resx">
       <DependentUpon>form_login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login\form_signup.resx">
+      <DependentUpon>form_signup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -134,7 +152,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="chess_lobby\resources\images\buttons\left.png" />
