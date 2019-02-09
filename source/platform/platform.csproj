@@ -40,8 +40,8 @@
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=8.0.14.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>packages\MySql.Data.8.0.14\lib\net452\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -88,11 +88,23 @@
     <Compile Include="glossy_button.Designer.cs">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </Compile>
+    <Compile Include="login\form_forgetpassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\form_forgetpassword.Designer.cs">
+      <DependentUpon>form_forgetpassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="login\form_login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="login\form_login.Designer.cs">
       <DependentUpon>form_login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="login\form_signup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\form_signup.Designer.cs">
+      <DependentUpon>form_signup.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,8 +117,14 @@
     <EmbeddedResource Include="glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="login\form_forgetpassword.resx">
+      <DependentUpon>form_forgetpassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login\form_login.resx">
       <DependentUpon>form_login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login\form_signup.resx">
+      <DependentUpon>form_signup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -130,7 +148,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="chess_lobby\resources\buttons\left.png" />
