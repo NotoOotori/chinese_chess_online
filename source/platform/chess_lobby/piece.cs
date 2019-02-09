@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -85,28 +86,37 @@ namespace platform.chess_lobby
         public PieceType type { get { return this._type; } }
         public Boolean masked { get; set; } = false;
         /// <summary>
-        /// 棋子图片
+        /// 棋子图片(可能为空)
         /// </summary>
         public Bitmap bitmap
         {
             get
             {
-                Bitmap piece = (Bitmap)Properties.Resources.
-                    ResourceManager.GetObject(this.ToString());
-                if (!this.masked)
-                    return piece;
                 Bitmap mask = (Bitmap)Properties.Resources.
                     ResourceManager.GetObject("mm");
-                using (Graphics graphics = Graphics.FromImage(piece))
+                try
                 {
-                    // 高质量
-                    graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    // 高像素偏移质量
-                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    Bitmap piece = (Bitmap)Properties.Resources.
+                        ResourceManager.GetObject(this.ToString());
+                    if (!this.masked)
+                        return piece;
+                    using (Graphics graphics = Graphics.FromImage(piece))
+                    {
+                        // 高质量
+                        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                        // 高像素偏移质量
+                        graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                        graphics.DrawImage(mask, 0, 0, mask.Width, mask.Height);
+                    }
+                    return piece;
                 }
-                return piece;
+                catch(ArgumentNullException)
+                {
+                    if (this.masked)
+                        return mask;
+                    return null;
+                }
             }
         } 
 
@@ -178,5 +188,106 @@ namespace platform.chess_lobby
         /// NULL
         /// </summary>
         NONE = 0
+    }
+
+    /// <summary>
+    /// 呈现棋子的<see cref="PictureBox"/>.
+    /// </summary>
+    public class PieceBox : PictureBox
+    {
+        #region ' Constructors '
+
+        /// <summary>
+        /// 初始化<see cref="PieceBox/>的新实例
+        /// </summary>
+        public PieceBox()
+        {
+            this.MouseClick += PieceBox_MouseClick;
+        }
+
+        #endregion
+
+        #region ' Fields and Properties '
+
+        public event MouseEventHandler GridClick;
+
+        #endregion
+
+        #region ' Methods '
+
+        protected virtual void OnGridClick(MouseEventArgs e)
+        {
+            GridClick?.Invoke(this, e);
+        }
+        private void PieceBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnGridClick(e);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// 前中后一二三四五
+    /// </summary>
+    public enum PieceIdentifier
+    {
+        NONE = 0,
+        ONE = 1,
+        TWO = 2,
+        THREE = 3,
+        FOUR = 4,
+        FIVE = 5,
+        FRONT = 6,
+        MIDDLE = 7,
+        REAR = 8
+    }
+
+    public static class ChessLobbyExtension
+    {
+        public static String to_audio_string(this PieceIdentifier id)
+        {
+            switch (id)
+            {
+                default:
+                    throw new InvalidEnumArgumentException();
+                case PieceIdentifier.FRONT:
+                case PieceIdentifier.MIDDLE:
+                case PieceIdentifier.REAR:
+                    return id.ToString().Substring(0, 2).ToLower();
+                case PieceIdentifier.ONE:
+                case PieceIdentifier.TWO:
+                case PieceIdentifier.THREE:
+                case PieceIdentifier.FOUR:
+                case PieceIdentifier.FIVE:
+                    return ((Int32)id).ToString();
+                case PieceIdentifier.NONE:
+                    return "";
+            }
+        }
+
+        public static String to_chinese_format(
+            this CoordinateDelta delta, ChessColour player)
+        {
+            Int32 value = Math.Abs(delta.y);
+            if (player == ChessColour.RED)
+                return "一二三四五六七八九".Substring(value - 1, 1);
+            return "１２３４５６７８９".Substring(value - 1, 1);
+        }
+
+        public static String to_audio_string(this MoveDirection direction)
+        {
+            switch (direction)
+            {
+                default:
+                    throw new InvalidEnumArgumentException();
+                case MoveDirection.FORWARD:
+                    return "ad";
+                case MoveDirection.SIDEWARD:
+                    return "tr";
+                case MoveDirection.BACKWARD:
+                    return "wi";
+            }
+        }
     }
 }

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace platform.chess_lobby
 {
@@ -64,5 +59,13 @@ namespace platform.chess_lobby
         }
 
         #endregion
+    }
+
+    [Flags]
+    public enum MoveType
+    {
+        INVALID_MOVE = 0,
+        NORMAL_MOVE = 1,
+        CAPTURE = 3
     }
 }

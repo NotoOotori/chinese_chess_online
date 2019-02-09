@@ -12,24 +12,31 @@ CREATE PROCEDURE procedure_log_in
     OUT _login_id INT UNSIGNED
 )
 BEGIN
-    SELECT encrypted_password, salt_value
-        INTO @_stored_password, @_salt_value
+    SELECT encrypted_password, salt_value, COUNT(*)
+        INTO @_stored_password, @_salt_value, @_count
         FROM platform_user
         WHERE email_address = _email_address;
-    SET @_encrypted_password = SHA2(CONCAT(
-        @_salt_value, _unencrypted_password), 256);
-    IF @_encrypted_password = @_stored_password
+    IF @_count = 0
     THEN
-        SET _status_code = 0;
-    ELSE
         SET _status_code = 1;
+    ELSE
+    BEGIN
+        SET @_encrypted_password = SHA2(CONCAT(
+            @_salt_value, _unencrypted_password), 256);
+        IF @_encrypted_password = @_stored_password
+        THEN
+            SET _status_code = 0;
+        ELSE
+            SET _status_code = 2;
+        END IF;
+        INSERT INTO user_login_record VALUE
+        (
+            0, _email_address, _server_hostname,
+            _server_port, _user_hostname, _user_port,
+            NULL, _status_code
+        );
+    END;
     END IF;
-    INSERT INTO user_login_record VALUE
-    (
-        0, _email_address, _server_hostname,
-        _server_port, _user_hostname, _user_port,
-        NULL, _status_code
-    );
     SET _login_id = IF(_status_code = 0, LAST_INSERT_ID(), 0);
 END //
 
