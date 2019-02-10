@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,6 +50,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -99,6 +101,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(207, 30);
             this.textBox1.TabIndex = 4;
+            this.textBox1.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
             // 
             // textBox2
             // 
@@ -210,7 +213,7 @@
             this.button1.BackColor = System.Drawing.Color.Cyan;
             this.button1.Font = new System.Drawing.Font("宋体", 15F);
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(286, 373);
+            this.button1.Location = new System.Drawing.Point(296, 373);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 43);
             this.button1.TabIndex = 16;
@@ -262,6 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox4);
@@ -315,5 +319,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

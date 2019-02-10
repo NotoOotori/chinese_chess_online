@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -35,6 +36,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -42,7 +44,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.MediumBlue;
-            this.label1.Location = new System.Drawing.Point(280, 31);
+            this.label1.Location = new System.Drawing.Point(304, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(210, 42);
             this.label1.TabIndex = 0;
@@ -76,6 +78,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(207, 30);
             this.textBox1.TabIndex = 3;
+            this.textBox1.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
             // 
             // textBox2
             // 
@@ -88,7 +91,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(287, 221);
+            this.button1.Location = new System.Drawing.Point(339, 215);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 39);
             this.button1.TabIndex = 5;
@@ -110,6 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(800, 334);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button1);
@@ -135,5 +139,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

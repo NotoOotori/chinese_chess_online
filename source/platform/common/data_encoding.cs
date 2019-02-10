@@ -48,7 +48,7 @@ namespace platform.common
         {
             return get_dictionary(Encoding.UTF8.GetString(bytes));
         }
-
+        
         /// <summary>
         /// Get the data string from a dictionary.
         /// </summary>
