@@ -22,7 +22,7 @@ namespace platform.login
         Int32 BUFSIZ = 1024; // 缓冲区大小
         Socket socket_client = null;
         Thread thread_client = null; // 线程
-        static string receive_string;
+        //static string receive_string;
         static int cin_count = 0;
         static int click_count = 0;
         static int captcha_state = 0;
@@ -39,16 +39,16 @@ namespace platform.login
         /// </summary>
         private void receive_data()
         {
-            while (true) //持续监听服务端发来的消息
-            {
+            //while (true) //持续监听服务端发来的消息
+            //{
                 //定义一个内存缓冲区 用于临时性存储接收到的信息
                 byte[] arr_data = new byte[BUFSIZ];
                 //将客户端套接字接收到的数据存入内存缓冲区, 并获取其长度
                 int length = socket_client.Receive(arr_data);
                 //将套接字获取到的字节数组转换为人可以看懂的字符串
                 string str_data = Encoding.UTF8.GetString(arr_data, 0, length);
-                receive_string = str_data;
-            }
+                
+            //}
         }
 
         /// <summary>
@@ -62,6 +62,26 @@ namespace platform.login
             //调用客户端套接字发送字节数组
             socket_client.Send(arr_data);
         }
+        
+        private void link_server()
+        {
+            //连接服务器
+            //定义一个套字节监听  包含3个参数(IP4寻址协议,流式连接,TCP协议)
+            socket_client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //IP地址
+            IPAddress ip_address = IPAddress.Parse(HOST);
+            //将ip地址和端口号绑定到网络节点end_point上
+            IPEndPoint end_point = new IPEndPoint(ip_address, PORT);
+            //这里客户端套接字连接到网络节点(服务端)用的方法是Connect 而不是Bind
+            socket_client.Connect(end_point);
+            //创建一个线程 用于监听服务端发来的消息
+            thread_client = new Thread(receive_data);
+            //将窗体线程设置为与后台同步
+            thread_client.IsBackground = true;
+            //启动线程
+            thread_client.Start();
+        }
+
 
         // 判断receive的字符串状态,0登录成功,1邮箱不存在,2邮箱或密码错误,3非常用登录ip请输入验证码,-1服务器出现错误
         private int receive_dict_check(Dictionary<string, string> dict)
@@ -119,6 +139,7 @@ namespace platform.login
             switch (state)
             {
                 case 0:
+                    MessageBox.Show("登陆成功");
                     //登陆成功
                     break;
                 case 1:
@@ -137,26 +158,6 @@ namespace platform.login
         }
 
         private GlossyButton glossyButton3 = new GlossyButton();
-
-        private void link_server()
-        {
-            //连接服务器
-            //定义一个套字节监听  包含3个参数(IP4寻址协议,流式连接,TCP协议)
-            socket_client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //IP地址
-            IPAddress ip_address = IPAddress.Parse(HOST);
-            //将ip地址和端口号绑定到网络节点end_point上
-            IPEndPoint end_point = new IPEndPoint(ip_address, PORT);
-            //这里客户端套接字连接到网络节点(服务端)用的方法是Connect 而不是Bind
-            socket_client.Connect(end_point);
-            //创建一个线程 用于监听服务端发来的消息
-            thread_client = new Thread(receive_data);
-            //将窗体线程设置为与后台同步
-            thread_client.IsBackground = true;
-            //启动线程
-            thread_client.Start();
-        }
-
         private void FormLogin_Load(object sender, EventArgs e)
         {
             label5.Text = "";
@@ -190,19 +191,18 @@ namespace platform.login
                 label6.Text = "请输入密码";
                 return;
             }
-            
-            if (textBox1.Text == "")
-            {
-                label5.Text = "请输入用户名";
-                return;
-            }
-
-            if (textBox2.Text == "")
-            {
-                label6.Text = "请输入密码";
-                return;
-            }
-
+            for(int i=0;i<textBox1.Text.Length;i++)
+                if(textBox1.Text.Substring(i,1)=="<"|| textBox1.Text.Substring(i, 1)==">"|| textBox1.Text.Substring(i, 1)=="/")
+                {
+                    MessageBox.Show("用户名中包含非法字符<>/");
+                    return;
+                }
+            for (int i = 0; i < textBox2.Text.Length; i++)
+                if (textBox2.Text.Substring(i, 1) == "<" || textBox2.Text.Substring(i, 1) == ">" || textBox2.Text.Substring(i, 1) == "/")
+                {
+                    MessageBox.Show("密码中包含非法字符<>/");
+                    return;
+                }
             //若产生验证码，进行检验
             if (captcha_state==1)
             {
