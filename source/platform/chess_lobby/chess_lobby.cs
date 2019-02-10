@@ -26,7 +26,7 @@ namespace platform.chess_lobby
 
             #endregion
             
-            this.chessboard.reflect(ReflectionType.VerticalReflection);
+            this.chessboard.reflect(ReflectionType.PointReflection);
         }
     }
 }

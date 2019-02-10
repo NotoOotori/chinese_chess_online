@@ -37,7 +37,7 @@
             this.chessboard.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("chessboard.BackgroundImage")));
             this.chessboard.Location = new System.Drawing.Point(0, 0);
             this.chessboard.Name = "chessboard";
-            this.chessboard.Size = new System.Drawing.Size(520, 576);
+            this.chessboard.Size = new System.Drawing.Size(810, 900);
             this.chessboard.TabIndex = 0;
             // 
             // ChessLobby

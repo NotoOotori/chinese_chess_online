@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="chess_lobby\chess_position.cs" />
     <Compile Include="chess_lobby\coordinate.cs" />
+    <Compile Include="chess_lobby\extension.cs" />
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
@@ -156,7 +157,6 @@
     <EmbeddedResource Include="chess_lobby\resources\images\middle\rn.png" />
     <EmbeddedResource Include="chess_lobby\resources\images\middle\rp.png" />
     <EmbeddedResource Include="chess_lobby\resources\images\middle\rr.png" />
-    <EmbeddedResource Include="chess_lobby\resources\images\wood_grain.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="extensions\" />
@@ -1771,6 +1771,7 @@
     <Content Include="chess_lobby\resources\audio\moves\rr9wi7.wav" />
     <Content Include="chess_lobby\resources\audio\moves\rr9wi8.wav" />
     <Content Include="chess_lobby\resources\audio\moves\rr9wi9.wav" />
+    <Content Include="chess_lobby\resources\images\wood_grain.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

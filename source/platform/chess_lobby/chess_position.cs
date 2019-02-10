@@ -94,6 +94,10 @@ namespace platform.chess_lobby
         /// </summary>
         public ChessColour current_player { get { return this._current_player; } }
         /// <summary>
+        /// 未轮到走子的那一方.
+        /// </summary>
+        public ChessColour idle_player { get { return current_player.flip(); } }
+        /// <summary>
         /// 棋局的fen串
         /// </summary>
         public String fen { get { return this.ToString(); } }
@@ -221,15 +225,13 @@ namespace platform.chess_lobby
             return PieceIdentifier.NONE;
         }
 
-        #endregion
-
         /// <summary>
         /// 判断棋步是否合法
         /// </summary>
         /// <param name="start">起始坐标</param>
         /// <param name="end">终止坐标</param>
         /// <returns></returns>
-        public Boolean is_move(Coordinate start, Coordinate end)
+        private Boolean is_valid_move(Coordinate start, Coordinate end)
         {
             ChessColour player = this.current_player;
             PieceType piece = this[start].type;
@@ -238,6 +240,26 @@ namespace platform.chess_lobby
             // 筛选偏移量是否合法
             if (!CoordinateDelta.is_valid(delta, piece))
                 return false;
+            // 筛选忽略棋规情况下是否合法
+            if (!this.is_raw_move(start, end))
+                return false;
+            // 棋规
+            if (!this.check_rules(start, end))
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// 判断忽略棋规的情况下棋步是否合法
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        private Boolean is_raw_move(Coordinate start, Coordinate end)
+        {
+            ChessColour player = this.current_player;
+            PieceType piece = this[start].type;
+            CoordinateDelta delta = end - start;
+
             switch (piece)
             {
                 default:
@@ -280,6 +302,38 @@ namespace platform.chess_lobby
                     return false;
             }
         }
+
+        private Boolean check_rules(Coordinate start, Coordinate end)
+        {
+            // 不能送将
+            if (this.is_check(start, end, current_player))
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// 判断棋步之后该<see cref="ChessColour"/>是否被将军
+        /// </summary>
+        /// <param name="start">起始坐标</param>
+        /// <param name="end">终止坐标</param>
+        /// <returns></returns>
+        private Boolean is_check(
+            Coordinate start, Coordinate end, ChessColour player)
+        {
+            return this.move(start, end).is_check(player);
+        }
+
+        /// <summary>
+        /// 判断<see cref="ChessColour"/>是否正在被将军.
+        /// </summary>
+        /// <param name="player">玩家</param>
+        /// <returns></returns>
+        private Boolean is_check(ChessColour player)
+        {
+            return false;
+        }
+
+        #endregion
 
         /// <summary>
         /// 获得棋步的音频字符串
@@ -338,11 +392,14 @@ namespace platform.chess_lobby
         /// <returns></returns>
         public MoveType get_move_type(Coordinate start, Coordinate end)
         {
-            if(is_move(start, end))
+            if(is_valid_move(start, end))
             {
+                MoveType type = MoveType.NORMAL_MOVE;
                 if (this[end].type != PieceType.NONE)
-                    return MoveType.CAPTURE;
-                return MoveType.NORMAL_MOVE;
+                    type = type | MoveType.CAPTURE;
+                if (this.is_check(start, end, idle_player))
+                    type = type | MoveType.CHECK;
+                return type;
             }
             return MoveType.INVALID_MOVE;
         }
@@ -359,8 +416,7 @@ namespace platform.chess_lobby
 
             #region ' Update the Stats '
 
-            new_position._current_player =
-                ChessColour.NONE ^ new_position._current_player;
+            new_position._current_player = new_position._current_player.flip();
             if (this[end] == null)
                 new_position.noncapture_moves += 1;
             else

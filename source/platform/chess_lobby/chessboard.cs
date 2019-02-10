@@ -51,7 +51,6 @@ namespace platform.chess_lobby
             #region ' Initialize the Chessboard '
 
             this.SuspendLayout();
-
             this.grid_panels = new Chessboard(
                 this.grid_side_length, this.grid_points)
             {
@@ -701,6 +700,10 @@ namespace platform.chess_lobby
                     if((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
                     {
                         audios.Add("capture");
+                    }
+                    if ((move_type & MoveType.CHECK) == MoveType.CHECK)
+                    {
+                        audios.Add("check");
                     }
                     Audio.play(audios);
                     return;

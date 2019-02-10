@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -241,53 +239,5 @@ namespace platform.chess_lobby
         FRONT = 6,
         MIDDLE = 7,
         REAR = 8
-    }
-
-    public static class ChessLobbyExtension
-    {
-        public static String to_audio_string(this PieceIdentifier id)
-        {
-            switch (id)
-            {
-                default:
-                    throw new InvalidEnumArgumentException();
-                case PieceIdentifier.FRONT:
-                case PieceIdentifier.MIDDLE:
-                case PieceIdentifier.REAR:
-                    return id.ToString().Substring(0, 2).ToLower();
-                case PieceIdentifier.ONE:
-                case PieceIdentifier.TWO:
-                case PieceIdentifier.THREE:
-                case PieceIdentifier.FOUR:
-                case PieceIdentifier.FIVE:
-                    return ((Int32)id).ToString();
-                case PieceIdentifier.NONE:
-                    return "";
-            }
-        }
-
-        public static String to_chinese_format(
-            this CoordinateDelta delta, ChessColour player)
-        {
-            Int32 value = Math.Abs(delta.y);
-            if (player == ChessColour.RED)
-                return "一二三四五六七八九".Substring(value - 1, 1);
-            return "１２３４５６７８９".Substring(value - 1, 1);
-        }
-
-        public static String to_audio_string(this MoveDirection direction)
-        {
-            switch (direction)
-            {
-                default:
-                    throw new InvalidEnumArgumentException();
-                case MoveDirection.FORWARD:
-                    return "ad";
-                case MoveDirection.SIDEWARD:
-                    return "tr";
-                case MoveDirection.BACKWARD:
-                    return "wi";
-            }
-        }
     }
 }
