@@ -22,7 +22,7 @@ namespace platform.login
         Int32 BUFSIZ = 1024; // 缓冲区大小
         Socket socket_client = null;
         Thread thread_client = null; // 线程
-        //static string receive_string;
+        static string receive_string;
         static int cin_count = 0;
         static int click_count = 0;
         static int captcha_state = 0;
@@ -47,7 +47,7 @@ namespace platform.login
                 int length = socket_client.Receive(arr_data);
                 //将套接字获取到的字节数组转换为人可以看懂的字符串
                 string str_data = Encoding.UTF8.GetString(arr_data, 0, length);
-                
+            receive_string = str_data;
             //}
         }
 
@@ -177,20 +177,21 @@ namespace platform.login
 
         private void glossyButton3_Click(object sender, EventArgs e)
         {
+            //判断是否输入用户名密码
+            foreach (Control con in this.Controls)
+            {
+                if (con is TextBox)
+                {
+                    TextBox t = (TextBox)con as TextBox;
+                    if (t.Text == "")
+                    {
+                       label5.Text = "用户名或密码为空";
+                       return;
+                    }
+                }
+            }
             label5.Text = "";
             label6.Text = "";
-            //判断是否输入用户名密码
-            if (textBox1.Text == "")
-            {
-                label5.Text = "请输入用户名";
-                return;
-            }
-
-            if (textBox2.Text == "")
-            {
-                label6.Text = "请输入密码";
-                return;
-            }
             for(int i=0;i<textBox1.Text.Length;i++)
                 if(textBox1.Text.Substring(i,1)=="<"|| textBox1.Text.Substring(i, 1)==">"|| textBox1.Text.Substring(i, 1)=="/")
                 {
