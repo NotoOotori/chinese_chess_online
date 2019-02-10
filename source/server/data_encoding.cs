@@ -17,8 +17,10 @@ namespace server
             Dictionary<String, String> dict = new Dictionary<String, String>();
             while (str.Length > 1)
             {
-                Int32 start = str.IndexOf("<");
+                Int32 start = str.IndexOf('<');
                 Int32 end = str.IndexOf('>');
+                if (start == end)
+                    break;
                 String tkey = str.Substring(start + 1, end - start - 1);
                 str = str.Substring(end + 1);
                 start = str.IndexOf('<');

@@ -69,6 +69,7 @@ namespace server
                     Int32 length = client_socket.Receive(arr_data);
                     String str_data = Encoding.UTF8.GetString(
                         arr_data, 0, length);
+                    Console.WriteLine($"{ep}: {str_data}");
                     if (str_data == null)
                     {
                         break;
