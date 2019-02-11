@@ -39,10 +39,24 @@ namespace server
 
         #region ' Login '
 
-        private UInt32 _login_id { get; set; } = 0;
         public UInt32 login_id { get { return _login_id; } }
+        public Boolean is_logged_in { get { return login_id != 0; } }
+        public String email_address { get { return _email_address; } }
 
-        private String email_address { get; set; }
+        private UInt32 _login_id { get; set; } = 0;
+        private String _email_address { get; set; }
+
+        #endregion
+
+        #region ' Lobby '
+
+        public Lobby lobby { get { return _lobby; } }
+        public Seat seat { get { return _seat; } }
+        public Boolean standby { get { return _standby; } }
+
+        private Lobby _lobby { get; set; }
+        private Seat _seat { get; set; } = Seat.NONE;
+        private Boolean _standby { get; set; } = false;
 
         #endregion
 
@@ -136,7 +150,7 @@ namespace server
                         case 0:
                             this._login_id = UInt32.Parse(
                                 _login_id.Value.ToString());
-                            this.email_address = email_address;
+                            this._email_address = email_address;
                             return 0;
                     }
 
@@ -145,7 +159,7 @@ namespace server
             }
         }
 
-        public void log_out()
+        public void try_log_out()
         {
             if (login_id == 0)
                 return;
@@ -163,13 +177,13 @@ namespace server
                     MySqlParameter _email_address = new MySqlParameter(
                         "_email_address", MySqlDbType.VarString, 254)
                     {
-                        Value = email_address,
+                        Value = this._email_address,
                         Direction = ParameterDirection.Input
                     };
                     MySqlParameter _login_id = new MySqlParameter(
                         "_login_id", MySqlDbType.UInt32)
                     {
-                        Value = login_id,
+                        Value = this.login_id,
                         Direction = ParameterDirection.Input
                     };
 
@@ -182,10 +196,41 @@ namespace server
                     command.ExecuteNonQuery();
                 }
             }
+            Console.WriteLine($"System: {email_address}({client_end_point}) " +
+                $"logged out successfully.");
+        }
+
+        #endregion
+
+        #region ' Lobby '
+
+        public Int32 enter_lobby(Lobby lobby, Seat seat)
+        {
+            Int32 code = lobby.try_enter(this, seat);
+            if (code == 0)
+            {
+                this._lobby = lobby;
+                this._seat = seat;
+            }
+            return code;
+        }
+
+        public void quit_lobby()
+        {
+            lobby.try_quit(this, seat);
+            this._lobby = null;
+            this._seat = Seat.NONE;
         }
 
         #endregion
 
         #endregion
     }
+}
+
+public class UserNotLoggedInException : Exception
+{
+    public UserNotLoggedInException()
+        : base("The user hasn't logged in yet.")
+    {; }
 }
