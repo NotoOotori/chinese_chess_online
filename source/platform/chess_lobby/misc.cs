@@ -66,6 +66,7 @@ namespace platform.chess_lobby
     {
         INVALID_MOVE = 0,
         NORMAL_MOVE = 1,
-        CAPTURE = 3
+        CAPTURE = 3,
+        CHECK = 5
     }
 }

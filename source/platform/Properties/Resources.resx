@@ -163,9 +163,6 @@
   <data name="rr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chess_lobby\resources\images\middle\rr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wood_grain" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\chess_lobby\resources\images\wood_grain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ba4ad5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chess_lobby\resources\audio\moves\ba4ad5.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -4992,5 +4989,8 @@
   </data>
   <data name="_5rptr9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\chess_lobby\resources\audio\moves\5rptr9.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="wood_grain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\chess_lobby\resources\images\wood_grain.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
