@@ -1,4 +1,5 @@
-﻿using System;
+﻿using platform.common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Data;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,7 +53,7 @@ namespace platform.chess_lobby
             #region ' Initialize the Chessboard '
 
             this.SuspendLayout();
-            this.grid_panels = new Chessboard(
+            this.chessboard = new Chessboard(
                 this.grid_side_length, this.grid_points)
             {
                 Size = this.Size,
@@ -60,8 +62,8 @@ namespace platform.chess_lobby
                 BackgroundImageLayout = ImageLayout.Tile,
                 Image = bitmap
             };
-            this.Controls.Add(this.grid_panels);
-            this.grid_panels.BringToFront();
+            this.Controls.Add(this.chessboard);
+            this.chessboard.BringToFront();
             
             this.ResumeLayout(true);
 
@@ -77,9 +79,16 @@ namespace platform.chess_lobby
         /// <summary>
         /// 装有<see cref="GridRect"/>们的控件
         /// </summary>
-        private Chessboard grid_panels { get; set; }
+        public Chessboard chessboard { get; }
 
         #endregion
+
+        public new ChessLobby Parent { get { return base.Parent as ChessLobby; } }
+
+        public ReflectionType reflection { get { return chessboard.reflection; } }
+
+        public Socket server_socket { get { return Parent.server_socket; } }
+        public UInt32 lobby_id { get { return Parent.lobby_id; } }
 
         private Int32 grid_side_length
         {
@@ -212,7 +221,7 @@ namespace platform.chess_lobby
         /// <param name="type">反射类型</param>
         public void reflect(ReflectionType type)
         {
-            this.grid_panels.reflect(type);
+            this.chessboard.reflect(type);
         }
 
         /// <summary>
@@ -528,6 +537,11 @@ namespace platform.chess_lobby
         private Int32 grid_side_length { get; set; }
         private Point[,] grid_points { get; set; }
 
+        public new ChessboardContainer Parent {
+            get { return base.Parent as ChessboardContainer; } }
+        public Socket server_socket { get { return Parent.server_socket; } }
+        public UInt32 lobby_id { get { return Parent.lobby_id; } }
+
         #region ' Reflection '
 
         private ReflectionType _reflection { get; set; } = ReflectionType.None;
@@ -559,6 +573,8 @@ namespace platform.chess_lobby
         private List<Coordinate> masked_panels { get; } = new List<Coordinate>();
 
         #endregion
+
+        public ChessColour colour { get; set; } = ChessColour.NONE;
 
         /// <summary>
         /// 已经进行的半回合数.
@@ -640,14 +656,26 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
-        public void move(Coordinate start, Coordinate end)
+        public void move(Coordinate start, Coordinate end, Boolean from_server)
         {
+            if (!from_server)
+                server_socket.Send(new Dictionary<String, String>()
+                {
+                    ["identifier"] = "lobby_chessmove",
+                    ["lobby_id"] = lobby_id.ToString(),
+                    ["move"] = start.ToString() + end.ToString()
+                });
             this.chess_positions =
                 this.chess_positions.Take(this.turns + 1).Append(
                     this.chess_positions[this.turns].move(start, end)).ToList();
             this.turns++;
             this.last_click = null;
             this.refresh_pieces(new[] { start, end });
+        }
+
+        public MoveType get_move_type(Coordinate start, Coordinate end)
+        {
+            return chess_position.get_move_type(start, end);
         }
 
         public void Chessboard_MouseClick(object sender, MouseEventArgs e)
@@ -661,8 +689,10 @@ namespace platform.chess_lobby
         /// 响应<see cref="GridRect"/>的Click事件./>
         /// </summary>
         /// <param name="click">实际坐标</param>
-        public void on_click(Coordinate click)
+        public void on_click(Coordinate click, Boolean from_server = false)
         {
+            if (colour != current_player)
+                return;
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)
             {
@@ -694,7 +724,7 @@ namespace platform.chess_lobby
                     {
                         audios.Add(chess_position.get_audio_string(
                             last_click, abs_click));
-                        this.move(this.last_click, abs_click);
+                        this.move(this.last_click, abs_click, from_server);
                         this.set_mask(abs_click);
                     }
                     if((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)

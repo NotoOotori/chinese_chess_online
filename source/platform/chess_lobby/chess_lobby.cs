@@ -1,5 +1,10 @@
-﻿using System;
+﻿using platform.common;
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace platform.chess_lobby
@@ -27,11 +32,87 @@ namespace platform.chess_lobby
                 ControlStyles.SupportsTransparentBackColor, true);
 
             #endregion
-            
-            this.chessboard.reflect(ReflectionType.PointReflection);
         }
+
+        private const String HOST = "45.32.82.133";
+        private const Int32 PORT = 21567;
+        private IPEndPoint end_point = new IPEndPoint(
+            IPAddress.Parse(HOST), PORT);
+        private const Int32 BUFSIZ = 1024 * 1024;
 
         public UInt32 lobby_id { get; } = 0;
         public Socket server_socket { get; }
+
+        public ChessColour colour
+        {
+            get
+            {
+                return chessboard_container.chessboard.colour;
+            }
+            set
+            {
+                chessboard_container.chessboard.colour = value;
+            }
+        }
+
+        #region ' Methods '
+
+        private void listening_thread()
+        {
+            try
+            {
+                while (true)
+                {
+                    Byte[] arr_data = new Byte[BUFSIZ];
+                    Int32 length = server_socket.Receive(arr_data);
+                    String str_data = Encoding.UTF8.GetString(
+                        arr_data, 0, length);
+                    if (str_data == null)
+                    {
+                        break;
+                    }
+                    Dictionary<String, String> dict =
+                        DataEncoding.get_dictionary(str_data);
+                    switch (dict["identifier"])
+                    {
+                        default:
+                            throw new DataEncodingException("Invalid identifier.");
+                        case "lobby_chessmove":
+                            check_chessmove_request(dict);
+                            break;
+                        case "lobby_gamestart":
+                            check_gamestart_request(dict);
+                            break;
+                    }
+                }
+            }
+            catch(DataEncodingException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        private void check_chessmove_request(Dictionary<String, String> dict)
+        {
+            String move = dict["move"];
+            Coordinate start = new Coordinate(move.Substring(0, 2));
+            Coordinate end = new Coordinate(move.Substring(2, 2));
+            chessboard_container.chessboard.on_click(start.reflect(
+                chessboard_container.reflection), true);
+            chessboard_container.chessboard.on_click(end.reflect(
+                chessboard_container.reflection), true);
+        }
+
+        private void check_gamestart_request(Dictionary<String, String> dict)
+        {
+            Char colour_str = dict["colour"][0];
+            colour = colour_str.to_chess_colour();
+            ReflectionType reflection = colour == ChessColour.RED ?
+                ReflectionType.None : ReflectionType.PointReflection;
+            chessboard_container.reflect(
+                chessboard_container.reflection ^ reflection);
+        }
+
+        #endregion
     }
 }

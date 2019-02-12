@@ -27,13 +27,89 @@ namespace server {
                 [Seat.ONE] = null,
                 [Seat.TWO] = null
             };
+        public Int32 user_count
+        {
+            get
+            {
+                Int32 count = 0;
+                foreach (User user in seats.Values)
+                    if (user != null)
+                        count++;
+                return count;
+            }
+        }
 
         #endregion
 
         #region ' Methods '
 
+        /// <summary>
+        /// Broadcast to all clients in the lobby.
+        /// </summary>
+        /// <param name="data"></param>
         public void broadcast(Byte[] data)
-        {; }
+        {
+            foreach (User user in seats.Values)
+            {
+                user.socket.Send(data);
+            }
+        }
+
+        /// <summary>
+        /// Broadcast to all clients in the lobby.
+        /// </summary>
+        /// <param name="dict"></param>
+        public void broadcast(Dictionary<String, String> dict)
+        {
+            foreach (User user in seats.Values)
+            {
+                user.socket.Send(dict);
+            }
+        }
+
+        /// <summary>
+        /// Broadcast to all clients except the one in the specified seat.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="seat"></param>
+        public void broadcast(Byte[] data, Seat seat)
+        {
+            foreach (var pair in seats)
+            {
+                if (pair.Key == seat)
+                    continue;
+                pair.Value.socket.Send(data);
+            }
+        }
+
+        /// <summary>
+        /// Broadcast to all clients except the one in the specified seat.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="seat"></param>
+        public void broadcast(Dictionary<String, String> dict, Seat seat)
+        {
+            foreach (var pair in seats)
+            {
+                if (pair.Key == seat)
+                    continue;
+                pair.Value.socket.Send(dict);
+            }
+        }
+        
+        private void start_game()
+        {
+            Int32 count = 0;
+            foreach (User user in seats.Values)
+            {
+                Socket socket = user.socket;
+                socket.Send(new Dictionary<String, String>()
+                {
+                    ["identifier"] = "lobby_gamestart",
+                    ["colour"] = "br".Substring(count++, 1)
+                });
+            }
+        }
 
         /// <summary>
         /// If successful then returns 0.
@@ -53,6 +129,8 @@ namespace server {
             Console.WriteLine($"System: User {user.email_address} entered into " +
                 $"lobby #{lobby_id}.");
             seats[seat] = user;
+            if (user_count == 2)
+                start_game();
             return 0;
         }
 

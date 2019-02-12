@@ -92,6 +92,9 @@ namespace server
                         case "lobby_enter":
                             check_lobby_enter_request(user, dict);
                             break;
+                        case "lobby_chessmove":
+                            check_lobby_chessmove_request(user, dict);
+                            break;
                     }
                 }
             }
@@ -182,13 +185,24 @@ namespace server
                 throw new UserNotLoggedInException();
             Socket client_socket = user.socket;
             UInt32 lobby_id = UInt32.Parse(dict["lobby_id"]);
+            Lobby lobby = lobbies[lobby_id];
             Seat seat = (Seat)Int32.Parse(dict["seat"]);
-            Int32 code = user.enter_lobby(lobbies[lobby_id], seat);
+            Int32 code = user.enter_lobby(lobby, seat);
             send(client_socket, new Dictionary<String, String>()
             {
                 ["identifier"] = "lobby_enter",
                 ["response"] = code.ToString()
             });
+        }
+
+        private void check_lobby_chessmove_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Lobby lobby = user.lobby;
+            Seat seat = user.seat;
+            lobby.broadcast(dict, seat);
         }
 
         #endregion

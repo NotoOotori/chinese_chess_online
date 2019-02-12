@@ -28,24 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessLobby));
-            this.chessboard = new platform.chess_lobby.ChessboardContainer();
+            this.chessboard_container = new platform.chess_lobby.ChessboardContainer();
             this.SuspendLayout();
             // 
-            // chessboard
+            // chessboard_container
             // 
-            this.chessboard.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("chessboard.BackgroundImage")));
-            this.chessboard.Location = new System.Drawing.Point(0, 0);
-            this.chessboard.Name = "chessboard";
-            this.chessboard.Size = new System.Drawing.Size(810, 900);
-            this.chessboard.TabIndex = 0;
+            this.chessboard_container.Location = new System.Drawing.Point(0, 0);
+            this.chessboard_container.Name = "chessboard_container";
+            this.chessboard_container.Size = new System.Drawing.Size(810, 900);
+            this.chessboard_container.TabIndex = 0;
             // 
             // ChessLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1540, 845);
-            this.Controls.Add(this.chessboard);
+            this.Controls.Add(this.chessboard_container);
             this.Name = "ChessLobby";
             this.Text = "chess_lobby";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -55,6 +53,6 @@
 
         #endregion
 
-        private ChessboardContainer chessboard;
+        private ChessboardContainer chessboard_container;
     }
 }
