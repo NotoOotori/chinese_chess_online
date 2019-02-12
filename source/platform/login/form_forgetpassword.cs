@@ -109,5 +109,10 @@ namespace platform.login
             thread_client.Start();
             //判断是否输入用户名密码
         }
+
+        private void textBox1_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(this.textBox1, "请勿输入<,>,/");
+        }
     }
 }
