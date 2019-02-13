@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="extension.cs" />
     <Compile Include="lobby.cs" />
     <Compile Include="data_encoding.cs" />
     <Compile Include="Program.cs" />
