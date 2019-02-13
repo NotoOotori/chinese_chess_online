@@ -21,8 +21,6 @@ namespace platform.login
         Int32 PORT = 21567; // 端口
         Int32 BUFSIZ = 1024; // 缓冲区大小
         Socket socket_client = null;
-        Thread thread_client = null; // 线程
-        static string receive_string;
         static int cin_count = 0;
         static int click_count = 0;
         static int captcha_state = 0;
@@ -37,18 +35,13 @@ namespace platform.login
         /// <summary>
         /// 接收服务端发来信息
         /// </summary>
-        private void receive_data()
+        private Dictionary<String, String> receive_data()
         {
-            //while (true) //持续监听服务端发来的消息
-            //{
-                //定义一个内存缓冲区 用于临时性存储接收到的信息
-                byte[] arr_data = new byte[BUFSIZ];
-                //将客户端套接字接收到的数据存入内存缓冲区, 并获取其长度
-                int length = socket_client.Receive(arr_data);
-                //将套接字获取到的字节数组转换为人可以看懂的字符串
-                string str_data = Encoding.UTF8.GetString(arr_data, 0, length);
-            receive_string = str_data;
-            //}
+            //定义一个内存缓冲区 用于临时性存储接收到的信息
+            byte[] arr_data = new byte[BUFSIZ];
+            //将客户端套接字接收到的数据存入内存缓冲区, 并获取其长度
+            socket_client.Receive(arr_data);
+            return DataEncoding.get_dictionary(arr_data);
         }
 
         /// <summary>
@@ -74,12 +67,6 @@ namespace platform.login
             IPEndPoint end_point = new IPEndPoint(ip_address, PORT);
             //这里客户端套接字连接到网络节点(服务端)用的方法是Connect 而不是Bind
             socket_client.Connect(end_point);
-            //创建一个线程 用于监听服务端发来的消息
-            thread_client = new Thread(receive_data);
-            //将窗体线程设置为与后台同步
-            thread_client.IsBackground = true;
-            //启动线程
-            thread_client.Start();
         }
 
 
@@ -130,8 +117,8 @@ namespace platform.login
         {
             if (true)
                 return 0;
-            else
-                return 1;
+            //else
+            //    return 1;
         }
 
         private void reaction(int state, Dictionary<string, string> di)
@@ -139,8 +126,8 @@ namespace platform.login
             switch (state)
             {
                 case 0:
-                    MessageBox.Show("登陆成功");
-                    //登陆成功
+                    MessageBox.Show("登录成功");
+                    //登录成功
                     break;
                 case 1:
                     label5.Text = "邮箱不存在";
@@ -169,8 +156,6 @@ namespace platform.login
             glossyButton3.Font = new Font("Microsoft Sans Serif", 15);
             glossyButton3.Size = new Size(207, 40);
             glossyButton3.Click += new EventHandler(glossyButton3_Click);
-            glossyButton3.MouseEnter += new EventHandler(glossyButton3_MouseEnter);
-            glossyButton3.MouseLeave += new EventHandler(glossyButton3_MouseLeave);
             this.Controls.Add(glossyButton3);
             textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*                       
         }
@@ -223,9 +208,7 @@ namespace platform.login
             //发送密码,用户名
             send_data(send_string);
             //接受信息
-            receive_data();
-            Dictionary<String, String> dict_back = new Dictionary<String, String>();
-            dict_back = DataEncoding.get_dictionary(receive_string);
+            Dictionary<String, String> dict_back = receive_data();
             int login_result = receive_dict_check(dict_back);
             if (cin_count == 3)
             {
@@ -280,16 +263,6 @@ namespace platform.login
                 textBox2.PasswordChar = new char();
             else
                 textBox2.PasswordChar = '*';
-        }
-
-        private void glossyButton3_MouseEnter(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Hand;
-        }
-
-        private void glossyButton3_MouseLeave(object sender, EventArgs e)
-        {
-            this.Cursor = Cursors.Arrow;
         }
     }
 }
