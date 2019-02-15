@@ -79,6 +79,24 @@ namespace platform.chess_lobby
             return ChessColour.NONE ^ colour;
         }
 
+        /// <summary>
+        /// 将颜色字符转化为<see cref="ChessColour"./>
+        /// </summary>
+        /// <param name="colour_char">颜色字符</param>
+        /// <returns></returns>
+        public static ChessColour to_chess_colour(this Char colour_char)
+        {
+            switch(colour_char)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("颜色字符越界!");
+                case 'r':
+                    return ChessColour.RED;
+                case 'b':
+                    return ChessColour.BLACK;
+            }
+        }
+
         #endregion
     }
 }

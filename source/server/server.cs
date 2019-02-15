@@ -28,7 +28,7 @@ namespace server
 
         #endregion
 
-        #region 'Fields and Properties '
+        #region ' Fields and Properties '
 
         private const String HOST = "45.32.82.133";
         private const Int32 PORT = 21567;
@@ -37,6 +37,12 @@ namespace server
         private const Int32 BUFSIZ = 1024 * 1024;
 
         private Socket server_socket { get; set; }
+
+        private Dictionary<UInt32, Lobby> lobbies { get; } =
+            new Dictionary<uint, Lobby>()
+            {
+                [1] = new Lobby(1)
+            };
 
         #endregion
 
@@ -60,7 +66,7 @@ namespace server
             Socket client_socket = client_socket_para as Socket;
             User user = new User(client_socket);
             String ep = client_socket.RemoteEndPoint.ToString();
-            Console.WriteLine($"{ep} connected.");
+            Console.WriteLine($"System: {ep} connected.");
             try
             {
                 while (true)
@@ -81,7 +87,13 @@ namespace server
                         default:
                             throw new DataEncodingException("Invalid identifier.");
                         case "login":
-                            check_login(user, dict);
+                            check_login_request(user, dict);
+                            break;
+                        case "lobby_enter":
+                            check_lobby_enter_request(user, dict);
+                            break;
+                        case "lobby_chessmove":
+                            check_lobby_chessmove_request(user, dict);
                             break;
                     }
                 }
@@ -90,16 +102,20 @@ namespace server
             catch(ObjectDisposedException) {; }
             catch(DataEncodingException e)
             {
-                send(client_socket, new Dictionary<String, String>()
-                {
-                    ["identifier"] = "error",
-                    ["message"] = e.Message
-                });
+                send_error(client_socket, e.Message);
+            }
+            catch(LobbyException e)
+            {
+                send_error(client_socket, e.Message);
+            }
+            catch(UserNotLoggedInException e)
+            {
+                send_error(client_socket, e.Message);
             }
 
-            user.log_out();
+            user.try_log_out();
             client_socket.Close();
-            Console.WriteLine($"{ep} disconnected.");
+            Console.WriteLine($"System: {ep} disconnected.");
         }
 
         #region ' Sending '
@@ -119,11 +135,20 @@ namespace server
             client.Send(DataEncoding.get_bytes(dict));
         }
 
+        private void send_error(Socket client, String message)
+        {
+            send(client, new Dictionary<String, String>()
+            {
+                ["identifier"] = "error",
+                ["message"] = message
+            });
+        }
+
         #endregion
 
         #region ' Login '
 
-        private void check_login(
+        private void check_login_request(
             User user, Dictionary<String, String> dict)
         {
             Socket client_socket = user.socket;
@@ -138,15 +163,46 @@ namespace server
             switch(code)
             {
                 default:
-                    Console.WriteLine($"{user.client_end_point} " +
+                    Console.WriteLine($"{email}({user.client_end_point}) " +
                         "failed to log in.");
                     user.socket.Close(10);
                     break;
                 case 0:
-                    Console.WriteLine($"{user.client_end_point} " +
+                    Console.WriteLine($"{email}({user.client_end_point}) " +
                         "logged in successfully.");
                     break;
             }
+        }
+
+        #endregion
+
+        #region ' Lobby '
+
+        private void check_lobby_enter_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Socket client_socket = user.socket;
+            UInt32 lobby_id = UInt32.Parse(dict["lobby_id"]);
+            Lobby lobby = lobbies[lobby_id];
+            Seat seat = (Seat)Int32.Parse(dict["seat"]);
+            Int32 code = user.enter_lobby(lobby, seat);
+            send(client_socket, new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_enter",
+                ["response"] = code.ToString()
+            });
+        }
+
+        private void check_lobby_chessmove_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Lobby lobby = user.lobby;
+            Seat seat = user.seat;
+            lobby.broadcast(dict, seat);
         }
 
         #endregion

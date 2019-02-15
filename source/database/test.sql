@@ -9,6 +9,7 @@ DELETE FROM platform_server
     WHERE hostname = '127.0.0.1';
 
 CALL procedure_sign_up('345238563@qq.com', 'noto_ootori', '123pzy', 'f', '1999-04-01');
+CALL procedure_sign_up('jason_345238563@outlook.com', 'noto_ootori', '123pzy', 'f', '1999-04-01');
 
 DELETE FROM platform_user
     WHERE username = 'noto_ootori';
