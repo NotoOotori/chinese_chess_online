@@ -691,7 +691,7 @@ namespace platform.chess_lobby
         /// <param name="click">实际坐标</param>
         public void on_click(Coordinate click, Boolean from_server = false)
         {
-            if (colour != current_player)
+            if (colour != current_player && !from_server)
                 return;
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)

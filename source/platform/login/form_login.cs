@@ -127,6 +127,7 @@ namespace platform.login
             {
                 case 0:
                     MessageBox.Show("登录成功");
+                    cxydsb();
                     //登录成功
                     break;
                 case 1:
@@ -142,6 +143,18 @@ namespace platform.login
                     MessageBox.Show(di["response"]);
                     break;
             }
+        }
+
+        private void cxydsb()
+        {
+            socket_client.Send(DataEncoding.get_bytes(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_enter",
+                ["lobby_id"] = "1",
+                ["seat"] = "1"
+            }));
+            Dictionary<String, String> data = receive_data();
+            new chess_lobby.ChessLobby(1, socket_client).Show();
         }
 
         private GlossyButton glossyButton3 = new GlossyButton();

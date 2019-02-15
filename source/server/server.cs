@@ -193,6 +193,7 @@ namespace server
                 ["identifier"] = "lobby_enter",
                 ["response"] = code.ToString()
             });
+            lobby.try_start_game();
         }
 
         private void check_lobby_chessmove_request(

@@ -32,6 +32,9 @@ namespace platform.chess_lobby
                 ControlStyles.SupportsTransparentBackColor, true);
 
             #endregion
+
+            Thread thread = new Thread(listening_thread);
+            thread.Start();
         }
 
         private const String HOST = "45.32.82.133";
@@ -54,6 +57,19 @@ namespace platform.chess_lobby
                 chessboard_container.chessboard.colour = value;
             }
         }
+
+        /// <summary>
+        /// 旋转<see cref="ChessboardContainer"/>的<see cref="Chessboard"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        delegate void ReflectionTypeArgReturningVoidDelegate(ReflectionType type);
+        /// <summary>
+        /// 点击<see cref="ChessboardContainer"/>的<see cref="Chessboard"/>的棋子.
+        /// </summary>
+        /// <param name="cdn"></param>
+        /// <param name="from_server"></param>
+        delegate void CoordinateArgBooleanArgReturningVoidDelegate(
+            Coordinate click, Boolean from_server);
 
         #region ' Methods '
 
@@ -97,9 +113,9 @@ namespace platform.chess_lobby
             String move = dict["move"];
             Coordinate start = new Coordinate(move.Substring(0, 2));
             Coordinate end = new Coordinate(move.Substring(2, 2));
-            chessboard_container.chessboard.on_click(start.reflect(
+            chessboard_on_click(start.reflect(
                 chessboard_container.reflection), true);
-            chessboard_container.chessboard.on_click(end.reflect(
+            chessboard_on_click(end.reflect(
                 chessboard_container.reflection), true);
         }
 
@@ -109,8 +125,38 @@ namespace platform.chess_lobby
             colour = colour_str.to_chess_colour();
             ReflectionType reflection = colour == ChessColour.RED ?
                 ReflectionType.None : ReflectionType.PointReflection;
-            chessboard_container.reflect(
+            chessboard_reflect(
                 chessboard_container.reflection ^ reflection);
+        }
+
+        private void chessboard_on_click(Coordinate click, Boolean from_server)
+        {
+            if (chessboard_container.InvokeRequired)
+            {
+                CoordinateArgBooleanArgReturningVoidDelegate d =
+                    new CoordinateArgBooleanArgReturningVoidDelegate(
+                        chessboard_on_click);
+                this.Invoke(d, new object[] { click, from_server });
+            }
+            else
+            {
+                this.chessboard_container.chessboard.on_click(click, from_server);
+            }
+        }
+
+        private void chessboard_reflect(ReflectionType reflection)
+        {
+            if (chessboard_container.InvokeRequired)
+            {
+                ReflectionTypeArgReturningVoidDelegate d =
+                    new ReflectionTypeArgReturningVoidDelegate(
+                        chessboard_reflect);
+                this.Invoke(d, new object[] { reflection });
+            }
+            else
+            {
+                this.chessboard_container.reflect(reflection);
+            }
         }
 
         #endregion

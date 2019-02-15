@@ -97,8 +97,10 @@ namespace server {
             }
         }
         
-        private void start_game()
+        public void try_start_game()
         {
+            if (user_count < 2)
+                return;
             Int32 count = 0;
             foreach (User user in seats.Values)
             {
@@ -129,8 +131,6 @@ namespace server {
             Console.WriteLine($"System: User {user.email_address} entered into " +
                 $"lobby #{lobby_id}.");
             seats[seat] = user;
-            if (user_count == 2)
-                start_game();
             return 0;
         }
 
