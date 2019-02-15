@@ -13,6 +13,7 @@ CREATE TABLE platform_user
     username VARCHAR(16) NOT NULL,
     encrypted_password BINARY(64) NOT NULL,
     salt_value BINARY(64) NOT NULL,
+    avatar MEDIUMBLOB,
     gender CHAR(1),
     # CHECK (gender LIKE '[fm]')
     birthday DATE
