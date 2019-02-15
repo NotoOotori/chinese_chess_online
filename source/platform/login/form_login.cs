@@ -164,8 +164,8 @@ namespace platform.login
             label6.Text = "";
             click_count = 0;
             cin_count = 0;         
-            glossyButton3.Location = new Point(80, 120);
-            glossyButton3.BtnText = "登录";
+            glossyButton3.Location = new Point(160, 240);
+            glossyButton3.Text = "登录";
             glossyButton3.Font = new Font("Microsoft Sans Serif", 15);
             glossyButton3.Size = new Size(207, 40);
             glossyButton3.Click += new EventHandler(glossyButton3_Click);
