@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+// 我们现在用NuGet 下面这行注释不需要了
 // 请先右键项目->Add->Reference->Browse添加MySql.Data.dll.
 
 namespace mysql_connection

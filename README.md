@@ -53,3 +53,46 @@ It will be an online platform and database of chinese chess.
       >
       > <https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans>  
       > <https://github.com/Microsoft/vscode-loc>
+* Platform:
+  * Language: C# latest minor version
+  * Target Framework: .NET Framework 4.6.1
+  * IDE: Visual Studio Community 2017
+  * Extensions:
+    * (NuGet)Google.Protobuf
+      > C# runtime library for Protocol Buffers -
+      > Google's data interchange format.
+      > | Attribute      | Value                                |
+      > | -------------- | ------------------------------------ |
+      > | Version        | 3.6.1                                |
+      > | Author(s)      | Google Inc.                          |
+      > | Date published | Saturday, August 11, 2018            |
+      > | Project URL    | <https://github.com/google/protobuf> |
+    * (NuGet)MySql.Data
+      > MySql.Data.MySqlClient .Net Core Class Library
+      > | Attribute      | Value                              |
+      > | -------------- | ---------------------------------- |
+      > | Version        | 8.0.14                             |
+      > | Author(s)      | Oracle                             |
+      > | Date published | Tuesday, January 22, 2019          |
+      > | Project URL    | <https://dev.mysql.com/downloads/> |
+    * (NuGet)System.ValueTuple
+      > Provides the System.ValueTuple structs, which implement
+      > the underlying types for tuples in C# and Visual Basic.
+      > | Attribute      | Value                   |
+      > | -------------- | ----------------------- |
+      > | Version        | 4.5.0                   |
+      > | Author(s)      | Microsoft               |
+      > | Date published | Wednesday, May 30, 2018 |
+      > | Project URL    | <https://dot.net/>      |
+  * Tools
+    * NoComment
+      > Hides comments and replaces them with a callout icon.
+      > Comments are shown as tooltip and when editing them.
+      > | Attribute         | Value                |
+      > | ----------------- | -------------------- |
+      > | Version           | 1.1                  |
+      > | Released on       | 2017/1/19 6:55:33 pm |
+      > | Last updated      | 2017/2/8 11:32:17 pm |
+      > | Publisher         | 3dGrabber            |
+      >
+      > <https://marketplace.visualstudio.com/items?itemName=3dGrabber.NoComment>
