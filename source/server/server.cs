@@ -92,6 +92,9 @@ namespace server
                         case "lobby_enter":
                             check_lobby_enter_request(user, dict);
                             break;
+                        case "lobby_ready":
+                            check_lobby_ready_request(user, dict);
+                            break;
                         case "lobby_chessmove":
                             check_lobby_chessmove_request(user, dict);
                             break;
@@ -191,6 +194,23 @@ namespace server
             send(client_socket, new Dictionary<String, String>()
             {
                 ["identifier"] = "lobby_enter",
+                ["response"] = code.ToString()
+            });
+        }
+
+        private void check_lobby_ready_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Socket client_socket = user.socket;
+            Lobby lobby = user.lobby;
+            if (!(user.lobby.lobby_id == UInt32.Parse(dict["lobby_id"])))
+                throw new LobbyException();
+            Int32 code = user.try_ready();
+            send(client_socket, new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_ready",
                 ["response"] = code.ToString()
             });
             lobby.try_start_game();

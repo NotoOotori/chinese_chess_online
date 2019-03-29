@@ -33,7 +33,7 @@ namespace platform.chess_lobby
 
             #endregion
 
-            Thread thread = new Thread(listening_thread);
+            thread = new Thread(listening_thread);
             thread.Start();
         }
 
@@ -43,6 +43,7 @@ namespace platform.chess_lobby
             IPAddress.Parse(HOST), PORT);
         private const Int32 BUFSIZ = 1024 * 1024;
 
+        private Thread thread { get; set; }
         public UInt32 lobby_id { get; } = 0;
         public Socket server_socket { get; }
 
@@ -93,6 +94,9 @@ namespace platform.chess_lobby
                     {
                         default:
                             throw new DataEncodingException("Invalid identifier.");
+                        case "lobby_ready":
+                            check_ready_request(dict);
+                            break;
                         case "lobby_chessmove":
                             check_chessmove_request(dict);
                             break;
@@ -106,6 +110,12 @@ namespace platform.chess_lobby
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        private void check_ready_request(Dictionary<String, String> dict)
+        {
+            // TODO
+            button_ready.Enabled = false;
         }
 
         private void check_chessmove_request(Dictionary<String, String> dict)
@@ -157,6 +167,21 @@ namespace platform.chess_lobby
             {
                 this.chessboard_container.reflect(reflection);
             }
+        }
+        
+        private void button_ready_Click(object sender, EventArgs e)
+        {
+            server_socket.Send(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_ready",
+                ["lobby_id"] = lobby_id.ToString()
+            });
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            server_socket.Close();
+            base.OnFormClosed(e);
         }
 
         #endregion

@@ -2,7 +2,8 @@
 using System.Net.Sockets;
 using System.Collections.Generic;
 
-namespace server {
+namespace server
+{
     public class Lobby
     {
         #region ' Constructors '
@@ -99,7 +100,7 @@ namespace server {
         
         public void try_start_game()
         {
-            if (user_count < 2)
+            if (count_ready_users() < 2)
                 return;
             Int32 count = 0;
             foreach (User user in seats.Values)
@@ -113,6 +114,15 @@ namespace server {
             }
         }
 
+        private Int32 count_ready_users()
+        {
+            Int32 count = 0;
+            foreach (User user in seats.Values)
+                if (user.ready)
+                    count++;
+            return count;
+        }
+
         /// <summary>
         /// If successful then returns 0.
         /// If user is currently in another lobby then returns 1.
@@ -123,7 +133,6 @@ namespace server {
         /// <returns></returns>
         public Int32 try_enter(User user, Seat seat)
         {
-            Socket client_socket = user.socket;
             if (user.lobby != null)
                 return 1;
             if (seats[seat] != null)
@@ -138,6 +147,8 @@ namespace server {
         {
             if (seats[seat] == user)
                 seats[seat] = null;
+            Console.WriteLine($"System: User {user.email_address} quit " +
+                $"lobby #{lobby_id}.");
         }
 
         #endregion

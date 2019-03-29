@@ -52,11 +52,11 @@ namespace server
 
         public Lobby lobby { get { return _lobby; } }
         public Seat seat { get { return _seat; } }
-        public Boolean standby { get { return _standby; } }
+        public Boolean ready { get { return _ready; } }
 
         private Lobby _lobby { get; set; }
         private Seat _seat { get; set; } = Seat.NONE;
-        private Boolean _standby { get; set; } = false;
+        private Boolean _ready { get; set; } = false;
 
         #endregion
 
@@ -196,6 +196,7 @@ namespace server
                     command.ExecuteNonQuery();
                 }
             }
+            quit_lobby();
             Console.WriteLine($"System: {email_address}({client_end_point}) " +
                 $"logged out successfully.");
         }
@@ -220,6 +221,14 @@ namespace server
             lobby.try_quit(this, seat);
             this._lobby = null;
             this._seat = Seat.NONE;
+        }
+
+        public Int32 try_ready()
+        {
+            _ready = true;
+            Console.WriteLine($"System: User {email_address} got ready in " +
+                $"lobby #{lobby.lobby_id}.");
+            return 0;
         }
 
         #endregion
