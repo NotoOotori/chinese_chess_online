@@ -13,6 +13,9 @@
     user\_port, login\_time, status\_code)
 * user\_logout\_record (<ins>**login\_id**</ins>,
     logout\_time)
+* game\_record (<ins>**game\_id**</ins>,
+    <ins>red\_email\_address</ins>, <ins>black\_email\_address</ins>,
+    start\_time, game\_string, result)
 
 ## 存储过程
 

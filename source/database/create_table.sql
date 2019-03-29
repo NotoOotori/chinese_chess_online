@@ -53,3 +53,22 @@ CREATE TABLE user_logout_record
         ON DELETE RESTRICT
         ON UPDATE RESTRICT
 );
+
+CREATE TABLE game_record
+(
+    game_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    red_email_address VARCHAR(254),
+    black_email_address VARCHAR(254),
+    # CHECK (red_email_address <> black_email_address)
+    start_time TIMESTAMP NOT NULL,
+    game_string VARCHAR(500) NOT NULL,
+    result TINYINT, # CHECK (result BETWEEN 0 AND 2)
+    FOREIGN KEY (red_email_address)
+        REFERENCES platform_user (email_address)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    FOREIGN KEY (black_email_address)
+        REFERENCES platform_user (email_address)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
