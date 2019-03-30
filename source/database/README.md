@@ -5,8 +5,8 @@
 * platform\_server (<ins>**server\_hostname**,
     **server\_port**</ins>)
 * platform\_user (<ins>**email\_address**</ins>,
-    username, encrypted\_password, salt\_value,
-    gender, birthday)
+    username, encrypted\_password, salt\_value, elo,
+    avatar, gender, birthday)
 * user\_login\_record (<ins>**login\_id**</ins>,
     <ins>email\_address</ins>, <ins>server\_hostname,
     server\_port</ins>, user\_hostname,
