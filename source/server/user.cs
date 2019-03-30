@@ -231,6 +231,11 @@ namespace server
             return 0;
         }
 
+        public void lobby_init()
+        {
+            _ready = false;
+        }
+
         #endregion
 
         #endregion

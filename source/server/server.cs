@@ -98,6 +98,12 @@ namespace server
                         case "lobby_chessmove":
                             check_lobby_chessmove_request(user, dict);
                             break;
+                        case "lobby_surrender":
+                            check_lobby_surrender_request(user, dict);
+                            break;
+                        case "lobby_draw":
+                            check_lobby_draw_request(user, dict);
+                            break;
                     }
                 }
             }
@@ -224,6 +230,29 @@ namespace server
             Lobby lobby = user.lobby;
             Seat seat = user.seat;
             lobby.broadcast(dict, seat);
+        }
+
+        private void check_lobby_surrender_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Lobby lobby = user.lobby;
+            switch (user.seat)
+            {
+                case Seat.ONE:
+                    lobby.end_game("0");
+                    break;
+                case Seat.TWO:
+                    lobby.end_game("2");
+                    break;
+            }
+        }
+
+        private void check_lobby_draw_request(
+            User user, Dictionary<String, String> dict)
+        {
+            // TODO
         }
 
         #endregion
