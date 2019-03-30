@@ -26,6 +26,7 @@
       > | `IN`    | \_email\_address        | `VARCHAR(254)` |                  |
       > | `IN`    | \_username              | `VARCHAR(16)`  |                  |
       > | `IN`    | \_unencrypted\_password | `VARCHAR(256)` |                  |
+      > | `IN`    | \_avatar                | `MEDIUMBLOB`   |                  |
       > | `IN`    | \_gender                | `CHAR(1)`      | `'[fm]'`, `NULL` |
       > | `IN`    | \_birthday              | `DATE`         | `NULL`           |
   * 效果:
