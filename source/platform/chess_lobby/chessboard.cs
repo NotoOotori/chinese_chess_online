@@ -662,6 +662,8 @@ namespace platform.chess_lobby
         {
             this.turns = 0;
             this.colour = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
             this.chess_positions = new List<ChessPosition>();
             ChessPosition chess_position = new ChessPosition();
             this.chess_positions.Add(chess_position);
@@ -676,6 +678,8 @@ namespace platform.chess_lobby
         {
             this.turns = 0;
             this.colour = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
             this.chess_positions = new List<ChessPosition>();
             ChessPosition chess_position = new ChessPosition(fen);
             this.chess_positions.Add(chess_position);
