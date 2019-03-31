@@ -129,6 +129,7 @@
             this.glossyButton_confirm.NormalColor = System.Drawing.Color.Orange;
             this.glossyButton_confirm.Size = new System.Drawing.Size(124, 44);
             this.glossyButton_confirm.TabIndex = 7;
+            this.glossyButton_confirm.Click += new System.EventHandler(this.glossyButton_confirm_Click);
             // 
             // FormResult
             // 

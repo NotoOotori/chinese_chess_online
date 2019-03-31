@@ -16,6 +16,8 @@ namespace platform.chess_lobby
         {
             InitializeComponent();
 
+            glossyButton_confirm.Font = new Font(
+                "Comic Sans MS", Convert.ToSingle(22.75));
             glossyButton_confirm.Text = "OK";
 
             List<Color> colours = new List<Color>();
@@ -46,6 +48,11 @@ namespace platform.chess_lobby
             label_result_opponent.ForeColor = colours[1];
             label_elo_change_player.ForeColor = colours[0];
             label_elo_change_opponent.ForeColor = colours[1];
+        }
+
+        private void glossyButton_confirm_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
