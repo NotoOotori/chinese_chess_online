@@ -22,6 +22,9 @@ namespace platform.chess_lobby
             this.seat = seat;
             this.server_socket = server_socket;
 
+            button_draw.Enabled = false;
+            button_surrender.Enabled = false;
+
             InitializeComponent();
 
             #region ' Set Control Styles '
@@ -84,9 +87,9 @@ namespace platform.chess_lobby
 
         private void initialize()
         {
-            button_draw.Enabled = true;
+            button_draw.Enabled = false;
             button_ready.Enabled = true;
-            button_surrender.Enabled = true;
+            button_surrender.Enabled = false;
             chessboard_initialize_pieces();
         }
 
@@ -152,6 +155,8 @@ namespace platform.chess_lobby
 
         private void check_gamestart_request(Dictionary<String, String> dict)
         {
+            button_draw.Enabled = true;
+            button_surrender.Enabled = true;
             Char colour_str = dict["colour"][0];
             chessboard_gamestart(colour_str.to_chess_colour());
         }
@@ -265,8 +270,6 @@ namespace platform.chess_lobby
             base.OnFormClosed(e);
         }
 
-        #endregion
-
         private void button_surrender_Click(object sender, EventArgs e)
         {
             server_socket.Send(new Dictionary<String, String>()
@@ -279,12 +282,16 @@ namespace platform.chess_lobby
 
         private void button_draw_Click(object sender, EventArgs e)
         {
+            /*
             server_socket.Send(new Dictionary<String, String>()
             {
                 ["identifier"] = "lobby_draw",
                 ["message"] = "draw"
             });
             button_draw.Enabled = false;
+            */
         }
+
+        #endregion
     }
 }

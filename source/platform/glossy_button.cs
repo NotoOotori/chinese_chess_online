@@ -111,7 +111,6 @@ namespace platform
         GraphicsPath GetRoundPath(RectangleF Rect, int radius)
         {
             float r2 = radius / 2f;
-            int a = 0;
             GraphicsPath GraphPath = new GraphicsPath();
             this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width + 1, this.Height + 1, 3, 3));
             GraphPath.AddArc(Rect.X, Rect.Y, radius, radius, 180, 90);
