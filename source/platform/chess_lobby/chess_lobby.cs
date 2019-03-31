@@ -22,9 +22,6 @@ namespace platform.chess_lobby
             this.seat = seat;
             this.server_socket = server_socket;
 
-            button_draw.Enabled = false;
-            button_surrender.Enabled = false;
-
             InitializeComponent();
 
             #region ' Set Control Styles '
@@ -36,6 +33,9 @@ namespace platform.chess_lobby
                 ControlStyles.SupportsTransparentBackColor, true);
 
             #endregion
+
+            button_draw.Enabled = false;
+            button_surrender.Enabled = false;
 
             thread = new Thread(listening_thread);
             thread.Start();
