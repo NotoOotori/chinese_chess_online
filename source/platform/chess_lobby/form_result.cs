@@ -41,8 +41,8 @@ namespace platform.chess_lobby
                     break;
             }
 
-            label_result_player.Text = result.ToString();
-            label_result_opponent.Text = (2 - result).ToString();
+            label_result_player.Text = result.to_chinese_result();
+            label_result_opponent.Text = (2 - result).to_chinese_result();
             label_elo_change_player.Text = elo_change.to_elo_change_string();
             label_elo_change_opponent.Text = (-elo_change).to_elo_change_string();
 

@@ -99,7 +99,7 @@ namespace platform.chess_lobby
 
         #endregion
 
-        #region ' Elo '
+        #region ' EndGame '
 
         public static String to_elo_change_string(this Int32 elo_change)
         {
@@ -107,6 +107,21 @@ namespace platform.chess_lobby
             if (elo_change >= 0)
                 elo_change_string.Insert(0, "+");
             return elo_change_string;
+        }
+
+        public static String to_chinese_result(this Int32 result)
+        {
+            switch (result)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("Result out of range!");
+                case 0:
+                    return "负";
+                case 1:
+                    return "平";
+                case 2:
+                    return "胜";
+            }
         }
 
         #endregion
