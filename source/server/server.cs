@@ -107,6 +107,12 @@ namespace server
                         case "lobby_chessmove":
                             check_lobby_chessmove_request(user, dict);
                             break;
+                        case "lobby_surrender":
+                            check_lobby_surrender_request(user, dict);
+                            break;
+                        case "lobby_draw":
+                            check_lobby_draw_request(user, dict);
+                            break;
                         case "plaza_renew":
                             check_plaza_renew_request(user, dict);
                             break;
@@ -238,10 +244,34 @@ namespace server
             lobby.broadcast(dict, seat);
         }
 
+        private void check_lobby_surrender_request(
+            User user, Dictionary<String, String> dict)
+        {
+            if (!user.is_logged_in)
+                throw new UserNotLoggedInException();
+            Lobby lobby = user.lobby;
+            switch (user.seat)
+            {
+                case Seat.ONE:
+                    lobby.end_game("0");
+                    break;
+                case Seat.TWO:
+                    lobby.end_game("2");
+                    break;
+            }
+        }
+
+        private void check_lobby_draw_request(
+            User user, Dictionary<String, String> dict)
+        {
+            // TODO
+        }
+
         private void check_plaza_renew_request(
             User user, Dictionary<String, String> dict)
         {
             Socket client_socket = user.socket;
+            String email_address = "0";
             if (!user.is_logged_in)
                 throw new UserNotLoggedInException();
             dict = new Dictionary<String, String>()
@@ -252,7 +282,8 @@ namespace server
             {
                 try
                 {
-                    dict.Add($"{lobby.lobby_id}-{1}", lobby.seat_1.email_address);
+                    email_address = lobby.seat_1.email_address;
+                    dict.Add($"{lobby.lobby_id}-{1}", email_address);
                 }
                 catch (NullReferenceException)
                 {
@@ -260,7 +291,8 @@ namespace server
                 }
                 try
                 {
-                    dict.Add($"{lobby.lobby_id}-{2}", lobby.seat_2.email_address);
+                    email_address = lobby.seat_2.email_address;
+                    dict.Add($"{lobby.lobby_id}-{2}", email_address);
                 }
                 catch (NullReferenceException)
                 {
