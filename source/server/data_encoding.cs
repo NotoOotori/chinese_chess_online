@@ -33,15 +33,16 @@ namespace server
                 {
                     try
                     {
-                        dict.Add(tkey, tvalue); break;
+                        dict.Add(tkey, tvalue);
                     }
                     catch (ArgumentException) {; }
+                    break;
                 }
                 else
                     str = str.Substring(end + 1);
                 try
                 {
-                    dict.Add(tkey, tvalue); break;
+                    dict.Add(tkey, tvalue);
                 }
                 catch (ArgumentException) {; }
             }
