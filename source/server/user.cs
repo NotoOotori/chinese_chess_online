@@ -218,7 +218,12 @@ namespace server
 
         public void quit_lobby()
         {
-            lobby.try_quit(this, seat);
+            try
+            {
+                lobby.try_quit(this, seat);
+            }
+            catch (NullReferenceException)
+            {; }
             this._lobby = null;
             this._seat = Seat.NONE;
         }
