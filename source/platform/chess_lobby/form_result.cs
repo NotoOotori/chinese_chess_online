@@ -19,6 +19,8 @@ namespace platform.chess_lobby
             glossyButton_confirm.Font = new Font(
                 "Comic Sans MS", Convert.ToSingle(22.75));
             glossyButton_confirm.Text = "OK";
+            glossyButton_confirm.label1.Click += new EventHandler(
+                glossyButton_confirm_Click);
 
             List<Color> colours = new List<Color>();
             switch (result)
