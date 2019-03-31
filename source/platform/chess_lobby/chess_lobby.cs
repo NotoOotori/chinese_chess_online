@@ -171,17 +171,21 @@ namespace platform.chess_lobby
         private void check_gameend_request(Dictionary<String, String> dict)
         {
             Int32 seat1_result = Convert.ToInt32(dict["result"]);
+            Int32 seat1_elo_change = Convert.ToInt32(dict["elo_change"]);
             Int32 result = -1;
+            Int32 elo_change = 100;
             switch (seat)
             {
                 case 1:
                     result = seat1_result;
+                    elo_change = seat1_elo_change;
                     break;
                 case 2:
                     result = 2 - seat1_result;
+                    elo_change = -seat1_elo_change;
                     break;
             }
-            MessageBox.Show(result.ToString()); // TODO result
+            new FormResult(result, elo_change).ShowDialog();
             this.initialize();
         }
 

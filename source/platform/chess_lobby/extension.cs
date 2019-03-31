@@ -98,5 +98,17 @@ namespace platform.chess_lobby
         }
 
         #endregion
+
+        #region ' Elo '
+
+        public static String to_elo_change_string(this Int32 elo_change)
+        {
+            String elo_change_string = elo_change.ToString("D2");
+            if (elo_change >= 0)
+                elo_change_string.Insert(0, "+");
+            return elo_change_string;
+        }
+
+        #endregion
     }
 }

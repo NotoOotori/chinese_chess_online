@@ -82,6 +82,12 @@
     <Compile Include="chess_lobby\chess_position.cs" />
     <Compile Include="chess_lobby\coordinate.cs" />
     <Compile Include="chess_lobby\extension.cs" />
+    <Compile Include="chess_lobby\form_result.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\form_result.Designer.cs">
+      <DependentUpon>form_result.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
@@ -119,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chess_lobby\form_result.resx">
+      <DependentUpon>form_result.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
