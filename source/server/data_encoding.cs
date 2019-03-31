@@ -39,7 +39,11 @@ namespace server
                 }
                 else
                     str = str.Substring(end + 1);
-                dict.Add(tkey, tvalue);
+                try
+                {
+                    dict.Add(tkey, tvalue); break;
+                }
+                catch (ArgumentException) {; }
             }
             if (!dict.ContainsKey("identifier"))
                 throw new DataEncodingException("Identifier Not Found!");
