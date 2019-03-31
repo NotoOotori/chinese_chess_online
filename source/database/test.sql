@@ -22,6 +22,9 @@ DELETE FROM user_login_record WHERE email_address = '345238563@qq.com';
 ALTER TABLE user_login_record AUTO_INCREMENT = 1;
 DELETE FROM user_logout_record WHERE login_id > 0;
 
+CALL procedure_get_username('345238563@qq.com', @_username);
+SELECT @_username;
+
 INSERT INTO game_record
     VALUE (NULL, '345238563@qq.com', 'jason_345238563@outlook.com', NULL, 'c2e2', 2);
 CALL procedure_end_game('345238563@qq.com', 'jason_345238563@outlook.com', 'c2e2', 2, @_red_elo_change);
