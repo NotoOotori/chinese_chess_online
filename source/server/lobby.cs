@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace server
 {
@@ -17,6 +19,13 @@ namespace server
         #endregion
 
         #region ' Properties '
+
+        private String CONNECTION_STRING =
+            "server = localhost; " +
+            "user = ccol_user; " +
+            "database = chinese_chess_online; " +
+            "port = 3306; " +
+            "password = 123PengZiYu@";
 
         public UInt32 lobby_id { get; }
 
@@ -123,15 +132,13 @@ namespace server
             if (count_ready_users() < 2)
                 return;
             Int32 count = 0;
-            Int32 seed = new Random().Next(0, 2);
-            Int32[] seeds = new Int32[2] { seed, 1 - seed };
             foreach (User user in seats.Values)
             {
                 Socket socket = user.socket;
                 socket.Send(new Dictionary<String, String>()
                 {
                     ["identifier"] = "lobby_gamestart",
-                    ["colour"] = "br".Substring(seeds[count++], 1)
+                    ["colour"] = "rb".Substring(count++, 1)
                 });
             }
         }
@@ -179,10 +186,67 @@ namespace server
         /// <param name="result"><see cref="Seat"/>1上玩家的结果</param>
         public void end_game(String result)
         {
+            String red_elo_change = "0";
+            using (MySqlConnection connection =
+                new MySqlConnection(CONNECTION_STRING))
+            {
+                using (MySqlCommand command = new MySqlCommand(
+                    "procedure_log_out", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    #region ' Add Parameters '
+
+                    MySqlParameter _red_email_address = new MySqlParameter(
+                        "_red_email_address", MySqlDbType.VarString, 254)
+                    {
+                        Value = seat_1.email_address,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _black_email_address = new MySqlParameter(
+                        "_black_email_address", MySqlDbType.VarString, 254)
+                    {
+                        Value = seat_2.email_address,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _game_string = new MySqlParameter(
+                        "_game_string", MySqlDbType.VarString, 500)
+                    {
+                        Value = "c2e2", //TODO
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _result = new MySqlParameter(
+                        "_result", MySqlDbType.Byte)
+                    {
+                        Value = result,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _red_elo_change = new MySqlParameter(
+                        "_red_elo_change", MySqlDbType.Int16)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(_red_email_address);
+                    command.Parameters.Add(_black_email_address);
+                    command.Parameters.Add(_game_string);
+                    command.Parameters.Add(_result);
+                    command.Parameters.Add(_red_elo_change);
+
+                    #endregion
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    red_elo_change = _red_elo_change.Value.ToString();
+                }
+            }
             broadcast(new Dictionary<String, String>()
             {
                 ["identifier"] = "lobby_gameend",
-                ["result"] = result
+                ["result"] = result,
+                ["elo_change"] = red_elo_change
             });
             this.initialize();
         }
