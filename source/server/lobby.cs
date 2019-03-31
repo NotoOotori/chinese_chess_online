@@ -52,7 +52,12 @@ namespace server
         {
             foreach (User user in seats.Values)
             {
-                user.socket.Send(data);
+                try
+                {
+                    user.socket.Send(data);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -64,7 +69,12 @@ namespace server
         {
             foreach (User user in seats.Values)
             {
-                user.socket.Send(dict);
+                try
+                {
+                    user.socket.Send(dict);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -79,7 +89,12 @@ namespace server
             {
                 if (pair.Key == seat)
                     continue;
-                pair.Value.socket.Send(data);
+                try
+                {
+                    pair.Value.socket.Send(data);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -94,7 +109,12 @@ namespace server
             {
                 if (pair.Key == seat)
                     continue;
-                pair.Value.socket.Send(dict);
+                try
+                {
+                    pair.Value.socket.Send(dict);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
         
@@ -103,13 +123,15 @@ namespace server
             if (count_ready_users() < 2)
                 return;
             Int32 count = 0;
+            Int32 seed = new Random().Next(0, 2);
+            Int32[] seeds = new Int32[2] { seed, 1 - seed };
             foreach (User user in seats.Values)
             {
                 Socket socket = user.socket;
                 socket.Send(new Dictionary<String, String>()
                 {
                     ["identifier"] = "lobby_gamestart",
-                    ["colour"] = "br".Substring(count++, 1)
+                    ["colour"] = "br".Substring(seeds[count++], 1)
                 });
             }
         }
@@ -149,6 +171,28 @@ namespace server
                 seats[seat] = null;
             Console.WriteLine($"System: User {user.email_address} quit " +
                 $"lobby #{lobby_id}.");
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="result"><see cref="Seat"/>1上玩家的结果</param>
+        public void end_game(String result)
+        {
+            broadcast(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_gameend",
+                ["result"] = result
+            });
+            this.initialize();
+        }
+
+        public void initialize()
+        {
+            foreach (User user in seats.Values)
+            {
+                user.lobby_init();
+            }
         }
 
         #endregion

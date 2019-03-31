@@ -59,6 +59,7 @@
             this.button_draw.TabIndex = 2;
             this.button_draw.Text = "Draw";
             this.button_draw.UseVisualStyleBackColor = true;
+            this.button_draw.Click += new System.EventHandler(this.button_draw_Click);
             // 
             // button_surrender
             // 
@@ -68,6 +69,7 @@
             this.button_surrender.TabIndex = 3;
             this.button_surrender.Text = "Surrender";
             this.button_surrender.UseVisualStyleBackColor = true;
+            this.button_surrender.Click += new System.EventHandler(this.button_surrender_Click);
             // 
             // ChessLobby
             // 

@@ -514,16 +514,13 @@ namespace platform.chess_lobby
 
             #endregion
 
+            this.MouseClick += Chessboard_MouseClick;
+
             #region ' Initialize Pieces '
-            
-            this.chess_positions = new List<ChessPosition>();
-            ChessPosition chess_position = new ChessPosition();
-            this.chess_positions.Add(chess_position);
-            this.refresh_pieces();
+
+            this.initialize_pieces(FEN.empty);
 
             #endregion
-
-            this.MouseClick += Chessboard_MouseClick;
         }
 
         #endregion
@@ -655,6 +652,50 @@ namespace platform.chess_lobby
         #endregion
 
         #region ' Methods '
+
+        #region ' Initiations '
+
+        /// <summary>
+        /// 初始化正常开始局面的棋子
+        /// </summary>
+        public void initialize_pieces()
+        {
+            this.turns = 0;
+            this.colour = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
+            this.chess_positions = new List<ChessPosition>();
+            ChessPosition chess_position = new ChessPosition();
+            this.chess_positions.Add(chess_position);
+            this.refresh_pieces();
+        }
+
+        /// <summary>
+        /// 初始化特定fen值下的棋子.
+        /// </summary>
+        /// <param name="fen"></param>
+        public void initialize_pieces(String fen)
+        {
+            this.turns = 0;
+            this.colour = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
+            this.chess_positions = new List<ChessPosition>();
+            ChessPosition chess_position = new ChessPosition(fen);
+            this.chess_positions.Add(chess_position);
+            this.refresh_pieces();
+        }
+
+        public void gamestart(ChessColour colour)
+        {
+            this.initialize_pieces();
+            ReflectionType reflection = colour == ChessColour.RED ?
+                ReflectionType.None : ReflectionType.PointReflection;
+            reflect(this.reflection ^ reflection);
+            this.colour = colour;
+        }
+
+        #endregion
 
         public void move(Coordinate start, Coordinate end, Boolean from_server)
         {
