@@ -191,7 +191,7 @@ namespace server
                 new MySqlConnection(CONNECTION_STRING))
             {
                 using (MySqlCommand command = new MySqlCommand(
-                    "procedure_log_out", connection)
+                    "procedure_end_game", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 })
