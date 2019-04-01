@@ -126,8 +126,12 @@ namespace platform.login
             switch (state)
             {
                 case 0:
-                    MessageBox.Show("登录成功");
-                    //登录成功
+                    {
+                        MessageBox.Show("登录成功");
+                        platform.dating.FormDating f1 = new dating.FormDating(socket_client);
+                        f1.Show(); 
+                        this.Hide();
+                    }
                     break;
                 case 1:
                     label5.Text = "邮箱不存在";
