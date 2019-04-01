@@ -57,22 +57,22 @@ namespace platform.login
         private void button1_Click(object sender, EventArgs e)
         {
             label12.Text = "";
-            string user_name=textBox_user.Text;            
-            //for(int i=0;i<user_name.Length;i++)
-            //{
-            //    if(user_name.Substring(i,1)=="<"|| user_name.Substring(i, 1) == ">"|| user_name.Substring(i, 1) == "/")
-            //    {
-            //        label10.ForeColor = Color.Red;
-            //        label10.Text = "用户名包含<>/,请重新输入";
-            //        return;
-            //    }
-            //}
-            //if (textBox_password.Text != textBox_confirm.Text)
-            //{
-            //    label12.Text = "密码输入错误，请重新输入";
-            //    return;
-            //}
-
+            string user_name=textBox_user.Text;
+            for (int i = 0; i < user_name.Length; i++)
+            {
+                if (user_name.Substring(i, 1) == "<" || user_name.Substring(i, 1) == ">" || user_name.Substring(i, 1) == "/")
+                {
+                    label10.ForeColor = Color.Red;
+                    label10.Text = "用户名包含<>/,请重新输入";
+                    return;
+                }
+            }
+            if (textBox_password.Text != textBox_confirm.Text)
+            {
+                label12.Text = "密码输入错误，请重新输入";
+                return;
+            }
+            
             SendFileBytesToDatabase();
         }
 
@@ -103,8 +103,7 @@ namespace platform.login
             ImageConverter imc = new ImageConverter();
             MySqlConnection sendDataConnection = CreateConnection();
             MySqlCommand cmd = new MySqlCommand("procedure_sign_up", sendDataConnection);
-            //string sendFileSql = "insert into platform_user(email_address,avatar) values(?email_address,?avatar);";
-            //MySqlCommand sendCmd = new MySqlCommand(sendFileSql, sendDataConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
             MySqlParameter email_address = new MySqlParameter("_email_address",MySqlDbType.VarChar,254);
             MySqlParameter username = new MySqlParameter("_username", MySqlDbType.VarChar, 16);
             MySqlParameter password = new MySqlParameter("_unencrypted_password", MySqlDbType.VarChar, 256);
@@ -121,20 +120,26 @@ namespace platform.login
             username.Value = this.textBox_user.Text;
             password.Value = this.textBox_password.Text;
             avatar.Value = (byte[])imc.ConvertTo(pictureBox_avatar.Image, typeof(Byte[]));
-            gender.Value = comboBox_gender.Text;
+            gender.Value = ((comboBox_gender.Text=="男")?"m":"f");
             String yyyy = comboBox_yy.Text;
             String mm = comboBox_mm.Text;
             String dd = comboBox_dd.Text;
-            birthday.Value = $"{yyyy}/{dd}/{mm}";
+            birthday.Value = $"{yyyy}/{mm}/{dd}";
+            cmd.Parameters.Add(email_address);
+            cmd.Parameters.Add(username);
+            cmd.Parameters.Add(password);
+            cmd.Parameters.Add(avatar);
+            cmd.Parameters.Add(gender);
+            cmd.Parameters.Add(birthday);
             sendDataConnection.Open();
             try
             {
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("向数据库储存数据完成");
+                MessageBox.Show("注册成功！");
             }
             catch (Exception e)
             {
-                Console.WriteLine("向数据库存储数据失败：" + e.Message);
+                MessageBox.Show("注册失败：" + e.Message);
             }
             finally
             {
