@@ -37,8 +37,6 @@ namespace platform.dating
             socket_server = server_socket;
         }
 
-        
-
         void server_send_renew(Socket socket_server)
         {
             byte[] renew;
@@ -87,13 +85,11 @@ namespace platform.dating
             //try { this.pictureBox1.Image = Image.FromFile("D:\\greenmushroom.gif"); pictureBox1.Enabled = false; }
             //catch (Exception ex) { MessageBox.Show(ex.ToString()); }
 
-            {                
-                thread_client = new Thread(receive_data);
-                //将窗体线程设置为与后台同步
-                thread_client.IsBackground = true;
-                //启动线程
-                thread_client.Start();
-            }
+            thread_client = new Thread(receive_data);
+            //将窗体线程设置为与后台同步
+            thread_client.IsBackground = true;
+            //启动线程
+            thread_client.Start();
 
             for (uint i = 0; i < tot_board; i++)
             {
@@ -229,7 +225,7 @@ namespace platform.dating
                                                 //try
                                                 { cmd1.ExecuteNonQuery(); }
                                             }
-                                            catch(MySqlException ex)
+                                            catch(MySqlException)
                                             {
                                                 MessageBox.Show("与服务器连接失败，请检查连接！");
                                             }
@@ -307,7 +303,7 @@ namespace platform.dating
                         }
                     }
                 }
-                catch (DataEncodingException ex)
+                catch (DataEncodingException)
                 {
                     MessageBox.Show("服务器内部错误，请稍后重试");
                 }

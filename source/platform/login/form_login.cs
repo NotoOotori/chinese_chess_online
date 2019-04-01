@@ -94,7 +94,6 @@ namespace platform.login
                     cin_count++;
                 return num;
             }
-               
         }
 
         private void prod_captcha()
