@@ -76,6 +76,7 @@
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 4;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox2
             // 
@@ -84,10 +85,13 @@
             this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // button_exit
             // 
+            this.button_exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_exit.BackColor = System.Drawing.Color.Transparent;
+            this.button_exit.FlatAppearance.BorderSize = 0;
             this.button_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_exit.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_exit.ForeColor = System.Drawing.Color.White;
@@ -101,7 +105,9 @@
             // 
             // button_min
             // 
+            this.button_min.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_min.BackColor = System.Drawing.Color.Transparent;
+            this.button_min.FlatAppearance.BorderSize = 0;
             this.button_min.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_min.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_min.ForeColor = System.Drawing.Color.White;
@@ -118,6 +124,7 @@
             this.button_renew.BackColor = System.Drawing.Color.Transparent;
             this.button_renew.BackgroundImage = global::platform.Properties.Resources.refresh;
             this.button_renew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_renew.FlatAppearance.BorderSize = 0;
             this.button_renew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_renew.ForeColor = System.Drawing.Color.Transparent;
             this.button_renew.Location = new System.Drawing.Point(656, 2);

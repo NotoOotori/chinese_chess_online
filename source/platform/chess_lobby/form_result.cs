@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using platform.common;
 
 namespace platform.chess_lobby
 {
-    public partial class FormResult : Form
+    public partial class FormResult : FormBase
     {
         public FormResult(Int32 result, Int32 elo_change)
         {

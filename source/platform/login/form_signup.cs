@@ -9,12 +9,13 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using MySql.Data;
-using MySql.Data.MySqlClient;   
+using MySql.Data.MySqlClient;
+using platform.common;
 
 
 namespace platform.login
 {
-    public partial class form_signup : Form
+    public partial class form_signup : FormBase
     {
         static string connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
         public form_signup()

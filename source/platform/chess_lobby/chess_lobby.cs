@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace platform.chess_lobby
 {
-    public partial class ChessLobby : Form
+    public partial class ChessLobby : FormBase
     {
         /// <summary>
         /// 建立<see cref="ChessLobby"/>类的新实例.

@@ -36,10 +36,10 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -116,20 +116,6 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "士大夫";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.label7.ForeColor = System.Drawing.Color.DarkBlue;
-            this.label7.Location = new System.Drawing.Point(466, 329);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(82, 22);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "忘记密码";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            this.label7.MouseLeave += new System.EventHandler(this.label7_MouseLeave);
-            this.label7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label7_MouseMove);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -159,6 +145,20 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.label7.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label7.Location = new System.Drawing.Point(466, 329);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(82, 22);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "忘记密码";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            this.label7.MouseLeave += new System.EventHandler(this.label7_MouseLeave);
+            this.label7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label7_MouseMove);
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,8 +179,17 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Name = "FormLogin";
-            this.Text = "form_login";
             this.Load += new System.EventHandler(this.FormLogin_Load);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label3, 0);
+            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.textBox2, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.label7, 0);
+            this.Controls.SetChildIndex(this.label8, 0);
+            this.Controls.SetChildIndex(this.checkBox1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,10 +204,10 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label7;
     }
 }
 

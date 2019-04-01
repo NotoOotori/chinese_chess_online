@@ -15,7 +15,7 @@ using platform.common;
 
 namespace platform.login
 {
-    public partial class FormLogin : Form
+    public partial class FormLogin : FormBase
     {
         String HOST = "45.32.82.133"; // IP地址
         Int32 PORT = 21567; // 端口
@@ -238,9 +238,9 @@ namespace platform.login
 
         private void label7_Click(object sender, EventArgs e)
         {
-            form_forgetpassword f1 = new form_forgetpassword();
-            this.Hide();
-            f1.Show();
+            // form_forgetpassword f1 = new form_forgetpassword();
+            // this.Hide();
+            // f1.Show();
         }
 
         private void label7_MouseMove(object sender, MouseEventArgs e)

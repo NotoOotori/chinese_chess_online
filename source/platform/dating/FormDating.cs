@@ -161,6 +161,16 @@ namespace platform.dating
                 leftflag = false;
         }
         #endregion
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
         public void receive_data()
         {
             while (true)
