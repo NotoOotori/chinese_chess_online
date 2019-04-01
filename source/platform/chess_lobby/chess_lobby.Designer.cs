@@ -35,6 +35,14 @@
             this.chessboard_container = new platform.chess_lobby.ChessboardContainer();
             this.SuspendLayout();
             // 
+            // button_exit
+            // 
+            this.button_exit.FlatAppearance.BorderSize = 0;
+            // 
+            // button_min
+            // 
+            this.button_min.FlatAppearance.BorderSize = 0;
+            // 
             // label_ready
             // 
             this.label_ready.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -42,7 +50,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_ready.AutoSize = true;
             this.label_ready.BackColor = System.Drawing.Color.Transparent;
-            this.label_ready.Font = new System.Drawing.Font("方正舒体", 50F);
+            this.label_ready.Font = new System.Drawing.Font("FZShuTi", 50F);
             this.label_ready.ForeColor = System.Drawing.Color.Cyan;
             this.label_ready.Location = new System.Drawing.Point(80, 570);
             this.label_ready.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -131,6 +139,9 @@
             this.Controls.Add(this.button_ready);
             this.Controls.Add(this.chessboard_container);
             this.Name = "ChessLobby";
+            this.Load += new System.EventHandler(this.ChessLobby_Load);
+            this.Controls.SetChildIndex(this.button_min, 0);
+            this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.chessboard_container, 0);
             this.Controls.SetChildIndex(this.button_ready, 0);
             this.Controls.SetChildIndex(this.button_draw, 0);

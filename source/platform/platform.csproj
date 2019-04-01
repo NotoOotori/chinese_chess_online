@@ -222,6 +222,7 @@
     <Content Include="chess_lobby\resources\audio\actions\capture.wav" />
     <Content Include="chess_lobby\resources\audio\actions\check.wav" />
     <Content Include="chess_lobby\resources\audio\actions\checkmate.wav" />
+    <Content Include="chess_lobby\resources\audio\bgm\bgm_roggy.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bpad1.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bptr1.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bptr2.wav" />

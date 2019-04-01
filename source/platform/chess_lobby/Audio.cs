@@ -42,7 +42,12 @@ namespace platform.chess_lobby
         #region ' Properties '
 
         private WaveOutEvent output_device { get; set; }
+
+        private IEnumerable<WaveFileReader> readers { get; set; }
+
         private IEnumerator<WaveFileReader> enumerator { get; set; }
+
+        public Single volume { get; set; } = 1.0F;
 
         #endregion
 
@@ -52,7 +57,7 @@ namespace platform.chess_lobby
         {
             output_device = new WaveOutEvent();
             output_device.PlaybackStopped += on_playback_stopped;
-            IEnumerable<WaveFileReader> readers = new List<WaveFileReader>();
+            readers = new List<WaveFileReader>();
             foreach(String name in names)
             {
                 Stream stream = Properties.Resources.ResourceManager.
@@ -69,6 +74,30 @@ namespace platform.chess_lobby
             if (!enumerator.MoveNext())
                 return;
             output_device.Init(enumerator.Current);
+            output_device.Volume = volume;
+            output_device.Play();
+        }
+
+        public void play_infinitely(String name)
+        {
+            output_device = new WaveOutEvent();
+            output_device.PlaybackStopped += on_infinite_playback_stopped;
+            Stream stream = Properties.Resources.ResourceManager.
+                GetStream(name);
+            readers = new WaveFileReader[] { new WaveFileReader(stream) };
+            enumerator = readers.GetEnumerator();
+            on_infinite_playback_stopped(new Object(), new EventArgs());
+        }
+
+        private void on_infinite_playback_stopped(Object sender, EventArgs e)
+        {
+            if (!enumerator.MoveNext())
+            {
+                enumerator = readers.GetEnumerator();
+                enumerator.MoveNext();
+            }
+            output_device.Init(enumerator.Current);
+            output_device.Volume = volume;
             output_device.Play();
         }
 

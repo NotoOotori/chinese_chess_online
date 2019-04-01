@@ -98,6 +98,11 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
+        private void ChessLobby_Load(object sender, EventArgs e)
+        {
+            new AudioPlayList() { volume = 0.1F }.play_infinitely("bgm_roggy");
+        }
+
         private void initialize()
         {
             button_draw.Enabled = false;
