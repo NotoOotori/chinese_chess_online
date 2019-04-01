@@ -118,128 +118,141 @@ namespace platform.dating
             {
                 byte[] arr_data = new byte[BUFSIZ];
                 int length = socket_server.Receive(arr_data);
-                Dictionary<String, String> mydic = DataEncoding.get_dictionary(arr_data);
-                String identifier = mydic["identifier"];
-                MessageBox.Show(DataEncoding.get_string(mydic));
-                if (identifier == "plaza_renew")
+                Dictionary<String, String> mydic;
+                try
                 {
-                    for(int i = 0; i < 10; i++)
-                        for (int seat = 1; seat < 3; seat++)
-                        {
-                            String key = $"{i + 1}-{seat}";
-                            string person = mydic[key];
-                            MessageBox.Show(person);
-                            if (person == "0")
+                    mydic = DataEncoding.get_dictionary(arr_data);
+
+                    String identifier = mydic["identifier"];
+                    //MessageBox.Show(DataEncoding.get_string(mydic));
+                    if (identifier == "plaza_renew")
+                    {
+                        for (int i = 0; i < 10; i++)
+                            for (int seat = 1; seat < 3; seat++)
                             {
-                                //没有人 do nothing
-                            }
-                            else
-                            {
-                                //有人
-                                void renew()
+                                String key = $"{i + 1}-{seat}";
+                                string person = mydic[key];
+                                MessageBox.Show(person);
+                                if (person == "0")
                                 {
-                                    MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
-                                    MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
-                                    MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
-                                    e_address.Value = person;
-                                    e_address.Direction = ParameterDirection.Input;
-                                    pic.Direction = ParameterDirection.Output;
-                                    name.Direction = ParameterDirection.Output;
-
-                                    using (MySqlConnection connection = new MySqlConnection(connection_string))
+                                    //没有人 do nothing
+                                }
+                                else
+                                {
+                                    //有人
+                                    void renew()
                                     {
-                                        connection.Open();
+                                        MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
+                                        MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
+                                        MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
+                                        e_address.Value = person;
+                                        e_address.Direction = ParameterDirection.Input;
+                                        pic.Direction = ParameterDirection.Output;
+                                        name.Direction = ParameterDirection.Output;
 
-                                        MySqlCommand cmd = new MySqlCommand("procedure_get_avatar", connection);
-                                        cmd.Parameters.Add(e_address);
-                                        cmd.Parameters.Add(pic);
-                                        cmd.CommandType = CommandType.StoredProcedure;
-                                        //try
-                                        { cmd.ExecuteNonQuery(); }
-                                        //catch { }
-                                        MySqlCommand cmd1 = new MySqlCommand("procedure_get_username", connection);
-                                        cmd1.Parameters.Add(e_address);
-                                        cmd1.Parameters.Add(name);
-                                        cmd1.CommandType = CommandType.StoredProcedure;
-                                        //try
-                                        { cmd1.ExecuteNonQuery(); }
-                                        //catch(Exception ex) { MessageBox.Show(); }
-
-                                        connection.Close();
-                                    };
-
-                                    // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.
-
-                                    MemoryStream myPic = null;
-                                    byte[] mydata;
-                                    if (Convert.IsDBNull(pic.Value))
-                                    {
-                                        MessageBox.Show("NULLPIC");
-                                        //try
+                                        using (MySqlConnection connection = new MySqlConnection(connection_string))
                                         {
-                                            if (seat == 1)
-                                                ZBWs[i].redimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
-                                            else
-                                                ZBWs[i].blackimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
-                                        }
-                                        //catch { }
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("NOTNULLPIC");
-                                        //try
-                                        {
-                                            mydata = (byte[])pic.Value;
-                                            myPic = new MemoryStream(mydata);
-                                            if (seat == 1)
-                                                ZBWs[i].redimage.BackgroundImage = Image.FromStream(myPic);
-                                            else
-                                                ZBWs[i].blackimage.BackgroundImage = Image.FromStream(myPic);
-                                        }
-                                        //catch { }
-                                    }
-                                    //头像
+                                            try
+                                            {
+                                                connection.Open();
+                                                MySqlCommand cmd = new MySqlCommand("procedure_get_avatar", connection);
+                                                cmd.Parameters.Add(e_address);
+                                                cmd.Parameters.Add(pic);
+                                                cmd.CommandType = CommandType.StoredProcedure;
 
-                                    if (seat == 1) //try
+                                                { cmd.ExecuteNonQuery(); }
+
+                                                MySqlCommand cmd1 = new MySqlCommand("procedure_get_username", connection);
+                                                cmd1.Parameters.Add(e_address);
+                                                cmd1.Parameters.Add(name);
+                                                cmd1.CommandType = CommandType.StoredProcedure;
+                                                //try
+                                                { cmd1.ExecuteNonQuery(); }
+                                            }
+                                            catch(MySqlException ex)
+                                            {
+                                                MessageBox.Show("与服务器连接失败，请检查连接！");
+                                            }
+                                        };
+
+                                        // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.
+
+                                        MemoryStream myPic = null;
+                                        byte[] mydata;
+                                        if (Convert.IsDBNull(pic.Value))
+                                        {
+                                            //MessageBox.Show("NULLPIC");
+                                            //try
+                                            {
+                                                if (seat == 1)
+                                                    ZBWs[i].redimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
+                                                else
+                                                    ZBWs[i].blackimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
+                                            }
+                                            //catch { }
+                                        }
+                                        else
+                                        {
+                                            //MessageBox.Show("NOTNULLPIC");
+                                            //try
+                                            {
+                                                mydata = (byte[])pic.Value;
+                                                myPic = new MemoryStream(mydata);
+                                                if (seat == 1)
+                                                    ZBWs[i].redimage.BackgroundImage = Image.FromStream(myPic);
+                                                else
+                                                    ZBWs[i].blackimage.BackgroundImage = Image.FromStream(myPic);
+                                            }
+                                            //catch { }
+                                        }
+                                        //头像
+
+                                        if (seat == 1) //try
                                         {
                                             string s = name.Value.ToString();
                                             MessageBox.Show(s);
-                                            ZBWs[i].redplayer.Text = name.Value.ToString(); }
+                                            ZBWs[i].redplayer.Text = name.Value.ToString();
+                                        }
                                         //catch { }
-                                    else try { ZBWs[i].blackplayer.Text = name.Value.ToString(); } catch { }
-                                    //名字          
+                                        else try { ZBWs[i].blackplayer.Text = name.Value.ToString(); } catch { }
+                                        //名字          
+                                    }
+                                    if (this.InvokeRequired)
+                                    {
+                                        renew_controls rc = new renew_controls(renew);
+                                        this.Invoke(rc);
+                                    }
+                                    else
+                                        renew();
                                 }
-                                if (this.InvokeRequired)
-                                {
-                                    renew_controls rc = new renew_controls(renew);
-                                    this.Invoke(rc);
-                                }
-                                else
-                                    renew();
                             }
+                    }
+                    if (identifier == "lobby_enter")
+                    {
+                        string get_response = mydic["response"];
+                        if (get_response == "0")//没有人 正常进入
+                        {
+                            num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
+                            this.Invoke(d, new object[] { num, seat, socket_server });
+                            this.Hide();
+                            break;
+                            //thread_client.Abort();
+                            //this.Close();
                         }
-                }
-                if (identifier == "lobby_enter") {
-                    string get_response = mydic["response"];
-                    if(get_response == "0")//没有人 正常进入
-                    {
-                        num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
-                        this.Invoke(d, new object[] { num, seat, socket_server });
-                        this.Hide();
-                        break;
-                        //thread_client.Abort();
-                        //this.Close();
-                    }
-                    if (get_response == "1")//已经在lobby中
-                    {
-                        MessageBox.Show("您已经进入房间，不能重复进入");
-                    }
-                    if (get_response == "2")//座位有人
-                    {
-                        MessageBox.Show("啊哦，好像有人了");
+                        if (get_response == "1")//已经在lobby中
+                        {
+                            MessageBox.Show("您已经进入房间，不能重复进入");
+                        }
+                        if (get_response == "2")//座位有人
+                        {
+                            MessageBox.Show("啊哦，好像有人了");
+                        }
                     }
                 }
-                    
+                catch (DataEncodingException ex)
+                {
+                    MessageBox.Show("服务器内部错误，请稍后重试");
+                }
             }
         }
     }

@@ -23,9 +23,9 @@ namespace platform.login
             //关闭对文本框的非法线程操作检查
             TextBox.CheckForIllegalCrossThreadCalls = false;
         }
-        String HOST = "45.32.82.133"; // IP地址
-        Int32 PORT = 21567; // 端口
-        Int32 BUFSIZ = 1024; // 缓冲区大小
+        //String HOST = "45.32.82.133"; // IP地址
+        //Int32 PORT = 21567; // 端口
+        //Int32 BUFSIZ = 1024; // 缓冲区大小
         
         private void form_signup_Load(object sender, EventArgs e)
         {
@@ -58,20 +58,20 @@ namespace platform.login
         {
             label12.Text = "";
             string user_name=textBox_user.Text;            
-            for(int i=0;i<user_name.Length;i++)
-            {
-                if(user_name.Substring(i,1)=="<"|| user_name.Substring(i, 1) == ">"|| user_name.Substring(i, 1) == "/")
-                {
-                    label10.ForeColor = Color.Red;
-                    label10.Text = "用户名包含<>/,请重新输入";
-                    return;
-                }
-            }
-            if (textBox_password.Text != textBox_confirm.Text)
-            {
-                label12.Text = "密码输入错误，请重新输入";
-                return;
-            }
+            //for(int i=0;i<user_name.Length;i++)
+            //{
+            //    if(user_name.Substring(i,1)=="<"|| user_name.Substring(i, 1) == ">"|| user_name.Substring(i, 1) == "/")
+            //    {
+            //        label10.ForeColor = Color.Red;
+            //        label10.Text = "用户名包含<>/,请重新输入";
+            //        return;
+            //    }
+            //}
+            //if (textBox_password.Text != textBox_confirm.Text)
+            //{
+            //    label12.Text = "密码输入错误，请重新输入";
+            //    return;
+            //}
 
             SendFileBytesToDatabase();
         }
@@ -95,7 +95,6 @@ namespace platform.login
             fs.Read(buffer, 0, Convert.ToInt32(fi.Length));
             fs.Close();
             return buffer;
-
         }
 
         private void SendFileBytesToDatabase()
@@ -104,7 +103,7 @@ namespace platform.login
             ImageConverter imc = new ImageConverter();
             MySqlConnection sendDataConnection = CreateConnection();
             MySqlCommand cmd = new MySqlCommand("procedure_sign_up", sendDataConnection);
-            string sendFileSql = "insert into platform_user(email_address,avatar) values(?email_address,?avatar);";
+            //string sendFileSql = "insert into platform_user(email_address,avatar) values(?email_address,?avatar);";
             //MySqlCommand sendCmd = new MySqlCommand(sendFileSql, sendDataConnection);
             MySqlParameter email_address = new MySqlParameter("_email_address",MySqlDbType.VarChar,254);
             MySqlParameter username = new MySqlParameter("_username", MySqlDbType.VarChar, 16);
@@ -148,7 +147,10 @@ namespace platform.login
             OpenFileDialog opd = new OpenFileDialog();
             opd.Title = "Select your avatar";
             if (opd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
                 pictureBox_avatar.Image = Image.FromFile(opd.FileName);
+                label13.Visible = false;
+            }
             else
                 return;
             

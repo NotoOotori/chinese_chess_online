@@ -66,7 +66,16 @@ namespace platform.login
             //将ip地址和端口号绑定到网络节点end_point上
             IPEndPoint end_point = new IPEndPoint(ip_address, PORT);
             //这里客户端套接字连接到网络节点(服务端)用的方法是Connect 而不是Bind
-            socket_client.Connect(end_point);
+            try
+            {
+                socket_client.Connect(end_point);
+            }
+            catch(SocketException ex)
+            {
+                MessageBox.Show("与服务器连接出现问题，请稍后再试！");
+                Application.Exit();
+            }
+           
         }
 
 
