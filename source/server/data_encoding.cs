@@ -30,10 +30,21 @@ namespace server
                 if (str.Substring(1, end - 1) != $"/{tkey}")
                     throw new DataEncodingException("Name Doesn't Match!");
                 if (str.IndexOf('>') == str.LastIndexOf('>'))
-                { dict.Add(tkey, tvalue); break; }
+                {
+                    try
+                    {
+                        dict.Add(tkey, tvalue);
+                    }
+                    catch (ArgumentException) {; }
+                    break;
+                }
                 else
                     str = str.Substring(end + 1);
-                dict.Add(tkey, tvalue);
+                try
+                {
+                    dict.Add(tkey, tvalue);
+                }
+                catch (ArgumentException) {; }
             }
             if (!dict.ContainsKey("identifier"))
                 throw new DataEncodingException("Identifier Not Found!");

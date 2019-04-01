@@ -13,6 +13,7 @@ CREATE TABLE platform_user
     username VARCHAR(16) NOT NULL,
     encrypted_password BINARY(64) NOT NULL,
     salt_value BINARY(64) NOT NULL,
+    elo SMALLINT DEFAULT 1500, # CHECK (elo BETWEEN 0 AND 3000)
     avatar MEDIUMBLOB,
     gender CHAR(1),
     # CHECK (gender LIKE '[fm]')
@@ -51,4 +52,23 @@ CREATE TABLE user_logout_record
         REFERENCES user_login_record (login_id)
         ON DELETE RESTRICT
         ON UPDATE RESTRICT
+);
+
+CREATE TABLE game_record
+(
+    game_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    red_email_address VARCHAR(254),
+    black_email_address VARCHAR(254),
+    # CHECK (red_email_address <> black_email_address)
+    start_time TIMESTAMP NOT NULL,
+    game_string VARCHAR(500) NOT NULL,
+    result TINYINT, # CHECK (result BETWEEN 0 AND 2)
+    FOREIGN KEY (red_email_address)
+        REFERENCES platform_user (email_address)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    FOREIGN KEY (black_email_address)
+        REFERENCES platform_user (email_address)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 );

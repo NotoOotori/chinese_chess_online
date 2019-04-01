@@ -9,6 +9,13 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the email address.';
     END IF;
+    
+    # CHECK elo
+    IF NOT NEW.elo BETWEEN 0 AND 3000
+    THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Please check the elo.';
+    END IF;
 
     # CHECK gender
     IF NOT NEW.gender REGEXP '[fm]'
@@ -33,6 +40,13 @@ BEGIN
     THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Please check the email address.';
+    END IF;
+    
+    # CHECK elo
+    IF NOT NEW.elo BETWEEN 0 AND 3000
+    THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Please check the elo.';
     END IF;
 
     # CHECK gender

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Data;
+using MySql.Data.MySqlClient;
 
-namespace server {
+namespace server
+{
     public class Lobby
     {
         #region ' Constructors '
@@ -16,6 +19,13 @@ namespace server {
         #endregion
 
         #region ' Properties '
+
+        private String CONNECTION_STRING =
+            "server = localhost; " +
+            "user = ccol_user; " +
+            "database = chinese_chess_online; " +
+            "port = 3306; " +
+            "password = 123PengZiYu@";
 
         public UInt32 lobby_id { get; }
 
@@ -51,7 +61,12 @@ namespace server {
         {
             foreach (User user in seats.Values)
             {
-                user.socket.Send(data);
+                try
+                {
+                    user.socket.Send(data);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -63,7 +78,12 @@ namespace server {
         {
             foreach (User user in seats.Values)
             {
-                user.socket.Send(dict);
+                try
+                {
+                    user.socket.Send(dict);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -78,7 +98,12 @@ namespace server {
             {
                 if (pair.Key == seat)
                     continue;
-                pair.Value.socket.Send(data);
+                try
+                {
+                    pair.Value.socket.Send(data);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
 
@@ -93,12 +118,19 @@ namespace server {
             {
                 if (pair.Key == seat)
                     continue;
-                pair.Value.socket.Send(dict);
+                try
+                {
+                    pair.Value.socket.Send(dict);
+                }
+                catch (NullReferenceException)
+                {; }
             }
         }
         
-        private void start_game()
+        public void try_start_game()
         {
+            if (count_ready_users() < 2)
+                return;
             Int32 count = 0;
             foreach (User user in seats.Values)
             {
@@ -106,9 +138,18 @@ namespace server {
                 socket.Send(new Dictionary<String, String>()
                 {
                     ["identifier"] = "lobby_gamestart",
-                    ["colour"] = "br".Substring(count++, 1)
+                    ["colour"] = "rb".Substring(count++, 1)
                 });
             }
+        }
+
+        private Int32 count_ready_users()
+        {
+            Int32 count = 0;
+            foreach (User user in seats.Values)
+                if (user.ready)
+                    count++;
+            return count;
         }
 
         /// <summary>
@@ -121,7 +162,6 @@ namespace server {
         /// <returns></returns>
         public Int32 try_enter(User user, Seat seat)
         {
-            Socket client_socket = user.socket;
             if (user.lobby != null)
                 return 1;
             if (seats[seat] != null)
@@ -129,8 +169,6 @@ namespace server {
             Console.WriteLine($"System: User {user.email_address} entered into " +
                 $"lobby #{lobby_id}.");
             seats[seat] = user;
-            if (user_count == 2)
-                start_game();
             return 0;
         }
 
@@ -138,6 +176,87 @@ namespace server {
         {
             if (seats[seat] == user)
                 seats[seat] = null;
+            Console.WriteLine($"System: User {user.email_address} quit " +
+                $"lobby #{lobby_id}.");
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="result"><see cref="Seat"/>1上玩家的结果</param>
+        public void end_game(String result)
+        {
+            String red_elo_change = "0";
+            using (MySqlConnection connection =
+                new MySqlConnection(CONNECTION_STRING))
+            {
+                using (MySqlCommand command = new MySqlCommand(
+                    "procedure_end_game", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    #region ' Add Parameters '
+
+                    MySqlParameter _red_email_address = new MySqlParameter(
+                        "_red_email_address", MySqlDbType.VarString, 254)
+                    {
+                        Value = seat_1.email_address,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _black_email_address = new MySqlParameter(
+                        "_black_email_address", MySqlDbType.VarString, 254)
+                    {
+                        Value = seat_2.email_address,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _game_string = new MySqlParameter(
+                        "_game_string", MySqlDbType.VarString, 500)
+                    {
+                        Value = "c2e2", //TODO
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _result = new MySqlParameter(
+                        "_result", MySqlDbType.Byte)
+                    {
+                        Value = result,
+                        Direction = ParameterDirection.Input
+                    };
+                    MySqlParameter _red_elo_change = new MySqlParameter(
+                        "_red_elo_change", MySqlDbType.Int16)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(_red_email_address);
+                    command.Parameters.Add(_black_email_address);
+                    command.Parameters.Add(_game_string);
+                    command.Parameters.Add(_result);
+                    command.Parameters.Add(_red_elo_change);
+
+                    #endregion
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    red_elo_change = _red_elo_change.Value.ToString();
+                }
+            }
+            broadcast(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_gameend",
+                ["result"] = result,
+                ["elo_change"] = red_elo_change
+            });
+            this.initialize();
+        }
+
+        public void initialize()
+        {
+            foreach (User user in seats.Values)
+            {
+                user.lobby_init();
+            }
         }
 
         #endregion

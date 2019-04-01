@@ -148,6 +148,21 @@ namespace platform.login
             }
         }
 
+        private void cxydsb()
+        {
+            UInt32 seat = MessageBox.Show(
+                "是1否2", "进lobby", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+                == DialogResult.OK ? (uint)1 : (uint)2;
+            socket_client.Send(DataEncoding.get_bytes(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_enter",
+                ["lobby_id"] = "1",
+                ["seat"] = seat.ToString()
+            }));
+            Dictionary<String, String> data = receive_data();
+            new chess_lobby.ChessLobby(1, seat, socket_client).Show();
+        }
+
         private GlossyButton glossyButton3 = new GlossyButton();
         private void FormLogin_Load(object sender, EventArgs e)
         {
