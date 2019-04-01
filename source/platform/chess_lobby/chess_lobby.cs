@@ -103,6 +103,7 @@ namespace platform.chess_lobby
             button_draw.Enabled = false;
             button_ready.Enabled = true;
             button_surrender.Enabled = false;
+            label_ready.Visible = false;
             chessboard_initialize_pieces();
         }
 
@@ -275,6 +276,7 @@ namespace platform.chess_lobby
                 ["lobby_id"] = lobby_id.ToString()
             });
             button_ready.Enabled = false;
+            label_ready.Visible = true;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

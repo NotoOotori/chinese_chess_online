@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // Chessboard
+            // ChessboardContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "Chessboard";
-            this.Size = new System.Drawing.Size(810, 900);
+            this.Name = "ChessboardContainer";
+            this.Size = new System.Drawing.Size(720, 800);
             this.ResumeLayout(false);
 
         }
