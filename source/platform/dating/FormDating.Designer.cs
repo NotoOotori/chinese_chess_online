@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button_renew = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // button_renew
@@ -65,8 +65,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button_renew;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

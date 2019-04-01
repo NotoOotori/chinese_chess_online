@@ -106,10 +106,10 @@
       <DependentUpon>FormDating.cs</DependentUpon>
     </Compile>
     <Compile Include="dating\ZBW.cs" />
-    <Compile Include="glossy_button.cs">
+    <Compile Include="common\glossy_button.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="glossy_button.Designer.cs">
+    <Compile Include="common\glossy_button.Designer.cs">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </Compile>
     <Compile Include="chess_lobby\rect.cs" />
@@ -148,7 +148,7 @@
     <EmbeddedResource Include="chess_lobby\form_result.resx">
       <DependentUpon>form_result.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="glossy_button.resx">
+    <EmbeddedResource Include="common\glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login\form_forgetpassword.resx">
