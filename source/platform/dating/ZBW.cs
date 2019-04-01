@@ -23,8 +23,8 @@ namespace platform.dating
         public Label redplayer = new Label();
         public Label blackplayer = new Label();
         public PictureBox chessboard = new PictureBox();
-        public PictureBox red_ready = new PictureBox();
-        public PictureBox black_ready = new PictureBox();
+        //public PictureBox red_ready = new PictureBox();
+        //public PictureBox black_ready = new PictureBox();
         public PictureBox redimage = new PictureBox();
         public PictureBox blackimage = new PictureBox();
         public uint lobby_num;
@@ -56,14 +56,14 @@ namespace platform.dating
             blackimage.Cursor = Cursors.Hand;
             panel.Controls.Add(blackimage);
 
-            red_ready.Location  = new Point((num % 4 + 1) * mywidth / 4 - 174 * 2 / 3-20,num/4*mygap + 42*2/3+36);
-            red_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
-            black_ready.BackgroundImageLayout = ImageLayout.Stretch;
-            //panel.Controls.Add(red_ready);
+            //red_ready.Location  = new Point((num % 4 + 1) * mywidth / 4 - 174 * 2 / 3-20,num/4*mygap + 42*2/3+36);
+            //red_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
+            //black_ready.BackgroundImageLayout = ImageLayout.Stretch;
+            ////panel.Controls.Add(red_ready);
 
-            black_ready.Location = new Point((num % 4 + 1) * mywidth / 4 - 75 * 2 / 3-20, num / 4 * mygap + 42 * 2 / 3+36);
-            black_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
-            black_ready.BackgroundImageLayout = ImageLayout.Stretch;
+            //black_ready.Location = new Point((num % 4 + 1) * mywidth / 4 - 75 * 2 / 3-20, num / 4 * mygap + 42 * 2 / 3+36);
+            //black_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
+            //black_ready.BackgroundImageLayout = ImageLayout.Stretch;
             //panel.Controls.Add(black_ready);
 
 
@@ -75,26 +75,7 @@ namespace platform.dating
             blackplayer.Location = new Point((num % 4 + 1) * mywidth / 4 - 96 * 2 / 3, num / 4 * mygap + 125 * 2 / 3);
             blackplayer.Size = new Size(54 * 2 / 3, 18 * 2 / 3);
             panel.Controls.Add(blackplayer);
-        }
-        public void renew(string args, int num)
-        {
-            //setplayer(args);
-            chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard ;
-            chessboard.BackgroundImage = global::platform.Properties.Resources.bgpic;
-            //red_ready.BackgroundImage = Resource1.zhunbei;
-            //red_ready.BringToFront();
-            //black_ready.BackgroundImage = Resource1.ready;
-            //black_ready.BringToFront();
-        }
-
-                
-
-        public void changechessboardimage()
-        {
-            if (true)
-                chessboard.BackgroundImage = Image.FromFile(".\\chessboard.jpg");          
-        }
-
+        }       
 
         public void setplayer(string e_mail)
         {
@@ -153,7 +134,6 @@ namespace platform.dating
 
             }
         }
-
-        
+       
     }
 }

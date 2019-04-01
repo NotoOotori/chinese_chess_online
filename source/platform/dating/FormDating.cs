@@ -22,18 +22,22 @@ namespace platform.dating
         uint num = 0, seat = 1;//记录进入的桌号和椅子
         Thread thread_client;
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
-        String HOST = "45.32.82.133"; // IP地址
-        Int32 PORT = 21567; // 端口
+        //String HOST = "45.32.82.133"; // IP地址
+        //Int32 PORT = 21567; // 端口
         Int32 BUFSIZ = 1024; // 缓冲区大小
         //Socket socket_client = null;
         Socket socket_server = null;
         // Modify the constructor
+        Point mouseoff;
+        bool leftflag;
         List<ZBW> ZBWs = new List<ZBW>();
         public FormDating(Socket server_socket)
         {
             InitializeComponent();
             socket_server = server_socket;
         }
+
+        
 
         void server_send_renew(Socket socket_server)
         {
@@ -91,7 +95,7 @@ namespace platform.dating
                 thread_client.Start();
             }
 
-            for (uint i = 0; i < 10; i++)
+            for (uint i = 0; i < tot_board; i++)
             {
                 ZBW myzbw = new ZBW(this, panel1,Convert.ToInt32(i));                
                 myzbw.blackimage.Click += new EventHandler(black_onclick);
@@ -112,6 +116,51 @@ namespace platform.dating
             new chess_lobby.ChessLobby(num, seat, socket_server).Show();
         }
 
+        private void button_renew_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(this.button_renew, "点击刷新大厅");
+        }
+
+        #region 最小化和叉叉
+        private void button_min_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
+
+        #region 窗口拖动
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left)
+            {
+                mouseoff = new Point(-e.X, -e.Y);
+                leftflag = true;
+
+            }
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (leftflag)
+            {
+                Point mouseset = Control.MousePosition;
+                mouseset.Offset(mouseoff.X, mouseoff.Y);
+                Location = mouseset;
+            }
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (leftflag)
+                leftflag = false;
+        }
+        #endregion
         public void receive_data()
         {
             while (true)
@@ -142,6 +191,7 @@ namespace platform.dating
                                     //有人
                                     void renew()
                                     {
+                                        ZBWs[i].chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard;
                                         MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
                                         MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
                                         MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
@@ -181,7 +231,6 @@ namespace platform.dating
                                         byte[] mydata;
                                         if (Convert.IsDBNull(pic.Value))
                                         {
-                                            //MessageBox.Show("NULLPIC");
                                             //try
                                             {
                                                 if (seat == 1)
@@ -193,7 +242,6 @@ namespace platform.dating
                                         }
                                         else
                                         {
-                                            //MessageBox.Show("NOTNULLPIC");
                                             //try
                                             {
                                                 mydata = (byte[])pic.Value;
@@ -210,7 +258,7 @@ namespace platform.dating
                                         if (seat == 1) //try
                                         {
                                             string s = name.Value.ToString();
-                                            MessageBox.Show(s);
+                                            //MessageBox.Show(s);
                                             ZBWs[i].redplayer.Text = name.Value.ToString();
                                         }
                                         //catch { }
