@@ -16,7 +16,7 @@ BEGIN
     INSERT INTO platform_user VALUE
     (
         _email_address, _username, @_encrypted_password,
-        @_salt_value, NULL, _avatar, _gender, _birthday
+        @_salt_value, 1500, _avatar, _gender, _birthday
     );
 END //
 
