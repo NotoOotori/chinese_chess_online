@@ -28,33 +28,35 @@ namespace platform.dating
         public PictureBox redimage = new PictureBox();
         public PictureBox blackimage = new PictureBox();
         public uint lobby_num;
-        public ZBW(FormDating form, Panel panel,int num)
+        public ZBW(FormDating form,int num)
         {
-
-            int mywidth = panel.Width; int mygap = 125 / 3 * 2;
+            int mywidth = form.Width; int mygap = 125 / 3 * 2;
             lobby_num = Convert.ToUInt32(num);
 
             redimage.Tag = lobby_num;
             blackimage.Tag = lobby_num;
 
-            panel.Controls.Add(chessboard);
+            form.Controls.Add(chessboard);
             chessboard.Size = new Size(60 * 2 / 3, 60 * 2 / 3);
             chessboard.Location = new Point((num % 4 + 1) * mywidth / 4 - 170 * 2 / 3, num / 4 * mygap + 42 * 2 / 3);
             chessboard.BackgroundImageLayout = ImageLayout.Stretch;
             chessboard.Cursor = Cursors.Hand;
             chessboard.BorderStyle = BorderStyle.FixedSingle;
+            chessboard.BackColor = Color.Transparent;
 
             redimage.Size = new Size(54 * 2 / 3, 54 * 2 / 3);
             redimage.Location = new Point((num % 4 + 1) * mywidth / 4 - 240 * 2 / 3, num / 4 * mygap + 56 * 2 / 3);
             redimage.BorderStyle = BorderStyle.Fixed3D;
             redimage.Cursor = Cursors.Hand;
-            panel.Controls.Add(redimage);
+            redimage.BackColor = Color.Transparent;
+            form.Controls.Add(redimage);
 
             blackimage.Size = new Size(54 * 2 / 3, 54 * 2 / 3);
             blackimage.Location = new Point((num % 4 + 1) * mywidth / 4 - 96 * 2 / 3, num / 4 * mygap + 56 * 2 / 3);
             blackimage.BorderStyle = BorderStyle.Fixed3D;
             blackimage.Cursor = Cursors.Hand;
-            panel.Controls.Add(blackimage);
+            blackimage.BackColor = Color.Transparent;
+            form.Controls.Add(blackimage);
 
             //red_ready.Location  = new Point((num % 4 + 1) * mywidth / 4 - 174 * 2 / 3-20,num/4*mygap + 42*2/3+36);
             //red_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
@@ -66,15 +68,15 @@ namespace platform.dating
             //black_ready.BackgroundImageLayout = ImageLayout.Stretch;
             //panel.Controls.Add(black_ready);
 
-
             redplayer.Location = new Point((num % 4 + 1) * mywidth / 4 - 240 * 2 / 3, num / 4 * mygap + 125 * 2 / 3);
             redplayer.Size = new Size(54 * 2 / 3, 18 * 2 / 3);
-            panel.Controls.Add(redplayer);
-
+            redplayer.BackColor = Color.Transparent;
+            form.Controls.Add(redplayer);
 
             blackplayer.Location = new Point((num % 4 + 1) * mywidth / 4 - 96 * 2 / 3, num / 4 * mygap + 125 * 2 / 3);
             blackplayer.Size = new Size(54 * 2 / 3, 18 * 2 / 3);
-            panel.Controls.Add(blackplayer);
+            blackplayer.BackColor = Color.Transparent;
+            form.Controls.Add(blackplayer);
         }       
 
         public void setplayer(string e_mail)
@@ -123,7 +125,7 @@ namespace platform.dating
                         {
                             blackimage.Image = Image.FromFile(".\\blank.jpg");
                         }
-                        catch (Exception ex) { }
+                        catch (Exception) { }
                         return;
                     }
                     //MessageBox.Show("here!");

@@ -35,6 +35,7 @@ namespace platform.dating
         {
             InitializeComponent();
             socket_server = server_socket;
+            Text = "中国象棋对战大厅";
         }
 
         void server_send_renew(Socket socket_server)
@@ -93,7 +94,7 @@ namespace platform.dating
 
             for (uint i = 0; i < tot_board; i++)
             {
-                ZBW myzbw = new ZBW(this, panel1,Convert.ToInt32(i));                
+                ZBW myzbw = new ZBW(this,Convert.ToInt32(i));
                 myzbw.blackimage.Click += new EventHandler(black_onclick);
                 myzbw.redimage.Click += new EventHandler(red_onclick);
                 ZBWs.Add(myzbw);
