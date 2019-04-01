@@ -105,11 +105,11 @@ namespace platform.dating
             server_send_renew(socket_server);
         }
 
-        delegate void num_socket_arg_returning_void(uint num, Socket socket_server);
+        delegate void num_socket_arg_returning_void(uint num, uint seat, Socket socket_server);
 
-        void show_form_lobby(UInt32 num, Socket socket_server)
+        void show_form_lobby(UInt32 num, uint seat, Socket socket_server)
         {
-            new chess_lobby.ChessLobby(num, socket_server).Show();
+            new chess_lobby.ChessLobby(num, seat, socket_server).Show();
         }
 
         public void receive_data()
@@ -224,7 +224,7 @@ namespace platform.dating
                     if(get_response == "0")//没有人 正常进入
                     {
                         num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
-                        this.Invoke(d, new object[] { num, socket_server });
+                        this.Invoke(d, new object[] { num, seat, socket_server });
                         this.Hide();
                         break;
                         //thread_client.Abort();

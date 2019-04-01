@@ -135,6 +135,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dating\FormDating.resx">
       <DependentUpon>FormDating.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\form_result.resx">
       <DependentUpon>form_result.cs</DependentUpon>
     </EmbeddedResource>
