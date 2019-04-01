@@ -1820,6 +1820,8 @@
     <Content Include="chess_lobby\resources\audio\moves\rr9wi8.wav" />
     <Content Include="chess_lobby\resources\audio\moves\rr9wi9.wav" />
     <Content Include="chess_lobby\resources\images\wood_grain.bmp" />
+    <Content Include="common\resources\chess_icon.ico" />
+    <Content Include="common\resources\chess_icon.png" />
     <Content Include="dating\resources\bgpic1.jpg" />
     <Content Include="dating\resources\bgpic2.jpg" />
     <Content Include="dating\resources\bgpic3.jpg" />
