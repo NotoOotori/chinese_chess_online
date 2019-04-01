@@ -43,6 +43,7 @@ namespace platform.login
                 comboBox_mm.Items.Add(i.ToString());
             for (i = 1; i < 32; i++)
                 comboBox_dd.Items.Add(i.ToString());
+            Text = "";
         }
 
         private void button1_MouseMove(object sender, MouseEventArgs e)

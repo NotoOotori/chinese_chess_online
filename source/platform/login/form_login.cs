@@ -28,6 +28,7 @@ namespace platform.login
         public FormLogin()
         {
             InitializeComponent();
+            Text = "";
             //关闭对文本框的非法线程操作检查
             TextBox.CheckForIllegalCrossThreadCalls = false;
         }
@@ -168,8 +169,9 @@ namespace platform.login
             glossyButton3.Font = new Font("Microsoft Sans Serif", 15);
             glossyButton3.Size = new Size(207, 40);
             glossyButton3.Click += new EventHandler(glossyButton3_Click);
+            glossyButton3.label1.Click += glossyButton3_Click;
             this.Controls.Add(glossyButton3);
-            textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*                       
+            textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*
         }
 
         private void glossyButton3_Click(object sender, EventArgs e)

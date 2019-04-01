@@ -16,7 +16,7 @@ using platform.common;
 
 namespace platform.dating
 {
-    public partial class FormDating : Form
+    public partial class FormDating : FormBase
     {
         int tot_board = 10;
         uint num = 0, seat = 1;//记录进入的桌号和椅子
