@@ -1,6 +1,7 @@
 ﻿using platform.common;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -34,6 +35,18 @@ namespace platform.chess_lobby
 
             #endregion
 
+            this.Text = $"中国象棋房间{lobby_id}座位{seat}";
+
+            Font button_font = new Font("Comic Sans MS", Convert.ToSingle(10));
+            button_ready.Font = button_font;
+            button_draw.Font = button_font;
+            button_surrender.Font = button_font;
+            button_ready.Text = "Ready";
+            button_draw.Text = "Draw";
+            button_surrender.Text = "Surrender";
+            button_ready.label1.Click += button_ready_Click;
+            button_draw.label1.Click += button_draw_Click;
+            button_surrender.label1.Click += button_surrender_Click;
             button_draw.Enabled = false;
             button_surrender.Enabled = false;
 

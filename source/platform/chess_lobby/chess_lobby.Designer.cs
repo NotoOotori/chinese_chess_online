@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.chessboard_container = new platform.chess_lobby.ChessboardContainer();
-            this.button_ready = new System.Windows.Forms.Button();
-            this.button_draw = new System.Windows.Forms.Button();
-            this.button_surrender = new System.Windows.Forms.Button();
+            this.button_ready = new platform.GlossyButton();
+            this.button_draw = new platform.GlossyButton();
+            this.button_surrender = new platform.GlossyButton();
             this.SuspendLayout();
             // 
             // chessboard_container
@@ -43,38 +43,57 @@
             // 
             // button_ready
             // 
+            this.button_ready.BackColor = System.Drawing.Color.Orange;
+            this.button_ready.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button_ready.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button_ready.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.button_ready.DownColor = System.Drawing.Color.Blue;
+            this.button_ready.EnterColor = System.Drawing.Color.Pink;
             this.button_ready.Location = new System.Drawing.Point(600, 980);
+            this.button_ready.Margin = new System.Windows.Forms.Padding(2);
             this.button_ready.Name = "button_ready";
+            this.button_ready.NormalColor = System.Drawing.Color.Orange;
             this.button_ready.Size = new System.Drawing.Size(100, 50);
             this.button_ready.TabIndex = 1;
-            this.button_ready.Text = "Ready";
-            this.button_ready.UseVisualStyleBackColor = true;
             this.button_ready.Click += new System.EventHandler(this.button_ready_Click);
             // 
             // button_draw
             // 
+            this.button_draw.BackColor = System.Drawing.Color.Orange;
+            this.button_draw.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button_draw.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button_draw.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.button_draw.DownColor = System.Drawing.Color.Blue;
+            this.button_draw.EnterColor = System.Drawing.Color.Pink;
             this.button_draw.Location = new System.Drawing.Point(750, 980);
+            this.button_draw.Margin = new System.Windows.Forms.Padding(2);
             this.button_draw.Name = "button_draw";
+            this.button_draw.NormalColor = System.Drawing.Color.Orange;
             this.button_draw.Size = new System.Drawing.Size(100, 50);
             this.button_draw.TabIndex = 2;
-            this.button_draw.Text = "Draw";
-            this.button_draw.UseVisualStyleBackColor = true;
             this.button_draw.Click += new System.EventHandler(this.button_draw_Click);
             // 
             // button_surrender
             // 
+            this.button_surrender.BackColor = System.Drawing.Color.Orange;
+            this.button_surrender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button_surrender.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button_surrender.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.button_surrender.DownColor = System.Drawing.Color.Blue;
+            this.button_surrender.EnterColor = System.Drawing.Color.Pink;
             this.button_surrender.Location = new System.Drawing.Point(900, 980);
+            this.button_surrender.Margin = new System.Windows.Forms.Padding(2);
             this.button_surrender.Name = "button_surrender";
+            this.button_surrender.NormalColor = System.Drawing.Color.Orange;
             this.button_surrender.Size = new System.Drawing.Size(100, 50);
             this.button_surrender.TabIndex = 3;
-            this.button_surrender.Text = "Surrender";
-            this.button_surrender.UseVisualStyleBackColor = true;
             this.button_surrender.Click += new System.EventHandler(this.button_surrender_Click);
             // 
             // ChessLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
             this.Controls.Add(this.button_surrender);
             this.Controls.Add(this.button_draw);
@@ -90,8 +109,8 @@
         #endregion
 
         private ChessboardContainer chessboard_container;
-        private System.Windows.Forms.Button button_ready;
-        private System.Windows.Forms.Button button_draw;
-        private System.Windows.Forms.Button button_surrender;
+        private GlossyButton button_ready;
+        private GlossyButton button_draw;
+        private GlossyButton button_surrender;
     }
 }
