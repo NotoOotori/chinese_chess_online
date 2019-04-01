@@ -179,7 +179,7 @@ namespace platform.dating
                             {
                                 String key = $"{i + 1}-{seat}";
                                 string person = mydic[key];
-                                MessageBox.Show(person);
+                                //MessageBox.Show(person);
                                 if (person == "0")
                                 {
                                     //没有人 do nothing
