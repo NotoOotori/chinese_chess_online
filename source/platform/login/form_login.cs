@@ -66,7 +66,16 @@ namespace platform.login
             //将ip地址和端口号绑定到网络节点end_point上
             IPEndPoint end_point = new IPEndPoint(ip_address, PORT);
             //这里客户端套接字连接到网络节点(服务端)用的方法是Connect 而不是Bind
-            socket_client.Connect(end_point);
+            try
+            {
+                socket_client.Connect(end_point);
+            }
+            catch(SocketException ex)
+            {
+                MessageBox.Show("与服务器连接出现问题，请稍后再试！");
+                Application.Exit();
+            }
+           
         }
 
 
@@ -126,8 +135,12 @@ namespace platform.login
             switch (state)
             {
                 case 0:
-                    cxydsb();
-                    //登录成功
+                    {
+                        MessageBox.Show("登录成功");
+                        platform.dating.FormDating f1 = new dating.FormDating(socket_client);
+                        f1.Show(); 
+                        this.Hide();
+                    }
                     break;
                 case 1:
                     label5.Text = "邮箱不存在";
