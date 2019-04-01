@@ -1820,8 +1820,14 @@
     <Content Include="chess_lobby\resources\audio\moves\rr9wi8.wav" />
     <Content Include="chess_lobby\resources\audio\moves\rr9wi9.wav" />
     <Content Include="chess_lobby\resources\images\wood_grain.bmp" />
+    <Content Include="dating\resources\bgpic1.jpg" />
+    <Content Include="dating\resources\bgpic2.jpg" />
+    <Content Include="dating\resources\bgpic3.jpg" />
+    <Content Include="dating\resources\bgpic4.jpg" />
+    <Content Include="dating\resources\bgpic5.jpg" />
     <Content Include="dating\resources\chessboard.jpg" />
     <Content Include="dating\resources\bgpic.jpg" />
+    <Content Include="dating\resources\refresh.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\netcoreapp2.0\FastDeepCloner.dll" />
