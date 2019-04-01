@@ -17,6 +17,9 @@ namespace platform.chess_lobby
         {
             InitializeComponent();
 
+            this.button_min.Visible = false;
+            this.button_exit.Visible = false;
+
             glossyButton_confirm.Font = new Font(
                 "Comic Sans MS", Convert.ToSingle(22.75));
             glossyButton_confirm.Text = "OK";

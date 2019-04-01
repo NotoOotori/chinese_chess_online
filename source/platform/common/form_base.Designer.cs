@@ -112,7 +112,7 @@
 
         private System.Windows.Forms.Label label_title;
         private System.Windows.Forms.PictureBox picture_box_icon;
-        private System.Windows.Forms.Button button_exit;
-        private System.Windows.Forms.Button button_min;
+        protected System.Windows.Forms.Button button_exit;
+        protected System.Windows.Forms.Button button_min;
     }
 }
