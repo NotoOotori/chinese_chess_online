@@ -147,8 +147,13 @@ namespace server
         {
             Int32 count = 0;
             foreach (User user in seats.Values)
-                if (user.ready)
-                    count++;
+                try
+                {
+                    if (user.ready)
+                        count++;
+                }
+                catch (NullReferenceException)
+                { }
             return count;
         }
 
