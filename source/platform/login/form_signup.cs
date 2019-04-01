@@ -33,8 +33,8 @@ namespace platform.login
             label10.Text = "";
             textBox_password.PasswordChar = '*';
             textBox_confirm.PasswordChar = '*';
-            label10.Text = "用户名不能包含<,>,/";
-            label10.ForeColor = Color.Black;
+            label10.ForeColor = Color.White;
+            label10.Text = "用户名不能包含<,>,/";            
             int i;
             for (i = 1950; i <= 2015; i++)
                 comboBox_yy.Items.Add(i.ToString());

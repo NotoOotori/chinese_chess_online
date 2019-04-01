@@ -233,7 +233,7 @@ namespace platform.dating
                         if (get_response == "0")//没有人 正常进入
                         {
                             num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
-                            this.Invoke(d, new object[] { num, seat, socket_server });
+                            this.Invoke(d, new object[] { num+1, seat, socket_server });
                             this.Hide();
                             break;
                             //thread_client.Abort();
