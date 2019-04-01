@@ -295,3 +295,6 @@ FakesAssemblies/
 ## Git
 # Commitizen
 .czrc
+
+## desktop.ini
+**/desktop.ini
