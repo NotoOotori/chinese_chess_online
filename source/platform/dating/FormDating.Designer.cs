@@ -47,6 +47,8 @@
             this.button_renew.Size = new System.Drawing.Size(46, 41);
             this.button_renew.TabIndex = 9;
             this.button_renew.UseVisualStyleBackColor = false;
+            this.button_renew.Click += new System.EventHandler(this.button_renew_Click);
+            this.button_renew.MouseHover += new System.EventHandler(this.button_renew_MouseHover);
             // 
             // FormDating
             // 
