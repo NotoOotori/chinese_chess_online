@@ -100,7 +100,7 @@ namespace platform.dating
                 }
                 catch (NullReferenceException ex)
                 {
-                    MessageBoxBase.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 try
                 {
@@ -112,7 +112,7 @@ namespace platform.dating
                 }
                 catch (NullReferenceException ex)
                 {
-                    MessageBoxBase.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 MemoryStream myPic = null;

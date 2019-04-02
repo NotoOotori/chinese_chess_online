@@ -24,7 +24,7 @@ namespace platform
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
             //this.label1.MouseDown += new MouseEventHandler(mymousedown);
             NormalStyle();
-            setFont();
+            //setFont();
             label1.MouseEnter += onMouseEnter;
             label1.MouseLeave += onMouseLeave;
             label1.MouseDown += onMouseDown;
