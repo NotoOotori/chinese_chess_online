@@ -70,11 +70,11 @@ namespace platform.chess_lobby
         {
             get
             {
-                return chessboard_container.chessboard.colour;
+                return chessboard_container.chessboard.lobby_player;
             }
             set
             {
-                chessboard_container.chessboard.colour = value;
+                chessboard_container.chessboard.lobby_player = value;
             }
         }
 
@@ -315,6 +315,11 @@ namespace platform.chess_lobby
                 ["identifier"] = "lobby_exit"
             });
             this.Hide();
+        }
+
+        public void surrender()
+        {
+            button_surrender_Click(this, new EventArgs());
         }
 
         private void button_surrender_Click(object sender, EventArgs e)
