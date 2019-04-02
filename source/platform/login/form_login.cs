@@ -238,9 +238,9 @@ namespace platform.login
 
         private void label8_Click(object sender, EventArgs e)
         {
-            form_signup f1 = new form_signup();
+            FormSignup form_signup = new FormSignup(this);
             this.Hide();
-            f1.Show();
+            form_signup.Show();
         }
 
         private void label7_Click(object sender, EventArgs e)
