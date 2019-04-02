@@ -131,6 +131,7 @@
     <Compile Include="login\form_signup.Designer.cs">
       <DependentUpon>form_signup.cs</DependentUpon>
     </Compile>
+    <Compile Include="login\ValidateCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="chess_lobby\chessboard.resx">

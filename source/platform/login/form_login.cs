@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using platform.common;
-
+using System.IO;
 
 namespace platform.login
 {
@@ -98,36 +98,39 @@ namespace platform.login
 
         private void prod_captcha()
         {
-            captcha_state = 1;
-            Label label4 = new Label();
-            label4.Font = new Font("宋体", 15);
-            label4.Location = new Point(109, 236);
-            label4.Size = new Size(69, 20);
-            label4.Text = "验证码";
-            this.Controls.Add(label4);
+            //captcha_state = 1;
+            //Label label4 = new Label();
+            //label4.Font = new Font("宋体", 15);
+            //label4.Location = new Point(109, 236);
+            //label4.Size = new Size(69, 20);
+            ////label4.Text = "验证码";
+            //this.Controls.Add(label4);
 
-            TextBox textBox3 = new TextBox();
-            textBox3.Font = new Font("宋体", 15);
-            textBox3.Location = new Point(184, 233);
-            textBox3.Size = new Size(77, 30);
-            this.Controls.Add(textBox3);
+            //TextBox textBox3 = new TextBox();
+            //textBox3.Font = new Font("宋体", 15);
+            //textBox3.Location = new Point(184, 233);
+            //textBox3.Size = new Size(77, 30);
+            //textBox3.Visible = true;
+            richTextBox1.Text = "请输入验证码！";
+            richTextBox1.Visible = true;
+            //this.Controls.Add(textBox3);
 
-            PictureBox pictureBox1 = new PictureBox();
-            pictureBox1.Location = new Point(306, 233);
-            pictureBox1.Size = new Size(150, 30);
+            //PictureBox pictureBox1 = new PictureBox();
+            //pictureBox1.Location = new Point(306, 233);
+            //pictureBox1.Size = new Size(150, 30);
             //加入图片
-            this.Controls.Add(pictureBox1);
+            //this.Controls.Add(pictureBox1);
             glossyButton3.Location = new Point(160, 290);
-            checkBox1.Location = new Point(220, 270);
+            //checkBox1.Location = new Point(220, 270);
         }
 
         //检查验证码，0正确，1错误
-        private int check_captcha()
+        private int check_captcha(string str)
         {
-            if (true)
+            if (richTextBox1.Text == str)
                 return 0;
-            //else
-            //    return 1;
+            else
+                return 1;
         }
 
         private void reaction(int state, Dictionary<string, string> di)
@@ -143,15 +146,17 @@ namespace platform.login
                     break;
                 case 1:
                     label5.Text = "邮箱不存在";
+                    cin_count++;
                     break;
                 case 2:
                     label6.Text = "邮箱或密码错误";
+                    cin_count++;
                     break;
                 case 3:
                     prod_captcha();
                     break;
                 default:
-                    MessageBox.Show(di["response"]);
+                    //MessageBox.Show(di["response"]);
                     break;
             }
         }
@@ -184,12 +189,14 @@ namespace platform.login
                     if (t.Text == "")
                     {
                        label5.Text = "用户名或密码为空";
+                       cin_count++;
                        return;
                     }
                 }
             }
             label5.Text = "";
             label6.Text = "";
+            //MessageBox.Show(cin_count.ToString());
             for(int i=0;i<textBox1.Text.Length;i++)
                 if(textBox1.Text.Substring(i,1)=="<"|| textBox1.Text.Substring(i, 1)==">"|| textBox1.Text.Substring(i, 1)=="/")
                 {
@@ -202,16 +209,26 @@ namespace platform.login
                     MessageBox.Show("密码中包含非法字符<>/");
                     return;
                 }
-            //若产生验证码，进行检验
-            if (captcha_state==1)
+            //产生验证码，进行检验
+            if (cin_count >= 3)
             {
-                int captcha_result = check_captcha();
-                if (captcha_result == 1)
+                ValidateCode vc = new ValidateCode();
+                string s = vc.CreateValidateCode(4);
+                MemoryStream stream = new MemoryStream();
+                stream = vc.CreateValidateGraphic(s);
+                pictureBox1.Image = Image.FromStream(stream);
+                prod_captcha();
+                if (captcha_state == 1)
                 {
-                    MessageBox.Show("验证码输入错误,请重新输入");
-                    return;
+                    int captcha_result = check_captcha(s);
+                    if (captcha_result == 1)
+                    {
+                        MessageBox.Show("验证码输入错误,请重新输入");
+                        return;
+                    }
                 }
-            }        
+            }
+            //
             link_server();//连接服务器
             Dictionary<String, String> dict = new Dictionary<String, String>();
             dict.Add("identifier", "login");
@@ -222,11 +239,7 @@ namespace platform.login
             send_data(send_string);
             //接受信息
             Dictionary<String, String> dict_back = receive_data();
-            int login_result = receive_dict_check(dict_back);
-            if (cin_count == 3)
-            {
-                prod_captcha();
-            }
+            int login_result = receive_dict_check(dict_back);           
             reaction(login_result, dict_back);            
         }
 
