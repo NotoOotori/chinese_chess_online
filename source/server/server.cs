@@ -101,6 +101,9 @@ namespace server
                         case "lobby_enter":
                             check_lobby_enter_request(user, dict);
                             break;
+                        case "lobby_exit":
+                            check_lobby_exit_request(user, dict);
+                            break;
                         case "lobby_ready":
                             check_lobby_ready_request(user, dict);
                             break;
@@ -213,6 +216,17 @@ namespace server
             {
                 ["identifier"] = "lobby_enter",
                 ["response"] = code.ToString()
+            });
+        }
+
+        private void check_lobby_exit_request(
+            User user, Dictionary<String, String> dict)
+        {
+            user.quit_lobby();
+            Socket client_socket = user.socket;
+            send(client_socket, new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_quit"
             });
         }
 

@@ -33,6 +33,12 @@ namespace platform.login
             TextBox.CheckForIllegalCrossThreadCalls = false;
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+            base.OnFormClosing(e);
+        }
+
         /// <summary>
         /// 接收服务端发来信息
         /// </summary>
@@ -71,9 +77,9 @@ namespace platform.login
             {
                 socket_client.Connect(end_point);
             }
-            catch(SocketException ex)
+            catch(SocketException)
             {
-                MessageBox.Show("与服务器连接出现问题，请稍后再试！");
+                MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
                 Application.Exit();
             }
            
@@ -156,7 +162,7 @@ namespace platform.login
                     prod_captcha();
                     break;
                 default:
-                    //MessageBox.Show(di["response"]);
+                    //MessageBoxBase.Show(di["response"]);
                     break;
             }
         }
@@ -200,13 +206,13 @@ namespace platform.login
             for(int i=0;i<textBox1.Text.Length;i++)
                 if(textBox1.Text.Substring(i,1)=="<"|| textBox1.Text.Substring(i, 1)==">"|| textBox1.Text.Substring(i, 1)=="/")
                 {
-                    MessageBox.Show("用户名中包含非法字符<>/");
+                    MessageBoxBase.Show("用户名中包含非法字符<>/");
                     return;
                 }
             for (int i = 0; i < textBox2.Text.Length; i++)
                 if (textBox2.Text.Substring(i, 1) == "<" || textBox2.Text.Substring(i, 1) == ">" || textBox2.Text.Substring(i, 1) == "/")
                 {
-                    MessageBox.Show("密码中包含非法字符<>/");
+                    MessageBoxBase.Show("密码中包含非法字符<>/");
                     return;
                 }
             //产生验证码，进行检验
@@ -223,7 +229,7 @@ namespace platform.login
                     int captcha_result = check_captcha(s);
                     if (captcha_result == 1)
                     {
-                        MessageBox.Show("验证码输入错误,请重新输入");
+                        MessageBoxBase.Show("验证码输入错误,请重新输入");
                         return;
                     }
                 }
@@ -245,9 +251,9 @@ namespace platform.login
 
         private void label8_Click(object sender, EventArgs e)
         {
-            form_signup f1 = new form_signup();
+            FormSignup form_signup = new FormSignup(this);
             this.Hide();
-            f1.Show();
+            form_signup.Show();
         }
 
         private void label7_Click(object sender, EventArgs e)

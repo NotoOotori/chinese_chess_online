@@ -15,18 +15,18 @@ using platform.common;
 
 namespace platform.login
 {
-    public partial class form_signup : FormBase
+    public partial class FormSignup : FormBase
     {
         static string connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
-        public form_signup()
+        public FormSignup(FormLogin form_login)
         {
             InitializeComponent();
             //关闭对文本框的非法线程操作检查
             TextBox.CheckForIllegalCrossThreadCalls = false;
+            this.form_login = form_login;
         }
-        //String HOST = "45.32.82.133"; // IP地址
-        //Int32 PORT = 21567; // 端口
-        //Int32 BUFSIZ = 1024; // 缓冲区大小
+
+        FormLogin form_login;
         
         private void form_signup_Load(object sender, EventArgs e)
         {
@@ -83,6 +83,12 @@ namespace platform.login
             toolTip1.SetToolTip(this.textBox_user, "请勿输入<,>,/");
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            form_login.Show();
+            base.OnFormClosing(e);
+        }
+
         private static MySqlConnection CreateConnection()
         {
             MySqlConnection Connection = new MySqlConnection(connection_string); //建立MySQL连接
@@ -137,11 +143,11 @@ namespace platform.login
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("注册成功！");
+                MessageBoxBase.Show("注册成功！");
             }
             catch (Exception e)
             {
-                MessageBox.Show("注册失败：" + e.Message);
+                MessageBoxBase.Show("注册失败：" + e.Message);
             }
             finally
             {
@@ -160,7 +166,6 @@ namespace platform.login
             }
             else
                 return;
-            
         }
     }
 }

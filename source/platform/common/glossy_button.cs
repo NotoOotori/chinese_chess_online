@@ -24,7 +24,7 @@ namespace platform
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
             //this.label1.MouseDown += new MouseEventHandler(mymousedown);
             NormalStyle();
-            setFont();
+            //setFont();
             label1.MouseEnter += onMouseEnter;
             label1.MouseLeave += onMouseLeave;
             label1.MouseDown += onMouseDown;
@@ -104,7 +104,7 @@ namespace platform
         //    base.OnPaint(e);
         //    this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width + 1, this.Height + 1, 3, 3));
         //    LinearGradientBrush lb = new LinearGradientBrush(new Rectangle(0, 0, this.Width, this.Height), Color.FromArgb(150, Color.White), Color.FromArgb(50, Color.White), LinearGradientMode.Vertical);
-        //    //MessageBox.Show(p.Color.ToString());
+        //    //MessageBoxBase.Show(p.Color.ToString());
         //    e.Graphics.FillRectangle(lb, 2, 2, this.Width - 6, this.Height / 2);
         //    e.Graphics.DrawRectangle(p, 0, 0, this.Width - 3, this.Height - 3);
         //}

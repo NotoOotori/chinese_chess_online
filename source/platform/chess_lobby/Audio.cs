@@ -35,13 +35,15 @@ namespace platform.chess_lobby
         #region ' Constructors '
 
         public AudioPlayList()
-        {; }
+        {
+            output_device = new WaveOutEvent();
+        }
 
         #endregion
 
         #region ' Properties '
 
-        private WaveOutEvent output_device { get; set; }
+        public WaveOutEvent output_device { get; }
 
         private IEnumerable<WaveFileReader> readers { get; set; }
 
@@ -55,7 +57,6 @@ namespace platform.chess_lobby
 
         public void play(IEnumerable<String> names)
         {
-            output_device = new WaveOutEvent();
             output_device.PlaybackStopped += on_playback_stopped;
             readers = new List<WaveFileReader>();
             foreach(String name in names)
@@ -80,7 +81,6 @@ namespace platform.chess_lobby
 
         public void play_infinitely(String name)
         {
-            output_device = new WaveOutEvent();
             output_device.PlaybackStopped += on_infinite_playback_stopped;
             Stream stream = Properties.Resources.ResourceManager.
                 GetStream(name);

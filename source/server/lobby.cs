@@ -181,6 +181,10 @@ namespace server
         {
             if (seats[seat] == user)
                 seats[seat] = null;
+            broadcast(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_exit"
+            }, seat);
             Console.WriteLine($"System: User {user.email_address} quit " +
                 $"lobby #{lobby_id}.");
         }

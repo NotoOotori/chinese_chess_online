@@ -1,4 +1,5 @@
 ﻿using platform.common;
+using platform.dating;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,8 +18,10 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="lobby_id">房间id</param>
         /// <param name="server_socket">服务器的socket</param>
-        public ChessLobby(UInt32 lobby_id, UInt32 seat, Socket server_socket)
+        public ChessLobby(FormDating dating, UInt32 lobby_id,
+            UInt32 seat, Socket server_socket)
         {
+            this.dating = dating;
             this.lobby_id = lobby_id;
             this.seat = seat;
             this.server_socket = server_socket;
@@ -58,6 +61,7 @@ namespace platform.chess_lobby
         private const Int32 BUFSIZ = 1024 * 1024;
 
         private Thread thread { get; set; }
+        private FormDating dating { get; }
         public UInt32 lobby_id { get; } = 0;
         public UInt32 seat { get; } = 0;
         public Socket server_socket { get; }
@@ -66,13 +70,15 @@ namespace platform.chess_lobby
         {
             get
             {
-                return chessboard_container.chessboard.colour;
+                return chessboard_container.chessboard.lobby_player;
             }
             set
             {
-                chessboard_container.chessboard.colour = value;
+                chessboard_container.chessboard.lobby_player = value;
             }
         }
+
+        private AudioPlayList play_list { get; set; } = new AudioPlayList();
 
         /// <summary>
         /// 旋转<see cref="ChessboardContainer"/>的<see cref="Chessboard"/>.
@@ -97,7 +103,8 @@ namespace platform.chess_lobby
 
         private void ChessLobby_Load(object sender, EventArgs e)
         {
-            new AudioPlayList() { volume = 0.1F }.play_infinitely("bgm_roggy");
+            play_list = new AudioPlayList();
+            play_list.play_infinitely("bgm_roggy");
         }
 
         public new void Show()
@@ -111,6 +118,8 @@ namespace platform.chess_lobby
         public new void Hide()
         {
             base.Hide();
+            play_list.output_device.Pause();
+            dating.Show();
             thread.Abort();
         }
 
@@ -125,60 +134,60 @@ namespace platform.chess_lobby
 
         private void listening_thread()
         {
-            try
+            while (true)
             {
-                while (true)
+                Byte[] arr_data = new Byte[BUFSIZ];
+                Dictionary<String, String> dict;
+                try
                 {
-                    Byte[] arr_data = new Byte[BUFSIZ];
-                    Int32 length = 0;
-                    try
-                    {
-                        length = server_socket.Receive(arr_data);
-                    }
-                    catch (SocketException)
-                    {
-                        MessageBox.Show("服务器掉线了！");
-                        Application.Exit();
-                    }
-                    String str_data = Encoding.UTF8.GetString(
-                        arr_data, 0, length);
-                    if (str_data == null)
-                    {
-                        break;
-                    }
-                    Dictionary<String, String> dict =
-                        DataEncoding.get_dictionary(str_data);
-                    switch (dict["identifier"])
-                    {
-                        default:
-                            throw new DataEncodingException("Invalid identifier.");
-                        case "lobby_ready":
-                            check_ready_request(dict);
-                            break;
-                        case "lobby_chessmove":
-                            check_chessmove_request(dict);
-                            break;
-                        case "lobby_gamestart":
-                            check_gamestart_request(dict);
-                            break;
-                        case "lobby_draw":
-                            check_draw_request(dict);
-                            break;
-                        case "lobby_gameend":
-                            check_gameend_request(dict);
-                            break;
-                    }
+                    server_socket.Receive(arr_data);
                 }
-            }
-            catch(DataEncodingException e)
-            {
-                MessageBox.Show(e.Message);
+                catch (SocketException)
+                {
+                    MessageBoxBase.Show("服务器掉线了！");
+                    Application.Exit();
+                }
+                try
+                {
+                    dict = DataEncoding.get_dictionary(arr_data);
+                }
+                catch (DataEncodingException e)
+                {
+                    MessageBoxBase.Show(e.Message);
+                    Application.Exit();
+                    break;
+                }
+                switch (dict["identifier"])
+                {
+                    default:
+                        throw new DataEncodingException("Invalid identifier.");
+                    case "lobby_ready":
+                        check_ready_request(dict);
+                        break;
+                    case "lobby_chessmove":
+                        check_chessmove_request(dict);
+                        break;
+                    case "lobby_gamestart":
+                        check_gamestart_request(dict);
+                        break;
+                    case "lobby_draw":
+                        check_draw_request(dict);
+                        break;
+                    case "lobby_gameend":
+                        check_gameend_request(dict);
+                        break;
+                    case "lobby_exit":
+                        MessageBoxBase.Show("你的对手已经退出了房间. 即将关闭房间.",
+                            "对手退出房间");
+                        this.Close();
+                        break;
+                }
             }
         }
 
         private void check_ready_request(Dictionary<String, String> dict)
         {
-            // TODO
+            // DO NOTING
         }
 
         private void check_chessmove_request(Dictionary<String, String> dict)
@@ -203,11 +212,11 @@ namespace platform.chess_lobby
         private void check_draw_request(Dictionary<String, String> dict)
         {
             String message = dict["message"];
-            switch(message)
+            switch (message)
             {
                 // TODO
                 case "draw":
-                    MessageBox.Show("对方提和, 请问您是否接受?");
+                    MessageBoxBase.Show("对方提和, 请问您是否接受?");
                     break;
             }
         }
@@ -292,7 +301,7 @@ namespace platform.chess_lobby
                 this.chessboard_container.chessboard.initialize_pieces(fen);
             }
         }
-        
+
         private void button_ready_Click(object sender, EventArgs e)
         {
             server_socket.Send(new Dictionary<String, String>()
@@ -304,10 +313,18 @@ namespace platform.chess_lobby
             label_ready.Visible = true;
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            // TODO MESSAGEBOX
+            server_socket.Send(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_exit"
+            });
             this.Hide();
+        }
+
+        public void surrender()
+        {
+            button_surrender_Click(this, new EventArgs());
         }
 
         private void button_surrender_Click(object sender, EventArgs e)

@@ -61,6 +61,7 @@ It will be an online platform and database of chinese chess.
     * (NuGet)Google.Protobuf
       > C# runtime library for Protocol Buffers -
       > Google's data interchange format.
+      >
       > | Attribute      | Value                                |
       > | -------------- | ------------------------------------ |
       > | Version        | 3.6.1                                |
@@ -69,6 +70,7 @@ It will be an online platform and database of chinese chess.
       > | Project URL    | <https://github.com/google/protobuf> |
     * (NuGet)MySql.Data
       > MySql.Data.MySqlClient .Net Core Class Library
+      >
       > | Attribute      | Value                              |
       > | -------------- | ---------------------------------- |
       > | Version        | 8.0.14                             |
@@ -78,6 +80,7 @@ It will be an online platform and database of chinese chess.
     * (NuGet)System.ValueTuple
       > Provides the System.ValueTuple structs, which implement
       > the underlying types for tuples in C# and Visual Basic.
+      >
       > | Attribute      | Value                   |
       > | -------------- | ----------------------- |
       > | Version        | 4.5.0                   |
@@ -88,6 +91,7 @@ It will be an online platform and database of chinese chess.
     * NoComment
       > Hides comments and replaces them with a callout icon.
       > Comments are shown as tooltip and when editing them.
+      > 
       > | Attribute         | Value                |
       > | ----------------- | -------------------- |
       > | Version           | 1.1                  |

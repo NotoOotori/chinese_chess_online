@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace platform.common
         {
             InitializeComponent();
 
+            picture_box_icon.Click += picture_box_icon_click;
             button_min.Click += button_min_Click;
             button_exit.Click += button_exit_Click;
             MouseUp += form_mouse_up;
@@ -26,6 +28,13 @@ namespace platform.common
             MouseMove += form_mouse_move;
 
             Icon = Properties.Resources.chess_icon;
+
+            ToolTip tool_tip = new ToolTip();
+            tool_tip.AutoPopDelay = 2500;
+            tool_tip.InitialDelay = 500;
+            tool_tip.ReshowDelay = 250;
+            tool_tip.ShowAlways = true;
+            tool_tip.SetToolTip(this.picture_box_icon, "Visit our repository.");
         }
 
         public new String Text
@@ -34,7 +43,10 @@ namespace platform.common
             set { label_title.Text = value; }
         }
 
-        #region 最小化和叉叉
+        public String text_exit { get; set; } = "请问您确定要关闭窗口吗?";
+
+        #region ' Minimize and Exit '
+
         private void button_min_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -42,11 +54,30 @@ namespace platform.common
 
         private void button_exit_Click(object sender, EventArgs e)
         {
-            OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing));
+            if (text_exit == "")
+            {
+                this.Close();
+                return;
+            }
+            if (MessageBoxBase.Show(
+                text_exit,
+                "关闭窗口",
+                MessageBoxButtons.OKCancel) == DialogResult.OK
+            )
+            {
+                this.Close();
+                return;
+            }
         }
+
+        private void picture_box_icon_click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/NotoOotori/chinese_chess_online");
+        }
+
         #endregion
 
-        #region 窗口拖动
+        #region ' 窗口拖动 '
 
         private void form_mouse_down(object sender, MouseEventArgs e)
         {
@@ -54,7 +85,6 @@ namespace platform.common
             {
                 mouseoff = new Point(-e.X, -e.Y);
                 leftflag = true;
-
             }
         }
 

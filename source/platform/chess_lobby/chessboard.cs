@@ -571,7 +571,10 @@ namespace platform.chess_lobby
 
         #endregion
 
-        public ChessColour colour { get; set; } = ChessColour.NONE;
+        /// <summary>
+        /// 本玩家的先后手
+        /// </summary>
+        public ChessColour lobby_player { get; set; } = ChessColour.NONE;
 
         /// <summary>
         /// 已经进行的半回合数.
@@ -661,7 +664,7 @@ namespace platform.chess_lobby
         public void initialize_pieces()
         {
             this.turns = 0;
-            this.colour = ChessColour.NONE;
+            this.lobby_player = ChessColour.NONE;
             this.last_click = null;
             this.masked_panels.Clear();
             this.chess_positions = new List<ChessPosition>();
@@ -677,7 +680,7 @@ namespace platform.chess_lobby
         public void initialize_pieces(String fen)
         {
             this.turns = 0;
-            this.colour = ChessColour.NONE;
+            this.lobby_player = ChessColour.NONE;
             this.last_click = null;
             this.masked_panels.Clear();
             this.chess_positions = new List<ChessPosition>();
@@ -692,7 +695,7 @@ namespace platform.chess_lobby
             ReflectionType reflection = colour == ChessColour.RED ?
                 ReflectionType.None : ReflectionType.PointReflection;
             reflect(this.reflection ^ reflection);
-            this.colour = colour;
+            this.lobby_player = colour;
         }
 
         #endregion
@@ -712,6 +715,8 @@ namespace platform.chess_lobby
             this.turns++;
             this.last_click = null;
             this.refresh_pieces(new[] { start, end });
+            if (!chess_position.has_king(lobby_player))
+                Parent.Parent.surrender();
         }
 
         public MoveType get_move_type(Coordinate start, Coordinate end)
@@ -732,7 +737,7 @@ namespace platform.chess_lobby
         /// <param name="click">实际坐标</param>
         public void on_click(Coordinate click, Boolean from_server = false)
         {
-            if (colour != current_player && !from_server)
+            if (lobby_player != current_player && !from_server)
                 return;
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)

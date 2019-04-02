@@ -65,8 +65,8 @@ namespace platform.login
         {
             if (true)
                 return 1;
-            else
-                return 0;
+            //else
+            //    return 0;
         }
 
         private void button1_Click(object sender, EventArgs e)

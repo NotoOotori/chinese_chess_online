@@ -128,7 +128,7 @@ namespace platform.dating
                         catch (Exception) { }
                         return;
                     }
-                    //MessageBox.Show("here!");
+                    //MessageBoxBase.Show("here!");
                     mydata = (byte[])(dataTable.Rows[0].ItemArray[0]);
                     myPic = new MemoryStream(mydata);
                     blackimage.Image = Image.FromStream(myPic);

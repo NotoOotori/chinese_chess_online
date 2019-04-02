@@ -436,6 +436,24 @@ namespace platform.chess_lobby
             return new_position;
         }
 
+        public Boolean has_king(ChessColour lobby_player)
+        {
+            ChessColour current_player = this.current_player;
+            if (lobby_player != current_player)
+                return true;
+            for (Int32 y = 9; y >= 0; y--)
+                for (Int32 x = 0; x < 9; x++)
+                {
+                    Coordinate cdn = new Coordinate(x, y);
+                    if (!is_inside_castle(cdn, current_player))
+                        continue;
+                    if (this[cdn].colour == current_player &&
+                        this[cdn].type == PieceType.KING)
+                        return true;
+                }
+            return false;
+        }
+
         /// <summary>
         /// 返回棋局的FEN串
         /// </summary>
