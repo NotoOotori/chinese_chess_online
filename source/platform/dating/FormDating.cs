@@ -18,7 +18,7 @@ namespace platform.dating
 {
     public partial class FormDating : FormBase
     {
-        int tot_board = 10;
+        int tot_board = 9;
         uint num = 0, seat = 1;//记录进入的桌号和椅子
         Thread thread_client;
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
@@ -139,7 +139,7 @@ namespace platform.dating
                 //MessageBoxBase.Show(DataEncoding.get_string(mydic));
                 if (identifier == "plaza_renew")
                 {
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < tot_board; i++)
                         for (int seat = 1; seat < 3; seat++)
                         {
                             String key = $"{i + 1}-{seat}";
@@ -147,13 +147,25 @@ namespace platform.dating
                             //MessageBoxBase.Show(person);
                             if (person == "0")
                             {
-                                //没有人 do nothing
+                                ZBWs[i].chessboard.BackgroundImage = null;
+                                if (seat == 1)
+                                {
+                                    ZBWs[i].redimage.BackgroundImage = null;
+                                    ZBWs[i].redplayer.Text = "";
+                                }
+                                else
+                                {
+                                    ZBWs[i].blackimage.BackgroundImage = null;
+                                    ZBWs[i].blackplayer.Text = "";
+                                }
+                                //没有人 重置为空值
                             }
                             else
                             {
                                 //有人
                                 void renew()
                                 {
+                                    this.Cursor = Cursors.WaitCursor;
                                     ZBWs[i].chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard;
                                     MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
                                     MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
@@ -186,6 +198,7 @@ namespace platform.dating
                                         {
                                             MessageBoxBase.Show("与服务器连接失败，请检查连接！");
                                         }
+                                        this.Cursor = Cursors.Arrow;
                                     };
 
                                     // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.
