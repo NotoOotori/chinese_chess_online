@@ -50,6 +50,7 @@
             // picture_box_icon
             // 
             this.picture_box_icon.BackColor = System.Drawing.Color.Transparent;
+            this.picture_box_icon.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picture_box_icon.Image = global::platform.Properties.Resources.chess_icon1;
             this.picture_box_icon.InitialImage = null;
             this.picture_box_icon.Location = new System.Drawing.Point(0, 0);
@@ -77,6 +78,7 @@
             // 
             this.button_min.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_min.BackColor = System.Drawing.Color.Transparent;
+            this.button_min.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_min.FlatAppearance.BorderSize = 0;
             this.button_min.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_min.Font = new System.Drawing.Font("Microsoft YaHei", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

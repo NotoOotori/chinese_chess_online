@@ -169,6 +169,7 @@
             // 
             // comboBox_yy
             // 
+            this.comboBox_yy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBox_yy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_yy.Font = new System.Drawing.Font("宋体", 15F);
             this.comboBox_yy.FormattingEnabled = true;
@@ -215,6 +216,7 @@
             // 
             // comboBox_mm
             // 
+            this.comboBox_mm.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBox_mm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_mm.Font = new System.Drawing.Font("宋体", 15F);
             this.comboBox_mm.FormattingEnabled = true;
@@ -225,6 +227,7 @@
             // 
             // comboBox_dd
             // 
+            this.comboBox_dd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBox_dd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_dd.Font = new System.Drawing.Font("宋体", 15F);
             this.comboBox_dd.FormattingEnabled = true;
@@ -308,6 +311,7 @@
             // 
             this.pictureBox_avatar.BackColor = System.Drawing.Color.Silver;
             this.pictureBox_avatar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox_avatar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox_avatar.Image = global::platform.Properties.Resources.default_avatar;
             this.pictureBox_avatar.Location = new System.Drawing.Point(41, 115);
             this.pictureBox_avatar.Margin = new System.Windows.Forms.Padding(2);
