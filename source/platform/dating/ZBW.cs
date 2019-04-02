@@ -30,52 +30,56 @@ namespace platform.dating
         public uint lobby_num;
         public ZBW(FormDating form,int num)
         {
-            int mywidth = form.Width; int mygap = 125 / 3 * 2;
+            int mywidth = form.Width;
+            int my_ver_gap = 125;
+            int my_hor_gap = mywidth / 3;
+            int board_size = 60;
+            int image_size = 60;
+            int chess_init = mywidth / 8;
+            int chess_gap = board_size + 10;
+            int ver_init = form.Height / 6;
+            int ver_chess_gap = 10;
+            int ver_play_gap = image_size + 10;
+
             lobby_num = Convert.ToUInt32(num);
 
             redimage.Tag = lobby_num;
             blackimage.Tag = lobby_num;
 
             form.Controls.Add(chessboard);
-            chessboard.Size = new Size(60 * 2 / 3, 60 * 2 / 3);
-            chessboard.Location = new Point((num % 4 + 1) * mywidth / 4 - 170 * 2 / 3, num / 4 * mygap + 42 * 2 / 3);
+            chessboard.Size = new Size(board_size, board_size);
+            chessboard.Location = new Point((num % 3) * my_hor_gap+chess_init, num / 3 * my_ver_gap + ver_init);
             chessboard.BackgroundImageLayout = ImageLayout.Stretch;
             chessboard.Cursor = Cursors.Hand;
             chessboard.BorderStyle = BorderStyle.FixedSingle;
             chessboard.BackColor = Color.Transparent;
 
-            redimage.Size = new Size(54 * 2 / 3, 54 * 2 / 3);
-            redimage.Location = new Point((num % 4 + 1) * mywidth / 4 - 240 * 2 / 3, num / 4 * mygap + 56 * 2 / 3);
+            redimage.Size = new Size(image_size, image_size);
+            redimage.Location = new Point((num % 3) * my_hor_gap+chess_init-chess_gap, num / 3 * my_ver_gap + ver_init+ver_chess_gap);
             redimage.BorderStyle = BorderStyle.Fixed3D;
             redimage.Cursor = Cursors.Hand;
+            redimage.BackgroundImageLayout = ImageLayout.Stretch;
             redimage.BackColor = Color.Transparent;
             form.Controls.Add(redimage);
 
-            blackimage.Size = new Size(54 * 2 / 3, 54 * 2 / 3);
-            blackimage.Location = new Point((num % 4 + 1) * mywidth / 4 - 96 * 2 / 3, num / 4 * mygap + 56 * 2 / 3);
+            blackimage.Size = new Size(image_size, image_size);
+            blackimage.Location = new Point((num % 3) * my_hor_gap + chess_init + chess_gap, num / 3 * my_ver_gap + ver_init + ver_chess_gap);
             blackimage.BorderStyle = BorderStyle.Fixed3D;
             blackimage.Cursor = Cursors.Hand;
             blackimage.BackColor = Color.Transparent;
+            blackimage.BackgroundImageLayout = ImageLayout.Stretch;
             form.Controls.Add(blackimage);
 
-            //red_ready.Location  = new Point((num % 4 + 1) * mywidth / 4 - 174 * 2 / 3-20,num/4*mygap + 42*2/3+36);
-            //red_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
-            //black_ready.BackgroundImageLayout = ImageLayout.Stretch;
-            ////panel.Controls.Add(red_ready);
-
-            //black_ready.Location = new Point((num % 4 + 1) * mywidth / 4 - 75 * 2 / 3-20, num / 4 * mygap + 42 * 2 / 3+36);
-            //black_ready.Size = new Size(30 * 2 / 3, 30 * 2 / 3);
-            //black_ready.BackgroundImageLayout = ImageLayout.Stretch;
-            //panel.Controls.Add(black_ready);
-
-            redplayer.Location = new Point((num % 4 + 1) * mywidth / 4 - 240 * 2 / 3, num / 4 * mygap + 125 * 2 / 3);
-            redplayer.Size = new Size(54 * 2 / 3, 18 * 2 / 3);
+            redplayer.Location = new Point((num % 3) * my_hor_gap + chess_init - chess_gap, num / 3 * my_ver_gap + ver_init + ver_chess_gap+ver_play_gap);
+            redplayer.Size = new Size(image_size, 18);
             redplayer.BackColor = Color.Transparent;
+            redplayer.Font = new Font("Comic Sans MS", 12f);
             form.Controls.Add(redplayer);
 
-            blackplayer.Location = new Point((num % 4 + 1) * mywidth / 4 - 96 * 2 / 3, num / 4 * mygap + 125 * 2 / 3);
-            blackplayer.Size = new Size(54 * 2 / 3, 18 * 2 / 3);
+            blackplayer.Location = new Point((num % 3) * my_hor_gap + chess_init + chess_gap, num / 3 * my_ver_gap + ver_init + ver_chess_gap + ver_play_gap);
+            blackplayer.Size = new Size(image_size , 18);
             blackplayer.BackColor = Color.Transparent;
+            blackplayer.Font = new Font("Comic Sans MS", 12f);
             form.Controls.Add(blackplayer);
         }       
 
@@ -114,7 +118,7 @@ namespace platform.dating
                 {
                     MessageBox.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                
                 MemoryStream myPic = null;
                 byte[] mydata;
                 if (dataTable.Rows.Count!=0)

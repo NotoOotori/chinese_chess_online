@@ -42,11 +42,19 @@
             this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // button_exit
+            // 
+            this.button_exit.FlatAppearance.BorderSize = 0;
+            // 
+            // button_min
+            // 
+            this.button_min.FlatAppearance.BorderSize = 0;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("方正舒体", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("FZShuTi", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.MediumBlue;
             this.label1.Location = new System.Drawing.Point(80, 45);
             this.label1.Name = "label1";
@@ -58,7 +66,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.Gold;
             this.label2.Location = new System.Drawing.Point(93, 124);
             this.label2.Name = "label2";
@@ -70,7 +78,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("宋体", 15F);
+            this.label3.Font = new System.Drawing.Font("SimSun", 15F);
             this.label3.ForeColor = System.Drawing.Color.Gold;
             this.label3.Location = new System.Drawing.Point(93, 180);
             this.label3.Name = "label3";
@@ -80,16 +88,15 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 15F);
+            this.textBox1.Font = new System.Drawing.Font("SimSun", 15F);
             this.textBox1.Location = new System.Drawing.Point(148, 121);
-            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(240, 30);
             this.textBox1.TabIndex = 3;
             // 
             // textBox2
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 15F);
+            this.textBox2.Font = new System.Drawing.Font("SimSun", 15F);
             this.textBox2.Location = new System.Drawing.Point(148, 177);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(240, 30);
@@ -124,7 +131,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("仿宋", 14F, System.Drawing.FontStyle.Bold);
+            this.label8.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
             this.label8.ForeColor = System.Drawing.Color.DarkBlue;
             this.label8.Location = new System.Drawing.Point(-1, 329);
             this.label8.Name = "label8";
@@ -143,7 +150,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox1.Location = new System.Drawing.Point(221, 223);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(95, 20);
@@ -156,7 +163,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("仿宋", 14F, System.Drawing.FontStyle.Bold);
+            this.label7.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
             this.label7.ForeColor = System.Drawing.Color.DarkBlue;
             this.label7.Location = new System.Drawing.Point(454, 329);
             this.label7.Name = "label7";
@@ -189,6 +196,8 @@
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Name = "FormLogin";
             this.Load += new System.EventHandler(this.FormLogin_Load);
+            this.Controls.SetChildIndex(this.button_min, 0);
+            this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.label3, 0);
