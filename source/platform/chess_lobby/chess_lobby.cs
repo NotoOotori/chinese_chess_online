@@ -103,7 +103,7 @@ namespace platform.chess_lobby
 
         private void ChessLobby_Load(object sender, EventArgs e)
         {
-            play_list = new AudioPlayList() { volume = 0.1F };
+            play_list = new AudioPlayList();
             play_list.play_infinitely("bgm_roggy");
         }
 
