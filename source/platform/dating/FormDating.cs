@@ -287,6 +287,7 @@ namespace platform.dating
             thread_client.IsBackground = true;
             thread_client.Start();
             base.Show();
+            button_renew_Click(this, new EventArgs());
         }
 
         public new void Hide()
