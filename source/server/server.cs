@@ -223,6 +223,11 @@ namespace server
             User user, Dictionary<String, String> dict)
         {
             user.quit_lobby();
+            Socket client_socket = user.socket;
+            send(client_socket, new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_quit"
+            });
         }
 
         private void check_lobby_ready_request(
