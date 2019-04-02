@@ -23,8 +23,7 @@ namespace platform.dating
         public Label redplayer = new Label();
         public Label blackplayer = new Label();
         public PictureBox chessboard = new PictureBox();
-        //public PictureBox red_ready = new PictureBox();
-        //public PictureBox black_ready = new PictureBox();
+        public Label board_id = new Label();
         public PictureBox redimage = new PictureBox();
         public PictureBox blackimage = new PictureBox();
         public uint lobby_num;
@@ -50,9 +49,18 @@ namespace platform.dating
             chessboard.Size = new Size(board_size, board_size);
             chessboard.Location = new Point((num % 3) * my_hor_gap+chess_init, num / 3 * my_ver_gap + ver_init);
             chessboard.BackgroundImageLayout = ImageLayout.Stretch;
-            chessboard.Cursor = Cursors.Hand;
+            //chessboard.Cursor = Cursors.Hand;
             chessboard.BorderStyle = BorderStyle.FixedSingle;
             chessboard.BackColor = Color.Transparent;
+
+            board_id.Size = new Size(board_size, 18);
+            board_id.BackColor = Color.Transparent;
+            board_id.Location = new Point((num % 3) * my_hor_gap + chess_init, num / 3 * my_ver_gap + ver_init+ver_chess_gap+board_size);
+            board_id.Text = "- "+(num+1).ToString()+" -";
+            board_id.TextAlign = ContentAlignment.MiddleCenter;
+            board_id.Font = new Font("Consolas", 12f);
+            form.Controls.Add(board_id);
+            //board_id.BringToFront();
 
             redimage.Size = new Size(image_size, image_size);
             redimage.Location = new Point((num % 3) * my_hor_gap+chess_init-chess_gap, num / 3 * my_ver_gap + ver_init+ver_chess_gap);

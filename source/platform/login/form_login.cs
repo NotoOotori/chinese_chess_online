@@ -80,7 +80,7 @@ namespace platform.login
             catch(SocketException)
             {
                 MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
-                Application.Exit();
+                //Application.Exit();
             }
            
         }

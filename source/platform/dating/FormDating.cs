@@ -140,6 +140,8 @@ namespace platform.dating
                 if (identifier == "plaza_renew")
                 {
                     for (int i = 0; i < tot_board; i++)
+                    {
+                        bool flag = false;
                         for (int seat = 1; seat < 3; seat++)
                         {
                             String key = $"{i + 1}-{seat}";
@@ -147,7 +149,6 @@ namespace platform.dating
                             //MessageBoxBase.Show(person);
                             if (person == "0")
                             {
-                                ZBWs[i].chessboard.BackgroundImage = null;
                                 if (seat == 1)
                                 {
                                     ZBWs[i].redimage.BackgroundImage = null;
@@ -162,6 +163,7 @@ namespace platform.dating
                             }
                             else
                             {
+                                flag = true;
                                 //有人
                                 void renew()
                                 {
@@ -249,7 +251,12 @@ namespace platform.dating
                                 else
                                     renew();
                             }
+                            if (!flag)
+                            {
+                                ZBWs[i].chessboard.BackgroundImage = null;
+                            }
                         }
+                    }
                 }
                 if (identifier == "lobby_enter")
                 {
