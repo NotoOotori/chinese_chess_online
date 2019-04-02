@@ -18,14 +18,23 @@ namespace platform.common
         }
 
         private Size default_size = new Size(100, 50);
-        private Font default_font = new Font("Comic Sans MS", 14F);
+        private Font default_button_font = new Font("Comic Sans MS", 14F);
+        private Font default_text_font = new Font("KaiTi", 14F);
 
         public MessageFormBase(String text, String caption,
             MessageBoxButtons buttons)
         {
             InitializeComponent();
+            this.add_buttons(buttons);
             this.label_text.Text = text;
+            this.label_text.Font = default_text_font;
+            this.label_text.SendToBack();
             this.Text = caption;
+            this.text_exit = "";
+        }
+
+        private void add_buttons(MessageBoxButtons buttons)
+        {
             switch (buttons)
             {
                 default:
@@ -38,15 +47,14 @@ namespace platform.common
                     add_button_cancel(new Point(225, 225));
                     break;
             }
-            this.label_text.SendToBack();
         }
 
         private void add_button_ok(Point location)
         {
             GlossyButton button_ok = new GlossyButton()
             {
+                Font = default_button_font,
                 Text = "OK",
-                Font = default_font,
                 Size = default_size,
                 Location = location,
             };
@@ -59,8 +67,8 @@ namespace platform.common
         {
             GlossyButton button_cancel = new GlossyButton()
             {
+                Font = default_button_font,
                 Text = "Cancel",
-                Font = default_font,
                 Size = default_size,
                 Location = location,
             };
@@ -87,7 +95,7 @@ namespace platform.common
         public static DialogResult Show(String text, String caption = "",
             MessageBoxButtons buttons = MessageBoxButtons.OK)
         {
-            using (var form = new MessageFormBase(text, caption))
+            using (var form = new MessageFormBase(text, caption, buttons))
                 return form.ShowDialog();
         }
     }

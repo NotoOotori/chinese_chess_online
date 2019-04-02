@@ -34,6 +34,8 @@ namespace platform.common
             set { label_title.Text = value; }
         }
 
+        public String text_exit { get; set; } = "请问您确定要关闭窗口吗?";
+
         #region ' Minimize and Exit '
 
         private void button_min_Click(object sender, EventArgs e)
@@ -43,8 +45,20 @@ namespace platform.common
 
         private void button_exit_Click(object sender, EventArgs e)
         {
-            // TODO MESSAGEBOX
-            OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false));
+            if (text_exit == "")
+            {
+                this.Close();
+                return;
+            }
+            if (MessageBoxBase.Show(
+                text_exit,
+                "关闭窗口",
+                MessageBoxButtons.OKCancel) == DialogResult.OK
+            )
+            {
+                this.Close();
+                return;
+            }
         }
 
         #endregion
@@ -57,7 +71,6 @@ namespace platform.common
             {
                 mouseoff = new Point(-e.X, -e.Y);
                 leftflag = true;
-
             }
         }
 
