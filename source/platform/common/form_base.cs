@@ -42,7 +42,7 @@ namespace platform.common
 
         private void button_exit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing));
         }
         #endregion
 

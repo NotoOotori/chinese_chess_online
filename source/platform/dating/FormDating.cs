@@ -86,11 +86,6 @@ namespace platform.dating
             //try { this.pictureBox1.Image = Image.FromFile("D:\\greenmushroom.gif"); pictureBox1.Enabled = false; }
             //catch (Exception ex) { MessageBox.Show(ex.ToString()); }
 
-            thread_client = new Thread(receive_data);
-            //将窗体线程设置为与后台同步
-            thread_client.IsBackground = true;
-            //启动线程
-            thread_client.Start();
 
             for (uint i = 0; i < tot_board; i++)
             {
@@ -307,10 +302,20 @@ namespace platform.dating
             }
         }
 
-        //public new void Hide()
-        //{
-        //    thread_client.Sleep
-        //    base.Hide();
-        //}
+        public new void Show()
+        {
+            thread_client = new Thread(receive_data);
+            //将窗体线程设置为与后台同步
+            thread_client.IsBackground = true;
+            //启动线程
+            thread_client.Start();
+            base.Show();
+        }
+
+        public new void Hide()
+        {
+            base.Hide();
+            thread_client.Abort();
+        }
     }
 }

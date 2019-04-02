@@ -49,9 +49,6 @@ namespace platform.chess_lobby
             button_surrender.label1.Click += button_surrender_Click;
             button_draw.Enabled = false;
             button_surrender.Enabled = false;
-
-            thread = new Thread(listening_thread);
-            thread.Start();
         }
 
         private const String HOST = "45.32.82.133";
@@ -101,6 +98,20 @@ namespace platform.chess_lobby
         private void ChessLobby_Load(object sender, EventArgs e)
         {
             new AudioPlayList() { volume = 0.1F }.play_infinitely("bgm_roggy");
+        }
+
+        public new void Show()
+        {
+            thread = new Thread(listening_thread);
+            thread.IsBackground = true;
+            thread.Start();
+            base.Show();
+        }
+
+        public new void Hide()
+        {
+            base.Hide();
+            thread.Abort();
         }
 
         private void initialize()
@@ -295,8 +306,8 @@ namespace platform.chess_lobby
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            server_socket.Close();
-            base.OnFormClosed(e);
+            // TODO MESSAGEBOX
+            this.Hide();
         }
 
         private void button_surrender_Click(object sender, EventArgs e)
