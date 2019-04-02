@@ -1,4 +1,5 @@
 ﻿using platform.common;
+using platform.dating;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,8 +18,10 @@ namespace platform.chess_lobby
         /// </summary>
         /// <param name="lobby_id">房间id</param>
         /// <param name="server_socket">服务器的socket</param>
-        public ChessLobby(UInt32 lobby_id, UInt32 seat, Socket server_socket)
+        public ChessLobby(FormDating dating, UInt32 lobby_id,
+            UInt32 seat, Socket server_socket)
         {
+            this.dating = dating;
             this.lobby_id = lobby_id;
             this.seat = seat;
             this.server_socket = server_socket;
@@ -58,6 +61,7 @@ namespace platform.chess_lobby
         private const Int32 BUFSIZ = 1024 * 1024;
 
         private Thread thread { get; set; }
+        private FormDating dating { get; }
         public UInt32 lobby_id { get; } = 0;
         public UInt32 seat { get; } = 0;
         public Socket server_socket { get; }
@@ -110,7 +114,9 @@ namespace platform.chess_lobby
 
         public new void Hide()
         {
+            
             base.Hide();
+            dating.Show();
             thread.Abort();
         }
 
@@ -304,9 +310,12 @@ namespace platform.chess_lobby
             label_ready.Visible = true;
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            // TODO MESSAGEBOX
+            server_socket.Send(new Dictionary<String, String>()
+            {
+                ["identifier"] = "lobby_exit"
+            });
             this.Hide();
         }
 
