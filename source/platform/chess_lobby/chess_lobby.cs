@@ -78,6 +78,8 @@ namespace platform.chess_lobby
             }
         }
 
+        private AudioPlayList play_list { get; set; } = new AudioPlayList();
+
         /// <summary>
         /// 旋转<see cref="ChessboardContainer"/>的<see cref="Chessboard"/>.
         /// </summary>
@@ -101,7 +103,8 @@ namespace platform.chess_lobby
 
         private void ChessLobby_Load(object sender, EventArgs e)
         {
-            new AudioPlayList() { volume = 0.1F }.play_infinitely("bgm_roggy");
+            play_list = new AudioPlayList() { volume = 0.1F };
+            play_list.play_infinitely("bgm_roggy");
         }
 
         public new void Show()
@@ -114,8 +117,8 @@ namespace platform.chess_lobby
 
         public new void Hide()
         {
-            
             base.Hide();
+            play_list.output_device.Pause();
             dating.Show();
             thread.Abort();
         }
