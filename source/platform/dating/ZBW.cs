@@ -100,7 +100,7 @@ namespace platform.dating
                 }
                 catch (NullReferenceException ex)
                 {
-                    MessageBox.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxBase.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 try
                 {
@@ -112,7 +112,7 @@ namespace platform.dating
                 }
                 catch (NullReferenceException ex)
                 {
-                    MessageBox.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBoxBase.Show("报错信息:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 MemoryStream myPic = null;
@@ -128,7 +128,7 @@ namespace platform.dating
                         catch (Exception) { }
                         return;
                     }
-                    //MessageBox.Show("here!");
+                    //MessageBoxBase.Show("here!");
                     mydata = (byte[])(dataTable.Rows[0].ItemArray[0]);
                     myPic = new MemoryStream(mydata);
                     blackimage.Image = Image.FromStream(myPic);

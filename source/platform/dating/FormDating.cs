@@ -76,7 +76,7 @@ namespace platform.dating
             //glossy.EnterCOlor = Color.Green;
             //this.Controls.Add(glossy);
             //try { this.pictureBox1.Image = Image.FromFile("D:\\greenmushroom.gif"); pictureBox1.Enabled = false; }
-            //catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            //catch (Exception ex) { MessageBoxBase.Show(ex.ToString()); }
 
 
             for (uint i = 0; i < tot_board; i++)
@@ -121,7 +121,7 @@ namespace platform.dating
                     int length = socket_server.Receive(arr_data);
                 }
                 catch (SocketException) {
-                    MessageBox.Show("服务器掉线了！");
+                    MessageBoxBase.Show("服务器掉线了！");
                     Application.Exit(); }
                 Dictionary<String, String> mydic;
                 try
@@ -129,7 +129,7 @@ namespace platform.dating
                     mydic = DataEncoding.get_dictionary(arr_data);
 
                     String identifier = mydic["identifier"];
-                    //MessageBox.Show(DataEncoding.get_string(mydic));
+                    //MessageBoxBase.Show(DataEncoding.get_string(mydic));
                     if (identifier == "plaza_renew")
                     {
                         for (int i = 0; i < 10; i++)
@@ -137,7 +137,7 @@ namespace platform.dating
                             {
                                 String key = $"{i + 1}-{seat}";
                                 string person = mydic[key];
-                                //MessageBox.Show(person);
+                                //MessageBoxBase.Show(person);
                                 if (person == "0")
                                 {
                                     //没有人 do nothing
@@ -177,7 +177,7 @@ namespace platform.dating
                                             }
                                             catch(MySqlException)
                                             {
-                                                MessageBox.Show("与服务器连接失败，请检查连接！");
+                                                MessageBoxBase.Show("与服务器连接失败，请检查连接！");
                                             }
                                         };
 
@@ -214,7 +214,7 @@ namespace platform.dating
                                         if (seat == 1) //try
                                         {
                                             string s = name.Value.ToString();
-                                            //MessageBox.Show(s);
+                                            //MessageBoxBase.Show(s);
                                             ZBWs[i].redplayer.Text = name.Value.ToString();
                                         }
                                         //catch { }
@@ -244,17 +244,17 @@ namespace platform.dating
                         }
                         if (get_response == "1")//已经在lobby中
                         {
-                            MessageBox.Show("您已经进入房间，不能重复进入");
+                            MessageBoxBase.Show("您已经进入房间，不能重复进入");
                         }
                         if (get_response == "2")//座位有人
                         {
-                            MessageBox.Show("啊哦，好像有人了");
+                            MessageBoxBase.Show("啊哦，好像有人了");
                         }
                     }
                 }
                 catch (DataEncodingException)
                 {
-                    MessageBox.Show("服务器内部错误，请稍后重试");
+                    MessageBoxBase.Show("服务器内部错误，请稍后重试");
                 }
             }
         }

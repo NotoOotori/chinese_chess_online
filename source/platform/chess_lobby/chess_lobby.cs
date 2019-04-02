@@ -143,7 +143,7 @@ namespace platform.chess_lobby
                     }
                     catch (SocketException)
                     {
-                        MessageBox.Show("服务器掉线了！");
+                        MessageBoxBase.Show("服务器掉线了！");
                         Application.Exit();
                     }
                     String str_data = Encoding.UTF8.GetString(
@@ -178,7 +178,7 @@ namespace platform.chess_lobby
             }
             catch(DataEncodingException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBoxBase.Show(e.Message);
             }
         }
 
@@ -213,7 +213,7 @@ namespace platform.chess_lobby
             {
                 // TODO
                 case "draw":
-                    MessageBox.Show("对方提和, 请问您是否接受?");
+                    MessageBoxBase.Show("对方提和, 请问您是否接受?");
                     break;
             }
         }

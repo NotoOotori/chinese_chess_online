@@ -99,6 +99,12 @@
     <Compile Include="common\form_base.Designer.cs">
       <DependentUpon>form_base.cs</DependentUpon>
     </Compile>
+    <Compile Include="common\message_box_base.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="common\message_box_base.Designer.cs">
+      <DependentUpon>message_box_base.cs</DependentUpon>
+    </Compile>
     <Compile Include="dating\FormDating.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="common\form_base.resx">
       <DependentUpon>form_base.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="common\message_box_base.resx">
+      <DependentUpon>message_box_base.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dating\FormDating.resx">
       <DependentUpon>FormDating.cs</DependentUpon>

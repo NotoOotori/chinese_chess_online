@@ -137,11 +137,11 @@ namespace platform.login
             try
             {
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("注册成功！");
+                MessageBoxBase.Show("注册成功！");
             }
             catch (Exception e)
             {
-                MessageBox.Show("注册失败：" + e.Message);
+                MessageBoxBase.Show("注册失败：" + e.Message);
             }
             finally
             {
