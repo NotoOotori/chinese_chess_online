@@ -63,6 +63,7 @@
             // 
             this.button_exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_exit.BackColor = System.Drawing.Color.Transparent;
+            this.button_exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_exit.FlatAppearance.BorderSize = 0;
             this.button_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_exit.Font = new System.Drawing.Font("Microsoft YaHei", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -100,6 +101,7 @@
             this.Controls.Add(this.picture_box_icon);
             this.Controls.Add(this.button_exit);
             this.Controls.Add(this.button_min);
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormBase";
             this.Text = "form_base";
