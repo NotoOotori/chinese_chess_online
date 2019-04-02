@@ -56,3 +56,14 @@
       > | `IN`    | \_login\_id             | `INT UNSIGNED`      |           |
   * 效果:
       添加登出记录, 如果邮箱和login_id不匹配, 则报错.
+* procedure\_end\_game
+  * 参数
+     > | `INOUT` | Parameter Name          | Data Type      | Note |
+     > | ------- | ----------------------- | -------------- | ---- |
+     > | `IN`    | \_red\_email\_address   | `VARCHAR(254)` |      |
+     > | `IN`    | \_black\_email\_address | `VARCHAR(254`) |      |
+     > | `IN`    | \_game\_string          | `VARCHAR(500)` |      |
+     > | `IN`    | \_result                | `TINYINT`      |      |
+     > | `OUT`   | \_red\_elo\_change      | `SMALLINT`     |      |
+  * 效果:
+      记录棋局并且更新elo.
