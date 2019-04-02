@@ -164,7 +164,13 @@ namespace platform.dating
             while (true)
             {
                 byte[] arr_data = new byte[BUFSIZ];
-                int length = socket_server.Receive(arr_data);
+                try
+                {
+                    int length = socket_server.Receive(arr_data);
+                }
+                catch (SocketException) {
+                    MessageBox.Show("服务器掉线了！");
+                    Application.Exit(); }
                 Dictionary<String, String> mydic;
                 try
                 {
@@ -281,7 +287,6 @@ namespace platform.dating
                             num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
                             this.Invoke(d, new object[] { num+1, seat, socket_server });
                             this.Hide();
-                            break;
                             //thread_client.Abort();
                             //this.Close();
                         }
@@ -301,5 +306,11 @@ namespace platform.dating
                 }
             }
         }
+
+        //public new void Hide()
+        //{
+        //    thread_client.Sleep
+        //    base.Hide();
+        //}
     }
 }

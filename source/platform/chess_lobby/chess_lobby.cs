@@ -119,7 +119,16 @@ namespace platform.chess_lobby
                 while (true)
                 {
                     Byte[] arr_data = new Byte[BUFSIZ];
-                    Int32 length = server_socket.Receive(arr_data);
+                    Int32 length = 0;
+                    try
+                    {
+                        length = server_socket.Receive(arr_data);
+                    }
+                    catch (SocketException)
+                    {
+                        MessageBox.Show("服务器掉线了！");
+                        Application.Exit();
+                    }
                     String str_data = Encoding.UTF8.GetString(
                         arr_data, 0, length);
                     if (str_data == null)
