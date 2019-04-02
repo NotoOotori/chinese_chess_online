@@ -33,11 +33,20 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
+            // button_exit
+            // 
+            this.button_exit.FlatAppearance.BorderSize = 0;
+            // 
+            // button_min
+            // 
+            this.button_min.FlatAppearance.BorderSize = 0;
+            // 
             // button_renew
             // 
             this.button_renew.BackColor = System.Drawing.Color.Transparent;
             this.button_renew.BackgroundImage = global::platform.Properties.Resources.refresh;
             this.button_renew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_renew.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_renew.FlatAppearance.BorderSize = 0;
             this.button_renew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_renew.ForeColor = System.Drawing.Color.Transparent;
@@ -60,6 +69,8 @@
             this.Controls.Add(this.button_renew);
             this.Name = "FormDating";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Controls.SetChildIndex(this.button_min, 0);
+            this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.button_renew, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
