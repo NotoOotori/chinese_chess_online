@@ -66,7 +66,7 @@ namespace platform.dating
         {
             byte[] enter;
             enter = DataEncoding.get_bytes(new Dictionary<string, string>()
-            { ["identifier"] = "lobby_enter", ["lobby_id"] = (num+1).ToString(), ["seat"] = seat.ToString() });
+            { ["identifier"] = "lobby_enter", ["lobby_id"] = (num + 1).ToString(), ["seat"] = seat.ToString() });
             socket_server.Send(enter);
         }
 
@@ -81,7 +81,7 @@ namespace platform.dating
 
             for (uint i = 0; i < tot_board; i++)
             {
-                ZBW myzbw = new ZBW(this,Convert.ToInt32(i));
+                ZBW myzbw = new ZBW(this, Convert.ToInt32(i));
                 myzbw.blackimage.Click += new EventHandler(black_onclick);
                 myzbw.redimage.Click += new EventHandler(red_onclick);
                 ZBWs.Add(myzbw);
@@ -120,141 +120,143 @@ namespace platform.dating
                 {
                     int length = socket_server.Receive(arr_data);
                 }
-                catch (SocketException) {
+                catch (SocketException)
+                {
                     MessageBoxBase.Show("服务器掉线了！");
-                    Application.Exit(); }
+                    Application.Exit();
+                }
                 Dictionary<String, String> mydic;
                 try
                 {
                     mydic = DataEncoding.get_dictionary(arr_data);
-
-                    String identifier = mydic["identifier"];
-                    //MessageBoxBase.Show(DataEncoding.get_string(mydic));
-                    if (identifier == "plaza_renew")
-                    {
-                        for (int i = 0; i < 10; i++)
-                            for (int seat = 1; seat < 3; seat++)
-                            {
-                                String key = $"{i + 1}-{seat}";
-                                string person = mydic[key];
-                                //MessageBoxBase.Show(person);
-                                if (person == "0")
-                                {
-                                    //没有人 do nothing
-                                }
-                                else
-                                {
-                                    //有人
-                                    void renew()
-                                    {
-                                        ZBWs[i].chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard;
-                                        MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
-                                        MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
-                                        MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
-                                        e_address.Value = person;
-                                        e_address.Direction = ParameterDirection.Input;
-                                        pic.Direction = ParameterDirection.Output;
-                                        name.Direction = ParameterDirection.Output;
-
-                                        using (MySqlConnection connection = new MySqlConnection(connection_string))
-                                        {
-                                            try
-                                            {
-                                                connection.Open();
-                                                MySqlCommand cmd = new MySqlCommand("procedure_get_avatar", connection);
-                                                cmd.Parameters.Add(e_address);
-                                                cmd.Parameters.Add(pic);
-                                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                                { cmd.ExecuteNonQuery(); }
-
-                                                MySqlCommand cmd1 = new MySqlCommand("procedure_get_username", connection);
-                                                cmd1.Parameters.Add(e_address);
-                                                cmd1.Parameters.Add(name);
-                                                cmd1.CommandType = CommandType.StoredProcedure;
-                                                //try
-                                                { cmd1.ExecuteNonQuery(); }
-                                            }
-                                            catch(MySqlException)
-                                            {
-                                                MessageBoxBase.Show("与服务器连接失败，请检查连接！");
-                                            }
-                                        };
-
-                                        // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.
-
-                                        MemoryStream myPic = null;
-                                        byte[] mydata;
-                                        if (Convert.IsDBNull(pic.Value))
-                                        {
-                                            //try
-                                            {
-                                                if (seat == 1)
-                                                    ZBWs[i].redimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
-                                                else
-                                                    ZBWs[i].blackimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
-                                            }
-                                            //catch { }
-                                        }
-                                        else
-                                        {
-                                            //try
-                                            {
-                                                mydata = (byte[])pic.Value;
-                                                myPic = new MemoryStream(mydata);
-                                                if (seat == 1)
-                                                    ZBWs[i].redimage.BackgroundImage = Image.FromStream(myPic);
-                                                else
-                                                    ZBWs[i].blackimage.BackgroundImage = Image.FromStream(myPic);
-                                            }
-                                            //catch { }
-                                        }
-                                        //头像
-
-                                        if (seat == 1) //try
-                                        {
-                                            string s = name.Value.ToString();
-                                            //MessageBoxBase.Show(s);
-                                            ZBWs[i].redplayer.Text = name.Value.ToString();
-                                        }
-                                        //catch { }
-                                        else try { ZBWs[i].blackplayer.Text = name.Value.ToString(); } catch { }
-                                        //名字          
-                                    }
-                                    if (this.InvokeRequired)
-                                    {
-                                        renew_controls rc = new renew_controls(renew);
-                                        this.Invoke(rc);
-                                    }
-                                    else
-                                        renew();
-                                }
-                            }
-                    }
-                    if (identifier == "lobby_enter")
-                    {
-                        string get_response = mydic["response"];
-                        if (get_response == "0")//没有人 正常进入
-                        {
-                            num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
-                            this.Invoke(d, new object[] { num+1, seat, socket_server });
-                            this.Hide();
-                            //thread_client.Abort();
-                            //this.Close();
-                        }
-                        if (get_response == "1")//已经在lobby中
-                        {
-                            MessageBoxBase.Show("您已经进入房间，不能重复进入");
-                        }
-                        if (get_response == "2")//座位有人
-                        {
-                            MessageBoxBase.Show("啊哦，好像有人了");
-                        }
-                    }
                 }
                 catch (DataEncodingException)
                 {
                     MessageBoxBase.Show("服务器内部错误，请稍后重试");
+                    continue;
+                }
+                String identifier = mydic["identifier"];
+                //MessageBoxBase.Show(DataEncoding.get_string(mydic));
+                if (identifier == "plaza_renew")
+                {
+                    for (int i = 0; i < 10; i++)
+                        for (int seat = 1; seat < 3; seat++)
+                        {
+                            String key = $"{i + 1}-{seat}";
+                            string person = mydic[key];
+                            //MessageBoxBase.Show(person);
+                            if (person == "0")
+                            {
+                                //没有人 do nothing
+                            }
+                            else
+                            {
+                                //有人
+                                void renew()
+                                {
+                                    ZBWs[i].chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard;
+                                    MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
+                                    MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
+                                    MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
+                                    e_address.Value = person;
+                                    e_address.Direction = ParameterDirection.Input;
+                                    pic.Direction = ParameterDirection.Output;
+                                    name.Direction = ParameterDirection.Output;
+
+                                    using (MySqlConnection connection = new MySqlConnection(connection_string))
+                                    {
+                                        try
+                                        {
+                                            connection.Open();
+                                            MySqlCommand cmd = new MySqlCommand("procedure_get_avatar", connection);
+                                            cmd.Parameters.Add(e_address);
+                                            cmd.Parameters.Add(pic);
+                                            cmd.CommandType = CommandType.StoredProcedure;
+
+                                            { cmd.ExecuteNonQuery(); }
+
+                                            MySqlCommand cmd1 = new MySqlCommand("procedure_get_username", connection);
+                                            cmd1.Parameters.Add(e_address);
+                                            cmd1.Parameters.Add(name);
+                                            cmd1.CommandType = CommandType.StoredProcedure;
+                                            //try
+                                            { cmd1.ExecuteNonQuery(); }
+                                        }
+                                        catch (MySqlException)
+                                        {
+                                            MessageBoxBase.Show("与服务器连接失败，请检查连接！");
+                                        }
+                                    };
+
+                                    // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.
+
+                                    MemoryStream myPic = null;
+                                    byte[] mydata;
+                                    if (Convert.IsDBNull(pic.Value))
+                                    {
+                                        //try
+                                        {
+                                            if (seat == 1)
+                                                ZBWs[i].redimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
+                                            else
+                                                ZBWs[i].blackimage.BackgroundImage = global::platform.Properties.Resources.default_avatar;
+                                        }
+                                        //catch { }
+                                    }
+                                    else
+                                    {
+                                        //try
+                                        {
+                                            mydata = (byte[])pic.Value;
+                                            myPic = new MemoryStream(mydata);
+                                            if (seat == 1)
+                                                ZBWs[i].redimage.BackgroundImage = Image.FromStream(myPic);
+                                            else
+                                                ZBWs[i].blackimage.BackgroundImage = Image.FromStream(myPic);
+                                        }
+                                        //catch { }
+                                    }
+                                    //头像
+
+                                    if (seat == 1) //try
+                                    {
+                                        string s = name.Value.ToString();
+                                        //MessageBoxBase.Show(s);
+                                        ZBWs[i].redplayer.Text = name.Value.ToString();
+                                    }
+                                    //catch { }
+                                    else try { ZBWs[i].blackplayer.Text = name.Value.ToString(); } catch { }
+                                    //名字          
+                                }
+                                if (this.InvokeRequired)
+                                {
+                                    renew_controls rc = new renew_controls(renew);
+                                    this.Invoke(rc);
+                                }
+                                else
+                                    renew();
+                            }
+                        }
+                }
+                if (identifier == "lobby_enter")
+                {
+                    string get_response = mydic["response"];
+                    if (get_response == "0")//没有人 正常进入
+                    {
+                        num_socket_arg_returning_void d = new num_socket_arg_returning_void(show_form_lobby);
+                        this.Invoke(d, new object[] { num + 1, seat, socket_server });
+                        this.Hide();
+                        //thread_client.Abort();
+                        //this.Close();
+                    }
+                    if (get_response == "1")//已经在lobby中
+                    {
+                        MessageBoxBase.Show("您已经进入房间，不能重复进入");
+                    }
+                    if (get_response == "2")//座位有人
+                    {
+                        MessageBoxBase.Show("啊哦，好像有人了");
+                    }
                 }
             }
         }
@@ -262,9 +264,7 @@ namespace platform.dating
         public new void Show()
         {
             thread_client = new Thread(receive_data);
-            //将窗体线程设置为与后台同步
             thread_client.IsBackground = true;
-            //启动线程
             thread_client.Start();
             base.Show();
         }
