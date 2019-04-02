@@ -514,16 +514,13 @@ namespace platform.chess_lobby
 
             #endregion
 
+            this.MouseClick += Chessboard_MouseClick;
+
             #region ' Initialize Pieces '
-            
-            this.chess_positions = new List<ChessPosition>();
-            ChessPosition chess_position = new ChessPosition();
-            this.chess_positions.Add(chess_position);
-            this.refresh_pieces();
+
+            this.initialize_pieces(FEN.empty);
 
             #endregion
-
-            this.MouseClick += Chessboard_MouseClick;
         }
 
         #endregion
@@ -574,7 +571,10 @@ namespace platform.chess_lobby
 
         #endregion
 
-        public ChessColour colour { get; set; } = ChessColour.NONE;
+        /// <summary>
+        /// 本玩家的先后手
+        /// </summary>
+        public ChessColour lobby_player { get; set; } = ChessColour.NONE;
 
         /// <summary>
         /// 已经进行的半回合数.
@@ -656,6 +656,50 @@ namespace platform.chess_lobby
 
         #region ' Methods '
 
+        #region ' Initiations '
+
+        /// <summary>
+        /// 初始化正常开始局面的棋子
+        /// </summary>
+        public void initialize_pieces()
+        {
+            this.turns = 0;
+            this.lobby_player = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
+            this.chess_positions = new List<ChessPosition>();
+            ChessPosition chess_position = new ChessPosition();
+            this.chess_positions.Add(chess_position);
+            this.refresh_pieces();
+        }
+
+        /// <summary>
+        /// 初始化特定fen值下的棋子.
+        /// </summary>
+        /// <param name="fen"></param>
+        public void initialize_pieces(String fen)
+        {
+            this.turns = 0;
+            this.lobby_player = ChessColour.NONE;
+            this.last_click = null;
+            this.masked_panels.Clear();
+            this.chess_positions = new List<ChessPosition>();
+            ChessPosition chess_position = new ChessPosition(fen);
+            this.chess_positions.Add(chess_position);
+            this.refresh_pieces();
+        }
+
+        public void gamestart(ChessColour colour)
+        {
+            this.initialize_pieces();
+            ReflectionType reflection = colour == ChessColour.RED ?
+                ReflectionType.None : ReflectionType.PointReflection;
+            reflect(this.reflection ^ reflection);
+            this.lobby_player = colour;
+        }
+
+        #endregion
+
         public void move(Coordinate start, Coordinate end, Boolean from_server)
         {
             if (!from_server)
@@ -671,6 +715,8 @@ namespace platform.chess_lobby
             this.turns++;
             this.last_click = null;
             this.refresh_pieces(new[] { start, end });
+            if (!chess_position.has_king(lobby_player))
+                Parent.Parent.surrender();
         }
 
         public MoveType get_move_type(Coordinate start, Coordinate end)
@@ -691,7 +737,7 @@ namespace platform.chess_lobby
         /// <param name="click">实际坐标</param>
         public void on_click(Coordinate click, Boolean from_server = false)
         {
-            if (colour != current_player)
+            if (lobby_player != current_player && !from_server)
                 return;
             Coordinate abs_click = click.reflect(this.reflection);
             if (this.last_click == null)

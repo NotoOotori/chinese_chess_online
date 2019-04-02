@@ -5,14 +5,17 @@
 * platform\_server (<ins>**server\_hostname**,
     **server\_port**</ins>)
 * platform\_user (<ins>**email\_address**</ins>,
-    username, encrypted\_password, salt\_value,
-    gender, birthday)
+    username, encrypted\_password, salt\_value, elo,
+    avatar, gender, birthday)
 * user\_login\_record (<ins>**login\_id**</ins>,
     <ins>email\_address</ins>, <ins>server\_hostname,
     server\_port</ins>, user\_hostname,
     user\_port, login\_time, status\_code)
 * user\_logout\_record (<ins>**login\_id**</ins>,
     logout\_time)
+* game\_record (<ins>**game\_id**</ins>,
+    <ins>red\_email\_address</ins>, <ins>black\_email\_address</ins>,
+    start\_time, game\_string, result)
 
 ## 存储过程
 
@@ -23,6 +26,7 @@
       > | `IN`    | \_email\_address        | `VARCHAR(254)` |                  |
       > | `IN`    | \_username              | `VARCHAR(16)`  |                  |
       > | `IN`    | \_unencrypted\_password | `VARCHAR(256)` |                  |
+      > | `IN`    | \_avatar                | `MEDIUMBLOB`   |                  |
       > | `IN`    | \_gender                | `CHAR(1)`      | `'[fm]'`, `NULL` |
       > | `IN`    | \_birthday              | `DATE`         | `NULL`           |
   * 效果:
@@ -52,3 +56,14 @@
       > | `IN`    | \_login\_id             | `INT UNSIGNED`      |           |
   * 效果:
       添加登出记录, 如果邮箱和login_id不匹配, 则报错.
+* procedure\_end\_game
+  * 参数
+     > | `INOUT` | Parameter Name          | Data Type      | Note |
+     > | ------- | ----------------------- | -------------- | ---- |
+     > | `IN`    | \_red\_email\_address   | `VARCHAR(254)` |      |
+     > | `IN`    | \_black\_email\_address | `VARCHAR(254`) |      |
+     > | `IN`    | \_game\_string          | `VARCHAR(500)` |      |
+     > | `IN`    | \_result                | `TINYINT`      |      |
+     > | `OUT`   | \_red\_elo\_change      | `SMALLINT`     |      |
+  * 效果:
+      记录棋局并且更新elo.

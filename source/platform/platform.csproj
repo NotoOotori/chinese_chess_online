@@ -33,10 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>common\resources\chess_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastDeepCloner, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -82,15 +82,40 @@
     <Compile Include="chess_lobby\chess_position.cs" />
     <Compile Include="chess_lobby\coordinate.cs" />
     <Compile Include="chess_lobby\extension.cs" />
+    <Compile Include="chess_lobby\form_result.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\form_result.Designer.cs">
+      <DependentUpon>form_result.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
     <Compile Include="common\data_encoding.cs" />
     <Compile Include="common\extension.cs" />
-    <Compile Include="glossy_button.cs">
+    <Compile Include="common\form_base.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="common\form_base.Designer.cs">
+      <DependentUpon>form_base.cs</DependentUpon>
+    </Compile>
+    <Compile Include="common\message_box_base.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="common\message_box_base.Designer.cs">
+      <DependentUpon>message_box_base.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dating\FormDating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dating\FormDating.Designer.cs">
+      <DependentUpon>FormDating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dating\ZBW.cs" />
+    <Compile Include="common\glossy_button.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="glossy_button.Designer.cs">
+    <Compile Include="common\glossy_button.Designer.cs">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </Compile>
     <Compile Include="chess_lobby\rect.cs" />
@@ -112,6 +137,7 @@
     <Compile Include="login\form_signup.Designer.cs">
       <DependentUpon>form_signup.cs</DependentUpon>
     </Compile>
+    <Compile Include="login\ValidateCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="chess_lobby\chessboard.resx">
@@ -120,7 +146,19 @@
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="glossy_button.resx">
+    <EmbeddedResource Include="common\form_base.resx">
+      <DependentUpon>form_base.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="common\message_box_base.resx">
+      <DependentUpon>message_box_base.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dating\FormDating.resx">
+      <DependentUpon>FormDating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chess_lobby\form_result.resx">
+      <DependentUpon>form_result.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="common\glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login\form_forgetpassword.resx">
@@ -138,6 +176,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="packages\FastDeepCloner.1.1.3\.signature.p7s" />
+    <None Include="packages\FastDeepCloner.1.1.3\FastDeepCloner.1.1.3.nupkg" />
+    <None Include="packages\Google.Protobuf.3.6.1\.signature.p7s" />
+    <None Include="packages\Google.Protobuf.3.6.1\Google.Protobuf.3.6.1.nupkg" />
+    <None Include="packages\MySql.Data.8.0.15\.signature.p7s" />
+    <None Include="packages\MySql.Data.8.0.15\MySql.Data.8.0.15.nupkg" />
+    <None Include="packages\NAudio.1.8.5\.signature.p7s" />
+    <None Include="packages\NAudio.1.8.5\NAudio.1.8.5.nupkg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -186,6 +232,7 @@
     <Content Include="chess_lobby\resources\audio\actions\capture.wav" />
     <Content Include="chess_lobby\resources\audio\actions\check.wav" />
     <Content Include="chess_lobby\resources\audio\actions\checkmate.wav" />
+    <Content Include="chess_lobby\resources\audio\bgm\bgm_roggy.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bpad1.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bptr1.wav" />
     <Content Include="chess_lobby\resources\audio\moves\1bptr2.wav" />
@@ -1793,6 +1840,42 @@
     <Content Include="chess_lobby\resources\audio\moves\rr9wi8.wav" />
     <Content Include="chess_lobby\resources\audio\moves\rr9wi9.wav" />
     <Content Include="chess_lobby\resources\images\wood_grain.bmp" />
+    <Content Include="common\resources\chess_icon.ico" />
+    <Content Include="common\resources\chess_icon.png" />
+    <Content Include="dating\resources\bgpic1.jpg" />
+    <Content Include="dating\resources\bgpic2.jpg" />
+    <Content Include="dating\resources\bgpic3.jpg" />
+    <Content Include="dating\resources\bgpic4.jpg" />
+    <Content Include="dating\resources\bgpic5.jpg" />
+    <Content Include="dating\resources\chessboard.jpg" />
+    <Content Include="dating\resources\bgpic.jpg" />
+    <Content Include="dating\resources\refresh.png" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netcoreapp2.0\FastDeepCloner.dll" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netcoreapp2.0\FastDeepCloner.xml" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netstandard1.3\FastDeepCloner.dll" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netstandard1.3\FastDeepCloner.xml" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netstandard2.0\FastDeepCloner.dll" />
+    <Content Include="packages\FastDeepCloner.1.1.3\lib\netstandard2.0\FastDeepCloner.xml" />
+    <Content Include="packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll" />
+    <Content Include="packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.xml" />
+    <Content Include="packages\Google.Protobuf.3.6.1\lib\netstandard1.0\Google.Protobuf.dll" />
+    <Content Include="packages\Google.Protobuf.3.6.1\lib\netstandard1.0\Google.Protobuf.xml" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\net452\MySql.Data.xml" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netcoreapp2.0\MySql.Data.dll" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netcoreapp2.0\MySql.Data.xml" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netstandard1.6\MySql.Data.dll" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netstandard1.6\MySql.Data.xml" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netstandard2.0\MySql.Data.dll" />
+    <Content Include="packages\MySql.Data.8.0.15\lib\netstandard2.0\MySql.Data.xml" />
+    <Content Include="packages\NAudio.1.8.5\lib\net35\NAudio.dll" />
+    <Content Include="packages\NAudio.1.8.5\lib\net35\NAudio.XML" />
+    <Content Include="packages\NAudio.1.8.5\lib\uap10.0\NAudio.Universal.dll" />
+    <Content Include="packages\NAudio.1.8.5\lib\uap10.0\NAudio.Universal.XML" />
+    <Content Include="packages\NAudio.1.8.5\license.txt" />
+    <None Include="dating\resources\default_avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

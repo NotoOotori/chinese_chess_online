@@ -19,7 +19,7 @@ namespace platform.chess_lobby
         /// 初始化<see cref="ChessPosition"/>的新实例
         /// </summary>
         /// <param name="fen">棋局的FEN串</param>
-        public ChessPosition(String fen = InitialFEN.value)
+        public ChessPosition(String fen = FEN.init)
         {
             String[] strings = fen.Split(' ');
             if (strings.Length != 6)
@@ -436,6 +436,24 @@ namespace platform.chess_lobby
             return new_position;
         }
 
+        public Boolean has_king(ChessColour lobby_player)
+        {
+            ChessColour current_player = this.current_player;
+            if (lobby_player != current_player)
+                return true;
+            for (Int32 y = 9; y >= 0; y--)
+                for (Int32 x = 0; x < 9; x++)
+                {
+                    Coordinate cdn = new Coordinate(x, y);
+                    if (!is_inside_castle(cdn, current_player))
+                        continue;
+                    if (this[cdn].colour == current_player &&
+                        this[cdn].type == PieceType.KING)
+                        return true;
+                }
+            return false;
+        }
+
         /// <summary>
         /// 返回棋局的FEN串
         /// </summary>
@@ -476,10 +494,11 @@ namespace platform.chess_lobby
     /// <summary>
     /// 初始局面FEN值
     /// </summary>
-    public class InitialFEN
+    public class FEN
     {
-        public const String value  = "rnbakabnr/9/1c5c1/p1p1p1p1p/" +
+        public const String init  = "rnbakabnr/9/1c5c1/p1p1p1p1p/" +
             "9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR r - - 0 1";
+        public const String empty = "9/9/9/9/9/9/9/9/9/9 r - - 0 1";
     }
 
     /// <summary>
