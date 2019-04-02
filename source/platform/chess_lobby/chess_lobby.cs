@@ -176,6 +176,11 @@ namespace platform.chess_lobby
                     case "lobby_gameend":
                         check_gameend_request(dict);
                         break;
+                    case "lobby_exit":
+                        MessageBoxBase.Show("你的对手已经退出了房间. 即将关闭房间.",
+                            "对手退出房间");
+                        this.Close();
+                        break;
                 }
             }
         }
