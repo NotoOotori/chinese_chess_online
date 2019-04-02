@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace platform.common
         {
             InitializeComponent();
 
+            picture_box_icon.Click += picture_box_icon_click;
             button_min.Click += button_min_Click;
             button_exit.Click += button_exit_Click;
             MouseUp += form_mouse_up;
@@ -26,6 +28,13 @@ namespace platform.common
             MouseMove += form_mouse_move;
 
             Icon = Properties.Resources.chess_icon;
+
+            ToolTip tool_tip = new ToolTip();
+            tool_tip.AutoPopDelay = 2500;
+            tool_tip.InitialDelay = 500;
+            tool_tip.ReshowDelay = 250;
+            tool_tip.ShowAlways = true;
+            tool_tip.SetToolTip(this.picture_box_icon, "Visit our repository.");
         }
 
         public new String Text
@@ -59,6 +68,11 @@ namespace platform.common
                 this.Close();
                 return;
             }
+        }
+
+        private void picture_box_icon_click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/NotoOotori/chinese_chess_online");
         }
 
         #endregion
