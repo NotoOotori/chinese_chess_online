@@ -34,7 +34,8 @@ namespace platform.common
             set { label_title.Text = value; }
         }
 
-        #region 最小化和叉叉
+        #region ' Minimize and Exit '
+
         private void button_min_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -42,11 +43,13 @@ namespace platform.common
 
         private void button_exit_Click(object sender, EventArgs e)
         {
-            OnFormClosed(new FormClosedEventArgs(CloseReason.UserClosing));
+            // TODO MESSAGEBOX
+            OnFormClosing(new FormClosingEventArgs(CloseReason.UserClosing, false));
         }
+
         #endregion
 
-        #region 窗口拖动
+        #region ' 窗口拖动 '
 
         private void form_mouse_down(object sender, MouseEventArgs e)
         {

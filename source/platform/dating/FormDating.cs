@@ -28,8 +28,6 @@ namespace platform.dating
         //Socket socket_client = null;
         Socket socket_server = null;
         // Modify the constructor
-        Point mouseoff;
-        bool leftflag;
         List<ZBW> ZBWs = new List<ZBW>();
         public FormDating(Socket server_socket)
         {
@@ -72,12 +70,6 @@ namespace platform.dating
             socket_server.Send(enter);
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            base.OnFormClosed(e);
-            socket_server.Close();
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             //platform.GlossyButton glossy = new platform.GlossyButton();
@@ -105,7 +97,7 @@ namespace platform.dating
 
         void show_form_lobby(UInt32 num, uint seat, Socket socket_server)
         {
-            new chess_lobby.ChessLobby(num, seat, socket_server).Show();
+            new chess_lobby.ChessLobby(this, num, seat, socket_server).Show();
         }
 
         private void button_renew_MouseHover(object sender, EventArgs e)
@@ -113,46 +105,11 @@ namespace platform.dating
             toolTip1.SetToolTip(this.button_renew, "点击刷新大厅");
         }
 
-        #region 最小化和叉叉
-        private void button_min_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void button_exit_Click(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Application.Exit();
+            base.OnFormClosing(e);
         }
-        #endregion
-
-        #region 窗口拖动
-
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Left)
-            {
-                mouseoff = new Point(-e.X, -e.Y);
-                leftflag = true;
-
-            }
-        }
-
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (leftflag)
-            {
-                Point mouseset = Control.MousePosition;
-                mouseset.Offset(mouseoff.X, mouseoff.Y);
-                Location = mouseset;
-            }
-        }
-
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (leftflag)
-                leftflag = false;
-        }
-        #endregion
 
         public void receive_data()
         {

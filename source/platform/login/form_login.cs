@@ -33,6 +33,12 @@ namespace platform.login
             TextBox.CheckForIllegalCrossThreadCalls = false;
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+            base.OnFormClosing(e);
+        }
+
         /// <summary>
         /// 接收服务端发来信息
         /// </summary>
@@ -71,7 +77,7 @@ namespace platform.login
             {
                 socket_client.Connect(end_point);
             }
-            catch(SocketException ex)
+            catch(SocketException)
             {
                 MessageBox.Show("与服务器连接出现问题，请稍后再试！");
                 Application.Exit();
