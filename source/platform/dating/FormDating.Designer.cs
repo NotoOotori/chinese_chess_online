@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.button_renew = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button_exit
@@ -59,6 +61,18 @@
             this.button_renew.Click += new System.EventHandler(this.button_renew_Click);
             this.button_renew.MouseHover += new System.EventHandler(this.button_renew_MouseHover);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Image = global::platform.Properties.Resources.greenmushroom;
+            this.pictureBox1.Location = new System.Drawing.Point(344, 199);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(60, 52);
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
             // FormDating
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -66,12 +80,15 @@
             this.BackgroundImage = global::platform.Properties.Resources.bgpic5;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button_renew);
             this.Name = "FormDating";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Controls.SetChildIndex(this.button_min, 0);
             this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.button_renew, 0);
+            this.Controls.SetChildIndex(this.pictureBox1, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -80,6 +97,7 @@
         #endregion
         private System.Windows.Forms.Button button_renew;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

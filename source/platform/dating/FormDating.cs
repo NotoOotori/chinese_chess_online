@@ -167,6 +167,8 @@ namespace platform.dating
                                 //有人
                                 void renew()
                                 {
+                                    pictureBox1.Enabled = true;
+                                    pictureBox1.Visible = true;
                                     this.Cursor = Cursors.WaitCursor;
                                     ZBWs[i].chessboard.BackgroundImage = global::platform.Properties.Resources.chessboard;
                                     MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
@@ -201,6 +203,7 @@ namespace platform.dating
                                             MessageBoxBase.Show("与服务器连接失败，请检查连接！");
                                         }
                                         this.Cursor = Cursors.Arrow;
+                                        pictureBox1.Visible = false;
                                     };
 
                                     // 这是文档中推荐的使用connection的方式, 在这段代码结束之后自动关闭connection, 无须程序猿来关闭.

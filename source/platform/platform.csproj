@@ -1846,6 +1846,7 @@
     <Content Include="dating\resources\bgpic5.jpg" />
     <Content Include="dating\resources\chessboard.jpg" />
     <Content Include="dating\resources\bgpic.jpg" />
+    <None Include="dating\resources\greenmushroom.gif" />
     <Content Include="dating\resources\refresh.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />

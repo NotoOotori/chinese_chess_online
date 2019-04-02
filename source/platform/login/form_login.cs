@@ -258,6 +258,7 @@ namespace platform.login
 
         private void label7_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("请联系管理员！");
             // form_forgetpassword f1 = new form_forgetpassword();
             // this.Hide();
             // f1.Show();
