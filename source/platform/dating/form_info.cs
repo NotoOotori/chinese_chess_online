@@ -25,7 +25,8 @@ namespace platform.dating
         private void form_info_Load(object sender, EventArgs e)
         {
             label_email.Text = user_email;
-            string elo, win_tot, lose_tot,win_ratio;
+            label_none.Text = "0";
+            //string elo, win_tot, lose_tot,win_ratio;
             List<Int32> red_results = new List<int>();
             List<Boolean> is_reds = new List<bool>();
             List<string> game_strings = new List<string>();
@@ -79,6 +80,22 @@ namespace platform.dating
 
                     label_name.Text = name.Value.ToString();
                 }//名字
+                MySqlDataAdapter adapter = new MySqlDataAdapter("select elo from platform_user where email_address = '" + user_email + "'", connection);
+                DataTable data = new DataTable();
+                DataTable data1 = new DataTable();
+                DataTable data2 = new DataTable();
+                adapter.Fill(data);
+                label_elo.Text = data.Rows[0].ItemArray[0].ToString();
+                string select_win = "select count(result) from game_record where (red_email_address = '" + user_email + "' or black_email_address = '" + user_email + "') and result =2"; 
+                string select_lose = "select count(result) from game_record where (red_email_address = '" + user_email + "' or black_email_address = '" + user_email + "') and result =0";
+                MySqlDataAdapter adapter1 = new MySqlDataAdapter(select_win,connection);
+                adapter1.Fill(data1);
+                
+                label_win.Text = data1.Rows[0].ItemArray[0].ToString();
+                MySqlDataAdapter adapter2 = new MySqlDataAdapter(select_lose, connection);
+                adapter2.Fill(data2);
+                label_lose.Text = data2.Rows[0].ItemArray[0].ToString();
+                label_ratio.Text = ((Convert.ToDouble(label_win.Text) / ((Convert.ToDouble(label_lose.Text))+ Convert.ToDouble(label_win.Text)))*100).ToString("0.00") +"%";
             }
             using (MySqlConnection connection = new MySqlConnection(connection_string)) {
                 DataTable data = new DataTable();               
