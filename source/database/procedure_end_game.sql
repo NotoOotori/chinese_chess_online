@@ -23,7 +23,7 @@ BEGIN
     FROM platform_user
     WHERE email_address = _black_email_address;
 
-    SET @_expect_red_score = 1/(1 + POW(10, (@_red_elo - @_black_elo)/400));
+    SET @_expect_red_score = 1/(1 + POW(10, -(@_red_elo - @_black_elo)/400));
     SET _red_elo_change = 32 * (_result/2 - @_expect_red_score);
     
     UPDATE platform_user

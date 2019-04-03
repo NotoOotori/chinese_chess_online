@@ -255,6 +255,7 @@ namespace server
                 throw new UserNotLoggedInException();
             Lobby lobby = user.lobby;
             Seat seat = user.seat;
+            lobby.chess_moves.Add(dict["move"]);
             lobby.broadcast(dict, seat);
         }
 
