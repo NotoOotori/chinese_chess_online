@@ -29,7 +29,7 @@ namespace platform.dating
         // Modify the constructor
         List<ZBW> ZBWs = new List<ZBW>();
         ToolTip tip = new ToolTip();
-        public FormDating(Socket server_socket,string email)
+        public FormDating(Socket server_socket, string email)
         {
             InitializeComponent();
             socket_server = server_socket;
@@ -38,7 +38,7 @@ namespace platform.dating
             tip.AutoPopDelay = 2500;
             tip.InitialDelay = 500;
             tip.ReshowDelay = 250;
-            tip.ShowAlways = true;          
+            tip.ShowAlways = true;
         }
 
         void server_send_renew(Socket socket_server)
@@ -52,12 +52,10 @@ namespace platform.dating
         }
 
         delegate void renew_controls();
-        
+
         void avatar_onclick(object sender, EventArgs arg)
         {
-            FormInfo f1 = new FormInfo(this,user_email);
-            f1.Show();
-            this.Hide();
+            new FormInfo(user_email).ShowDialog();
         }
 
         public void red_onclick(object sender, EventArgs arg)
@@ -107,10 +105,10 @@ namespace platform.dating
                 cmd.CommandType = CommandType.StoredProcedure;
                 try
                 {
-                    connection.Open();                  
+                    connection.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (MySqlException){ }
+                catch (MySqlException) { }
                 MemoryStream myPic = null;
                 byte[] mydata;
                 if (Convert.IsDBNull(pic.Value))
@@ -124,11 +122,11 @@ namespace platform.dating
                         myPic = new MemoryStream(mydata);
                         user_avatar.BackgroundImage = Image.FromStream(myPic);
                     }
-                    
+
                 }
             }
 
-                for (uint i = 0; i < tot_board; i++)
+            for (uint i = 0; i < tot_board; i++)
             {
                 ZBW myzbw = new ZBW(this, Convert.ToInt32(i));
                 myzbw.blackimage.Click += new EventHandler(black_onclick);

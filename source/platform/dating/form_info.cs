@@ -15,25 +15,18 @@ namespace platform.dating
         List<Label> win_lose_info = new List<Label>();
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
         string user_email;
-        private FormDating dating { get; }
-        public FormInfo(FormDating dating, string email)
+        public FormInfo(string email)
         {
-            this.dating = dating;
             user_email = email;
+            text_exit = "";
             InitializeComponent();
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            this.Hide();
-            dating.Show();
         }
 
         private void form_info_Load(object sender, EventArgs e)
         {
             label_email.Text = user_email;
             string elo, win_tot, lose_tot,win_ratio;
-            List<Int32> redresults = new List<int>();
+            List<Int32> red_results = new List<int>();
             List<Boolean> is_reds = new List<bool>();
             List<string> game_strings = new List<string>();
             List<Image> avatars = new List<Image>();
@@ -96,7 +89,7 @@ namespace platform.dating
                 {
                     game_strings.Add(dr["game_string"].ToString());
                     usernames.Add(dr["username"].ToString());
-                    redresults.Add(Convert.ToInt32(dr["result"]));
+                    red_results.Add(Convert.ToInt32(dr["result"]));
                     if (dr["email_address"].ToString() == dr["red_email_address"].ToString())
                     {
                         is_reds.Add(true);
@@ -107,7 +100,6 @@ namespace platform.dating
                         is_reds.Add(false);
                         email_addresses.Add(dr["red_email_address"].ToString());
                     }
-                    redresults.Add(Convert.ToInt32( dr["result"]));
                     if (Convert.IsDBNull(dr["avatar"]))
                     {
                         avatars.Add(Properties.Resources.default_avatar);
@@ -121,6 +113,13 @@ namespace platform.dating
                     }
                 }
             }
+            new RecentGames(red_results, is_reds, game_strings, avatars, usernames, email_addresses)
+            {
+                Parent = this,
+                Location = new Point(
+                    groupBox3.Location.X + 29, groupBox3.Location.Y + 22)
+            }.Show();
+            groupBox3.SendToBack();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using platform.common;
 
 namespace platform.dating
 {
@@ -41,6 +42,7 @@ namespace platform.dating
 
             InitializeComponent();
             this.Size = CONTROL_SIZE;
+            this.BackColor = Color.DarkCyan;
             tool_tip = new ToolTip()
             {
                 AutoPopDelay = 2500,
@@ -142,8 +144,8 @@ namespace platform.dating
         private void label_on_click(object sender, EventArgs e)
         {
             String game_string = String.Format(
-                "{0};{1}", chess_lobby.FEN.init, (sender as Label).Tag as String);
-            String arguments = $"-g {game_string} -s readonly";
+                "{0};{1}", chess_lobby.FEN.init_w, (sender as Label).Tag as String);
+            String arguments = $"-g \"{game_string}\" -s readonly";
             string path = Path.Combine(Path.GetTempPath(), "temp_replay.exe");
             File.WriteAllBytes(path, Properties.Resources.replay);
             Process.Start(path, arguments);
@@ -167,6 +169,7 @@ namespace platform.dating
                 Cursor = Cursors.Hand,
                 Tag = email_address
             };
+            picture_box.Click += picture_box_on_click;
             tool_tip.SetToolTip(picture_box, $"查看{username}的信息");
         }
 

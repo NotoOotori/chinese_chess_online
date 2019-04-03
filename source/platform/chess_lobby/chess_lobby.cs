@@ -345,6 +345,7 @@ namespace platform.chess_lobby
 
         private void button_draw_Click(object sender, EventArgs e)
         {
+            MessageBoxBase.Show("敬请期待求和功能.");
             /*
             server_socket.Send(new Dictionary<String, String>()
             {

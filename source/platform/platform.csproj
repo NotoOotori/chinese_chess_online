@@ -111,11 +111,11 @@
     <Compile Include="common\message_box_base.Designer.cs">
       <DependentUpon>message_box_base.cs</DependentUpon>
     </Compile>
-    <Compile Include="dating\FormDating.cs">
+    <Compile Include="dating\form_dating.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="dating\FormDating.Designer.cs">
-      <DependentUpon>FormDating.cs</DependentUpon>
+    <Compile Include="dating\form_dating.Designer.cs">
+      <DependentUpon>form_dating.cs</DependentUpon>
     </Compile>
     <Compile Include="dating\form_info.cs">
       <SubType>Form</SubType>
@@ -179,8 +179,8 @@
     <EmbeddedResource Include="common\message_box_base.resx">
       <DependentUpon>message_box_base.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dating\FormDating.resx">
-      <DependentUpon>FormDating.cs</DependentUpon>
+    <EmbeddedResource Include="dating\form_dating.resx">
+      <DependentUpon>form_dating.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\form_result.resx">
       <DependentUpon>form_result.cs</DependentUpon>
