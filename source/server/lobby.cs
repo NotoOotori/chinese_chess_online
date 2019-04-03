@@ -48,6 +48,7 @@ namespace server
                 return count;
             }
         }
+        public List<String> chess_moves { get; } = new List<String>();
 
         #endregion
 
@@ -222,7 +223,7 @@ namespace server
                     MySqlParameter _game_string = new MySqlParameter(
                         "_game_string", MySqlDbType.VarString, 500)
                     {
-                        Value = "c2e2", //TODO
+                        Value = String.Join(" ", this.chess_moves),
                         Direction = ParameterDirection.Input
                     };
                     MySqlParameter _result = new MySqlParameter(
