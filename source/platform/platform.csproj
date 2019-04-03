@@ -117,6 +117,18 @@
     <Compile Include="dating\FormDating.Designer.cs">
       <DependentUpon>FormDating.cs</DependentUpon>
     </Compile>
+    <Compile Include="dating\form_info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dating\form_info.Designer.cs">
+      <DependentUpon>form_info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dating\recent_games.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dating\recent_games.Designer.cs">
+      <DependentUpon>recent_games.cs</DependentUpon>
+    </Compile>
     <Compile Include="dating\ZBW.cs" />
     <Compile Include="common\glossy_button.cs">
       <SubType>UserControl</SubType>
@@ -175,6 +187,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="common\glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dating\form_info.resx">
+      <DependentUpon>form_info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dating\recent_games.resx">
+      <DependentUpon>recent_games.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
