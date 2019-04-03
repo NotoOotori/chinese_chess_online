@@ -15,15 +15,31 @@ namespace platform.dating
         List<Label> win_lose_info = new List<Label>();
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
         string user_email;
-        public form_info(string email)
+        private FormDating dating { get; }
+        public form_info(FormDating dating, string email)
         {
+            this.dating = dating;
             user_email = email;
             InitializeComponent();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            this.Hide();
+            dating.Show();
         }
 
         private void form_info_Load(object sender, EventArgs e)
         {
             label_email.Text = user_email;
+            string elo, win_tot, lose_tot,win_ratio;
+            List<Int32> redresults = new List<int>();
+            List<Boolean> is_reds = new List<bool>();
+            List<string> game_strings = new List<string>();
+            List<Image> avatars = new List<Image>();
+            List<string> usernames = new List<string>();
+            List<string> email_addresses = new List<string>();
+            string select_name;
             user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
             using (MySqlConnection connection = new MySqlConnection(connection_string))
             {
@@ -67,8 +83,43 @@ namespace platform.dating
                     cmd1.Parameters.Add(name);
                     cmd1.CommandType = CommandType.StoredProcedure;
                     cmd1.ExecuteNonQuery();
+
                     label_name.Text = name.Value.ToString();
                 }//名字
+            }
+            using (MySqlConnection connection = new MySqlConnection(connection_string)) {
+                DataTable data = new DataTable();               
+                select_name = "select * from game_record,platform_user where (email_address=red_email_address or email_address = black_email_address) and email_address = '" + user_email + "' order by game_id desc";
+                MySqlDataAdapter adapter_name = new MySqlDataAdapter(select_name,connection);
+                adapter_name.Fill(data);
+                foreach(DataRow dr in data.Rows)
+                {
+                    game_strings.Add(dr["game_string"].ToString());
+                    usernames.Add(dr["username"].ToString());
+                    redresults.Add(Convert.ToInt32(dr["result"]));
+                    if (dr["email_address"].ToString() == dr["red_email_address"].ToString())
+                    {
+                        is_reds.Add(true);
+                        email_addresses.Add(dr["black_email_address"].ToString());
+                    }
+                    else
+                    {
+                        is_reds.Add(false);
+                        email_addresses.Add(dr["red_email_address"].ToString());
+                    }
+                    redresults.Add(Convert.ToInt32( dr["result"]));
+                    if (Convert.IsDBNull(dr["avatar"]))
+                    {
+                        avatars.Add(Properties.Resources.default_avatar);
+                    }
+                    else
+                    {
+                        byte[] mydata; MemoryStream myPic = null;
+                        mydata = (byte[])dr["avatar"];
+                        myPic = new MemoryStream(mydata);
+                        avatars.Add( Image.FromStream(myPic));
+                    }
+                }
             }
         }
     }

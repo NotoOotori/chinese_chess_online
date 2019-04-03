@@ -55,7 +55,9 @@ namespace platform.dating
         
         void avatar_onclick(object sender, EventArgs arg)
         {
-
+            form_info f1 = new form_info(this,user_email);
+            f1.Show();
+            this.Hide();
         }
 
         public void red_onclick(object sender, EventArgs arg)
@@ -88,6 +90,7 @@ namespace platform.dating
             user_avatar.Location = new Point(this.Width - user_avatar_size, this.Height - user_avatar_size);
             user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
             user_avatar.Cursor = Cursors.Hand;
+            user_avatar.Click += avatar_onclick;
             tip.SetToolTip(user_avatar, "查看个人信息");
             this.Controls.Add(user_avatar);
 
