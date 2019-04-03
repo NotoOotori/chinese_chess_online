@@ -96,7 +96,10 @@ namespace platform.common
             MessageBoxButtons buttons = MessageBoxButtons.OK)
         {
             using (var form = new MessageFormBase(text, caption, buttons))
+            {
+                form.StartPosition = FormStartPosition.CenterParent;
                 return form.ShowDialog();
+            }
         }
     }
 }
