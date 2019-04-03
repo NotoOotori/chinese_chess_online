@@ -19,6 +19,11 @@ namespace platform.chess_lobby
             InitializeComponent();
 
             panel_play_book.ControlAdded += panel_play_book_control_added;
+
+            panel_play_book.HorizontalScroll.Maximum = 0;
+            panel_play_book.AutoScroll = false;
+            panel_play_book.VerticalScroll.Visible = false;
+            panel_play_book.AutoScroll = true;
         }
 
         #endregion
