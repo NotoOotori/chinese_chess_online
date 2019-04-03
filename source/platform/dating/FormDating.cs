@@ -22,18 +22,23 @@ namespace platform.dating
         uint num = 0, seat = 1;//记录进入的桌号和椅子
         Thread thread_client;
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
-        //String HOST = "45.32.82.133"; // IP地址
-        //Int32 PORT = 21567; // 端口
+        string user_email;
         Int32 BUFSIZ = 1024; // 缓冲区大小
         //Socket socket_client = null;
         Socket socket_server = null;
         // Modify the constructor
         List<ZBW> ZBWs = new List<ZBW>();
-        public FormDating(Socket server_socket)
+        ToolTip tip = new ToolTip();
+        public FormDating(Socket server_socket,string email)
         {
             InitializeComponent();
             socket_server = server_socket;
             Text = "中国象棋对战大厅";
+            user_email = email;
+            tip.AutoPopDelay = 2500;
+            tip.InitialDelay = 500;
+            tip.ReshowDelay = 250;
+            tip.ShowAlways = true;          
         }
 
         void server_send_renew(Socket socket_server)
@@ -47,6 +52,11 @@ namespace platform.dating
         }
 
         delegate void renew_controls();
+        
+        void avatar_onclick(object sender, EventArgs arg)
+        {
+
+        }
 
         public void red_onclick(object sender, EventArgs arg)
         {
@@ -72,14 +82,50 @@ namespace platform.dating
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //platform.GlossyButton glossy = new platform.GlossyButton();
-            //glossy.EnterCOlor = Color.Green;
-            //this.Controls.Add(glossy);
-            //try { this.pictureBox1.Image = Image.FromFile("D:\\greenmushroom.gif"); pictureBox1.Enabled = false; }
-            //catch (Exception ex) { MessageBoxBase.Show(ex.ToString()); }
+            PictureBox user_avatar = new PictureBox();
+            int user_avatar_size = 40;
+            user_avatar.Size = new Size(user_avatar_size, user_avatar_size);
+            user_avatar.Location = new Point(this.Width - user_avatar_size, this.Height - user_avatar_size);
+            user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
+            tip.SetToolTip(user_avatar, "点击查看");
+            this.Controls.Add(user_avatar);
 
+            using (MySqlConnection connection = new MySqlConnection(connection_string))
+            {
+                MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
+                MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
+                e_address.Value = user_email;
+                e_address.Direction = ParameterDirection.Input;
+                pic.Direction = ParameterDirection.Output;
+                MySqlCommand cmd = new MySqlCommand("procedure_get_avatar", connection);
+                cmd.Parameters.Add(e_address);
+                cmd.Parameters.Add(pic);
+                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    connection.Open();                  
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException){ }
+                MemoryStream myPic = null;
+                byte[] mydata;
+                if (Convert.IsDBNull(pic.Value))
+                {
+                    user_avatar.BackgroundImage = Properties.Resources.default_avatar;
+                }
+                else
+                {
+                    {
+                        mydata = (byte[])pic.Value;
+                        myPic = new MemoryStream(mydata);
+                        user_avatar.BackgroundImage = Image.FromStream(myPic);
+                    }
+                    
+                }
+ 
+            }
 
-            for (uint i = 0; i < tot_board; i++)
+                for (uint i = 0; i < tot_board; i++)
             {
                 ZBW myzbw = new ZBW(this, Convert.ToInt32(i));
                 myzbw.blackimage.Click += new EventHandler(black_onclick);

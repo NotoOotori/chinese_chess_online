@@ -139,13 +139,13 @@ namespace platform.login
                 return 1;
         }
 
-        private void reaction(int state, Dictionary<string, string> di)
+        private void reaction(int state, Dictionary<string, string> di,string email)
         {
             switch (state)
             {
                 case 0:
                     {
-                        platform.dating.FormDating f1 = new dating.FormDating(socket_client);
+                        platform.dating.FormDating f1 = new dating.FormDating(socket_client,email);
                         f1.Show(); 
                         this.Hide();
                     }
@@ -254,7 +254,7 @@ namespace platform.login
             //接受信息
             Dictionary<String, String> dict_back = receive_data();
             int login_result = receive_dict_check(dict_back);           
-            reaction(login_result, dict_back);            
+            reaction(login_result, dict_back,textBox1.Text);
         }
 
         private void label8_Click(object sender, EventArgs e)
