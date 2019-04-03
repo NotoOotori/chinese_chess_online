@@ -298,3 +298,6 @@ FakesAssemblies/
 
 ## desktop.ini
 **/desktop.ini
+
+## Include resource files
+!**/resources/*.exe
