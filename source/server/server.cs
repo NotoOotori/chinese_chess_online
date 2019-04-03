@@ -245,6 +245,7 @@ namespace server
                 ["identifier"] = "lobby_ready",
                 ["response"] = code.ToString()
             });
+            Thread.Sleep(1000);
             lobby.try_start_game();
         }
 
