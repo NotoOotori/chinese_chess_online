@@ -100,42 +100,23 @@ namespace platform.login
             }
         }
 
-        private void prod_captcha()
-        {
-            //captcha_state = 1;
-            //Label label4 = new Label();
-            //label4.Font = new Font("宋体", 15);
-            //label4.Location = new Point(109, 236);
-            //label4.Size = new Size(69, 20);
-            ////label4.Text = "验证码";
-            //this.Controls.Add(label4);
-
-            //TextBox textBox3 = new TextBox();
-            //textBox3.Font = new Font("宋体", 15);
-            //textBox3.Location = new Point(184, 233);
-            //textBox3.Size = new Size(77, 30);
-            //textBox3.Visible = true;
-            richTextBox1.Text = "请输入验证码！";
-            richTextBox1.Visible = true;
-            //this.Controls.Add(textBox3);
-
-            //PictureBox pictureBox1 = new PictureBox();
-            //pictureBox1.Location = new Point(306, 233);
-            //pictureBox1.Size = new Size(150, 30);
-            //加入图片
-            //this.Controls.Add(pictureBox1);
-            button_login.Location = new Point(160, 290);
-            //checkBox1.Location = new Point(220, 270);
-        }
+        //private void prod_captcha()
+        //{
+        //    //captcha_state = 1;
+            
+        //    richTextBox1.Text = "请输入验证码！";
+        //    richTextBox1.Visible = true;           
+        //    button_login.Location = new Point(160, 290);            
+        //}
 
         //检查验证码，0正确，1错误
-        private int check_captcha(string str)
-        {
-            if (richTextBox1.Text == str)
-                return 0;
-            else
-                return 1;
-        }
+        //private int check_captcha(string str)
+        //{
+        //    if (richTextBox1.Text == str)
+        //        return 0;
+        //    else
+        //        return 1;
+        //}
 
         private void reaction(int state, Dictionary<string, string> di,string email)
         {
@@ -157,7 +138,7 @@ namespace platform.login
                     cin_count++;
                     break;
                 case 3:
-                    prod_captcha();
+                    //prod_captcha();
                     break;
                 case 4:
                     MessageBoxBase.Show("该用户已经登录!");
@@ -225,24 +206,21 @@ namespace platform.login
                     return;
                 }
             //产生验证码，进行检验
-            if (cin_count >= 3)
-            {
-                ValidateCode vc = new ValidateCode();
-                string s = vc.CreateValidateCode(4);
-                MemoryStream stream = new MemoryStream();
-                stream = vc.CreateValidateGraphic(s);
-                pictureBox1.Image = Image.FromStream(stream);
-                prod_captcha();
-                if (captcha_state == 1)
-                {
-                    int captcha_result = check_captcha(s);
-                    if (captcha_result == 1)
-                    {
-                        MessageBoxBase.Show("验证码输入错误,请重新输入");
-                        return;
-                    }
-                }
-            }
+            //if (cin_count >= 3)
+            //{
+            //    ValidateCode vc = new ValidateCode();
+            //    string s = vc.CreateValidateCode(4);
+            //    MemoryStream stream = new MemoryStream();
+            //    stream = vc.CreateValidateGraphic(s);
+            //    pictureBox1.Image = Image.FromStream(stream);
+            //    prod_captcha();
+            //    int captcha_result = check_captcha(s);
+            //    if (captcha_result == 1)
+            //    {
+            //        MessageBoxBase.Show("验证码输入错误,请重新输入");
+            //        return;
+            //    }                
+            //}
             //连接服务器
             if (!link_server())
                 return;
