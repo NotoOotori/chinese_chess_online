@@ -187,6 +187,13 @@ namespace platform.login
         private void glossyButton3_Click(object sender, EventArgs e)
         {
             //判断是否输入用户名密码
+            if(textBox1.Text == "admin"&&textBox2.Text == "123456")
+            {
+                Admin admin = new Admin();
+                admin.Show();
+                this.Hide();
+                return;
+            }       
             foreach (Control con in this.Controls)
             {
                 if (con is TextBox)
