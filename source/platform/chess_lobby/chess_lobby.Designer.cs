@@ -33,6 +33,7 @@
             this.button_draw = new platform.GlossyButton();
             this.button_ready = new platform.GlossyButton();
             this.chessboard_container = new platform.chess_lobby.ChessboardContainer();
+            this.play_book = new platform.chess_lobby.PlayBook();
             this.SuspendLayout();
             // 
             // button_exit
@@ -127,6 +128,14 @@
             this.chessboard_container.Size = new System.Drawing.Size(720, 800);
             this.chessboard_container.TabIndex = 0;
             // 
+            // play_book
+            // 
+            this.play_book.BackColor = System.Drawing.Color.Transparent;
+            this.play_book.Location = new System.Drawing.Point(1225, 25);
+            this.play_book.Name = "play_book";
+            this.play_book.Size = new System.Drawing.Size(200, 400);
+            this.play_book.TabIndex = 9;
+            // 
             // ChessLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -135,6 +144,7 @@
             this.BackgroundImage = global::platform.Properties.Resources.bgpic2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1540, 845);
+            this.Controls.Add(this.play_book);
             this.Controls.Add(this.label_ready);
             this.Controls.Add(this.button_surrender);
             this.Controls.Add(this.button_draw);
@@ -142,13 +152,14 @@
             this.Controls.Add(this.chessboard_container);
             this.Name = "ChessLobby";
             this.Load += new System.EventHandler(this.ChessLobby_Load);
-            this.Controls.SetChildIndex(this.button_min, 0);
-            this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.chessboard_container, 0);
             this.Controls.SetChildIndex(this.button_ready, 0);
             this.Controls.SetChildIndex(this.button_draw, 0);
             this.Controls.SetChildIndex(this.button_surrender, 0);
             this.Controls.SetChildIndex(this.label_ready, 0);
+            this.Controls.SetChildIndex(this.button_min, 0);
+            this.Controls.SetChildIndex(this.button_exit, 0);
+            this.Controls.SetChildIndex(this.play_book, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,5 +172,6 @@
         private GlossyButton button_draw;
         private GlossyButton button_surrender;
         private System.Windows.Forms.Label label_ready;
+        private PlayBook play_book;
     }
 }

@@ -35,6 +35,65 @@ namespace platform.chess_lobby
 
         #endregion
 
+        public static String to_chinese_submove(this String submove, ChessColour player)
+        {
+            switch (submove)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("Submove out of range!");
+                case "ba":
+                    return "士";
+                case "ra":
+                    return "仕";
+                case "bb":
+                    return "象";
+                case "rb":
+                    return "相";
+                case "bc":
+                    return "砲";
+                case "rc":
+                    return "炮";
+                case "bk":
+                    return "將";
+                case "rk":
+                    return "帥";
+                case "bn":
+                    return "傌";
+                case "rn":
+                    return "馬";
+                case "bp":
+                    return "卒";
+                case "rp":
+                    return "兵";
+                case "br":
+                    return "俥";
+                case "rr":
+                    return "車";
+                case "ad":
+                    return "进";
+                case "tr":
+                    return "平";
+                case "wi":
+                    return "退";
+            }
+        }
+
+        public static String to_chinese_submove(this Char submove, ChessColour player)
+        {
+            String red_nums = "一二三四五六七八九";
+            String black_nums = "１２３４５６７８９";
+            Int32 num = Int32.Parse(submove.ToString()) - 1;
+            switch (player)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException("Player out of range!");
+                case ChessColour.RED:
+                    return red_nums.Substring(num, 1);
+                case ChessColour.BLACK:
+                    return black_nums.Substring(num, 1);
+            }
+        }
+
         #region ' CoordinateDelta '
 
         public static String to_chinese_format(

@@ -63,7 +63,7 @@ namespace platform.login
             socket_client.Send(arr_data);
         }
         
-        private void link_server()
+        private Boolean link_server()
         {
             //连接服务器
             //定义一个套字节监听  包含3个参数(IP4寻址协议,流式连接,TCP协议)
@@ -80,9 +80,9 @@ namespace platform.login
             catch(SocketException)
             {
                 MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
-                //Application.Exit();
+                return false;
             }
-           
+            return true;
         }
 
 
@@ -241,8 +241,9 @@ namespace platform.login
                     }
                 }
             }
-            //
-            link_server();//连接服务器
+            //连接服务器
+            if (!link_server())
+                return;
             Dictionary<String, String> dict = new Dictionary<String, String>();
             dict.Add("identifier", "login");
             dict.Add("email", textBox1.Text);

@@ -130,6 +130,7 @@ namespace platform.chess_lobby
             button_surrender.Enabled = false;
             label_ready.Visible = false;
             chessboard_initialize_pieces();
+            play_book.clear();
         }
 
         private void listening_thread()
@@ -300,6 +301,11 @@ namespace platform.chess_lobby
             {
                 this.chessboard_container.chessboard.initialize_pieces(fen);
             }
+        }
+
+        public void play_book_add(String move)
+        {
+            play_book.add(move);
         }
 
         private void button_ready_Click(object sender, EventArgs e)

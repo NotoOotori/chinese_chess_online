@@ -88,6 +88,12 @@
     <Compile Include="chess_lobby\form_result.Designer.cs">
       <DependentUpon>form_result.cs</DependentUpon>
     </Compile>
+    <Compile Include="chess_lobby\play_book.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\play_book.Designer.cs">
+      <DependentUpon>play_book.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chess_lobby\play_book.resx">
+      <DependentUpon>play_book.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="common\form_base.resx">
       <DependentUpon>form_base.cs</DependentUpon>

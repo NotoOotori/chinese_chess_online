@@ -384,6 +384,12 @@ namespace platform.chess_lobby
             }
         }
 
+        public String get_chinese_string(Coordinate start, Coordinate end)
+        {
+            ChessColour player = this.current_player;
+            return ChessMove.to_chinese_name(get_audio_string(start, end), player);
+        }
+
         /// <summary>
         /// 判断棋步是否合法
         /// </summary>
@@ -596,6 +602,32 @@ namespace platform.chess_lobby
                 throw new ArgumentOutOfRangeException("越界!");
             return ($"{id.to_audio_string()}{player.ToString()[0]}{(char)piece}" +
                 $"{direction.to_audio_string()}{Math.Abs(delta.y)}").ToLower();
+        }
+
+        public static String to_chinese_name(String audio_name, ChessColour player)
+        {
+            String chinese_name = "";
+            while (audio_name.Length > 0)
+            {
+                if (Char.IsDigit(audio_name[0]))
+                {
+                    chinese_name += audio_name[0].to_chinese_submove(player);
+                    try
+                    {
+                        audio_name = audio_name.Substring(1);
+                    }
+                    catch (ArgumentOutOfRangeException) { break; }
+                    continue;
+                }
+                chinese_name += audio_name.Substring(0, 2).to_chinese_submove(player);
+                try
+                {
+                    audio_name = audio_name.Substring(2);
+                }
+                catch (ArgumentOutOfRangeException) { break; }
+                continue;
+            }
+            return chinese_name;
         }
     }
 }
