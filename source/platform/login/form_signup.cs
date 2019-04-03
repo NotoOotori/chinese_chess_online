@@ -144,6 +144,7 @@ namespace platform.login
             {
                 cmd.ExecuteNonQuery();
                 MessageBoxBase.Show("注册成功！");
+                this.Close();
             }
             catch (Exception e)
             {

@@ -91,19 +91,20 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("SimSun", 15F);
-            this.textBox1.Location = new System.Drawing.Point(148, 121);
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(148, 120);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 30);
+            this.textBox1.Size = new System.Drawing.Size(240, 31);
             this.textBox1.TabIndex = 3;
             // 
             // textBox2
             // 
-            this.textBox2.Font = new System.Drawing.Font("SimSun", 15F);
-            this.textBox2.Location = new System.Drawing.Point(148, 177);
+            this.textBox2.Font = new System.Drawing.Font("Consolas", 15F);
+            this.textBox2.Location = new System.Drawing.Point(148, 176);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(240, 30);
+            this.textBox2.Size = new System.Drawing.Size(240, 31);
             this.textBox2.TabIndex = 4;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox2_KeyDown);
             this.textBox2.MouseEnter += new System.EventHandler(this.textBox2_MouseEnter);
             // 
             // label5

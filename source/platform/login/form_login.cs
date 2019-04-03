@@ -29,8 +29,6 @@ namespace platform.login
         {
             InitializeComponent();
             Text = "";
-            //关闭对文本框的非法线程操作检查
-            TextBox.CheckForIllegalCrossThreadCalls = false;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -126,7 +124,7 @@ namespace platform.login
             //pictureBox1.Size = new Size(150, 30);
             //加入图片
             //this.Controls.Add(pictureBox1);
-            glossyButton3.Location = new Point(160, 290);
+            button_login.Location = new Point(160, 290);
             //checkBox1.Location = new Point(220, 270);
         }
 
@@ -170,25 +168,26 @@ namespace platform.login
             }
         }
 
-        private GlossyButton glossyButton3 = new GlossyButton();
+        private GlossyButton button_login = new GlossyButton();
         private void FormLogin_Load(object sender, EventArgs e)
         {
             label5.Text = "";
             label6.Text = "";
             click_count = 0;
             cin_count = 0;         
-            glossyButton3.Location = new Point(160, 240);
-            glossyButton3.Text = "登录";
-            glossyButton3.Font = new Font("Microsoft Sans Serif", 15);
-            glossyButton3.Size = new Size(207, 40);
-            glossyButton3.Click += new EventHandler(glossyButton3_Click);
-            glossyButton3.label1.Click += glossyButton3_Click;
-            this.Controls.Add(glossyButton3);
+            button_login.Location = new Point(160, 240);
+            button_login.Text = "登录";
+            button_login.Font = new Font("Microsoft Sans Serif", 15);
+            button_login.Size = new Size(207, 40);
+            button_login.Click += new EventHandler(button_login_click);
+            button_login.label1.Click += button_login_click;
+            this.Controls.Add(button_login);
             textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*
         }
 
-        private void glossyButton3_Click(object sender, EventArgs e)
+        private void button_login_click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             //判断是否输入用户名密码
             if(textBox1.Text == "admin"&&textBox2.Text == "123456")
             {
@@ -263,6 +262,7 @@ namespace platform.login
             }
             catch (SocketException ex)
             { MessageBoxBase.Show(ex.Message); }
+            Cursor = Cursors.Arrow;
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -312,6 +312,14 @@ namespace platform.login
                 textBox2.PasswordChar = new char();
             else
                 textBox2.PasswordChar = '*';
+        }
+
+        private void TextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button_login_click(button_login, new EventArgs());
+            }
         }
     }
 }

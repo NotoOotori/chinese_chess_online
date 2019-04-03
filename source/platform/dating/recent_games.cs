@@ -42,7 +42,7 @@ namespace platform.dating
 
             InitializeComponent();
             this.Size = CONTROL_SIZE;
-            this.BackColor = Color.DarkCyan;
+            this.BackColor = Color.Transparent;
             tool_tip = new ToolTip()
             {
                 AutoPopDelay = 2500,
@@ -143,12 +143,16 @@ namespace platform.dating
 
         private void label_on_click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
             String game_string = String.Format(
                 "{0};{1}", chess_lobby.FEN.init_w, (sender as Label).Tag as String);
             String arguments = $"-g \"{game_string}\" -s readonly";
             string path = Path.Combine(Path.GetTempPath(), "temp_replay.exe");
             File.WriteAllBytes(path, Properties.Resources.replay);
             Process.Start(path, arguments);
+
+            Cursor = Cursors.Arrow;
         }
 
         #endregion
@@ -175,8 +179,12 @@ namespace platform.dating
 
         private void picture_box_on_click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
             String email_address = (sender as PictureBox).Tag as String;
             new FormInfo(email_address).ShowDialog();
+
+            Cursor = Cursors.Arrow;
         }
 
         #endregion

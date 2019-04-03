@@ -18,6 +18,8 @@ namespace platform.common
 
         public FormBase()
         {
+            TextBox.CheckForIllegalCrossThreadCalls = false;
+
             InitializeComponent();
 
             picture_box_icon.Click += picture_box_icon_click;

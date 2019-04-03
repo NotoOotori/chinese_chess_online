@@ -55,7 +55,9 @@ namespace platform.dating
 
         void avatar_onclick(object sender, EventArgs arg)
         {
+            Cursor = Cursors.WaitCursor;
             new FormInfo(user_email).ShowDialog();
+            Cursor = Cursors.Arrow;
         }
 
         public void red_onclick(object sender, EventArgs arg)
