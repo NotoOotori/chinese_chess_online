@@ -53,6 +53,8 @@ namespace server
                 [10] = new Lobby(10),
             };
 
+        private List<String> logged_in_emails { get; } = new List<string>();
+
         #endregion
 
         #region ' Methods '
@@ -137,6 +139,12 @@ namespace server
                 send_error(client_socket, e.Message);
             }
 
+            try
+            {
+                logged_in_emails.Remove(user.email_address);
+            }
+            catch
+            {; }
             user.try_log_out();
             client_socket.Close();
             Console.WriteLine($"System: {ep} disconnected.");
@@ -179,6 +187,11 @@ namespace server
             String email = dict["email"];
             String password = dict["password"];
             Int32 code = user.log_in(email, password);
+            if (logged_in_emails.Contains(email))
+            {
+                code = 4;
+                logged_in_emails.Add(email);
+            }
             send(client_socket, new Dictionary<String, String>()
             {
                 ["identifier"] = "login",
@@ -194,6 +207,7 @@ namespace server
                 case 0:
                     Console.WriteLine($"{email}({user.client_end_point}) " +
                         "logged in successfully.");
+                    logged_in_emails.Add(email);
                     break;
             }
         }

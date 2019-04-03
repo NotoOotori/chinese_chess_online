@@ -161,6 +161,9 @@ namespace platform.login
                 case 3:
                     prod_captcha();
                     break;
+                case 4:
+                    MessageBoxBase.Show("该用户已经登录!");
+                    break;
                 default:
                     //MessageBoxBase.Show(di["response"]);
                     break;
@@ -252,9 +255,14 @@ namespace platform.login
             //发送密码,用户名
             send_data(send_string);
             //接受信息
-            Dictionary<String, String> dict_back = receive_data();
-            int login_result = receive_dict_check(dict_back);           
-            reaction(login_result, dict_back,textBox1.Text);
+            try
+            {
+                Dictionary<String, String> dict_back = receive_data();
+                int login_result = receive_dict_check(dict_back);
+                reaction(login_result, dict_back, textBox1.Text);
+            }
+            catch (SocketException ex)
+            { MessageBoxBase.Show(ex.Message); }
         }
 
         private void label8_Click(object sender, EventArgs e)
