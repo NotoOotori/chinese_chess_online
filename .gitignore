@@ -298,3 +298,10 @@ FakesAssemblies/
 
 ## desktop.ini
 **/desktop.ini
+
+## Include resource files
+!**/resources/*.exe
+
+## Installer files
+**/ccol_client_installer-SetupFiles/
+**/ccol_client_installer-cache/
