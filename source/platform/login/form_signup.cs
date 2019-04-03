@@ -95,14 +95,24 @@ namespace platform.login
             return Connection;
         }
 
-        private static byte[] FileToBytes(string filePath)
+        private Byte[] compress_image(
+            Byte[] image, Int32 width = 160, Int32 height = 160)
         {
-            FileInfo fi = new FileInfo(filePath);
-            byte[] buffer = new byte[fi.Length];
-            FileStream fs = fi.OpenRead();
-            fs.Read(buffer, 0, Convert.ToInt32(fi.Length));
-            fs.Close();
-            return buffer;
+            using (MemoryStream ms = new MemoryStream(image, 0, image.Length))
+            {
+                using (Image tmp_img = Image.FromStream(ms))
+                {
+                    using (Bitmap b = new Bitmap(tmp_img, new Size(width, height)))
+                    {
+                        using (MemoryStream ms2 = new MemoryStream())
+                        {
+                            b.Save(ms2, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            image = ms2.ToArray();
+                        }
+                    }
+                }
+            }
+            return image;
         }
 
         private void SendFileBytesToDatabase()
@@ -127,7 +137,8 @@ namespace platform.login
             email_address.Value = this.textBox_email.Text;
             username.Value = this.textBox_user.Text;
             password.Value = this.textBox_password.Text;
-            avatar.Value = (byte[])imc.ConvertTo(pictureBox_avatar.Image, typeof(Byte[]));
+            avatar.Value = compress_image(
+                (byte[])imc.ConvertTo(pictureBox_avatar.Image, typeof(Byte[])));
             gender.Value = ((comboBox_gender.Text=="男")?"m":"f");
             String yyyy = comboBox_yy.Text;
             String mm = comboBox_mm.Text;
