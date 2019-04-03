@@ -55,7 +55,7 @@ namespace platform.dating
         
         void avatar_onclick(object sender, EventArgs arg)
         {
-            form_info f1 = new form_info(this,user_email);
+            FormInfo f1 = new FormInfo(this,user_email);
             f1.Show();
             this.Hide();
         }

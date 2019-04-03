@@ -1,6 +1,6 @@
 ﻿namespace platform.dating
 {
-    partial class form_info
+    partial class FormInfo
     {
         /// <summary>
         /// Required designer variable.

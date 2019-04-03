@@ -173,7 +173,7 @@ namespace platform.dating
         private void picture_box_on_click(object sender, EventArgs e)
         {
             String email_address = (sender as PictureBox).Tag as String;
-            new form_info(email_address).ShowDialog();
+            new FormInfo(email_address).ShowDialog();
         }
 
         #endregion

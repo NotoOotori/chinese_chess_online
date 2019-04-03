@@ -10,13 +10,13 @@ using platform.common;
 
 namespace platform.dating
 {
-    public partial class form_info : FormBase
+    public partial class FormInfo : FormBase
     {
         List<Label> win_lose_info = new List<Label>();
         String connection_string = "server = 45.32.82.133; user = ccol_user; database = chinese_chess_online; port = 3306; password = 123PengZiYu@";
         string user_email;
         private FormDating dating { get; }
-        public form_info(FormDating dating, string email)
+        public FormInfo(FormDating dating, string email)
         {
             this.dating = dating;
             user_email = email;
