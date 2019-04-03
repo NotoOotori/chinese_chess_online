@@ -87,7 +87,8 @@ namespace platform.dating
             user_avatar.Size = new Size(user_avatar_size, user_avatar_size);
             user_avatar.Location = new Point(this.Width - user_avatar_size, this.Height - user_avatar_size);
             user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
-            tip.SetToolTip(user_avatar, "点击查看");
+            user_avatar.Cursor = Cursors.Hand;
+            tip.SetToolTip(user_avatar, "查看个人信息");
             this.Controls.Add(user_avatar);
 
             using (MySqlConnection connection = new MySqlConnection(connection_string))
@@ -122,7 +123,6 @@ namespace platform.dating
                     }
                     
                 }
- 
             }
 
                 for (uint i = 0; i < tot_board; i++)

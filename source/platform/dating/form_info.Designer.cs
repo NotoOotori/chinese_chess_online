@@ -31,7 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.user_avatar = new System.Windows.Forms.PictureBox();
             this.label_name = new System.Windows.Forms.Label();
             this.label_email = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,7 +46,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.user_avatar)).BeginInit();
             this.SuspendLayout();
             // 
             // button_exit
@@ -63,7 +63,7 @@
             // 
             this.groupBox1.Controls.Add(this.label_email);
             this.groupBox1.Controls.Add(this.label_name);
-            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Controls.Add(this.user_avatar);
             this.groupBox1.Font = new System.Drawing.Font("楷体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(24, 68);
             this.groupBox1.Name = "groupBox1";
@@ -102,13 +102,13 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "历史交手";
             // 
-            // pictureBox1
+            // user_avatar
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(19, 35);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(160, 160);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.user_avatar.Location = new System.Drawing.Point(19, 35);
+            this.user_avatar.Name = "user_avatar";
+            this.user_avatar.Size = new System.Drawing.Size(160, 160);
+            this.user_avatar.TabIndex = 0;
+            this.user_avatar.TabStop = false;
             // 
             // label_name
             // 
@@ -269,7 +269,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.user_avatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,7 +280,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label_email;
         private System.Windows.Forms.Label label_name;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox user_avatar;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label5;
