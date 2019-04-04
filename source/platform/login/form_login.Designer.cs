@@ -40,9 +40,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button_exit
@@ -91,19 +88,20 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("SimSun", 15F);
-            this.textBox1.Location = new System.Drawing.Point(148, 121);
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(148, 120);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 30);
+            this.textBox1.Size = new System.Drawing.Size(240, 31);
             this.textBox1.TabIndex = 3;
             // 
             // textBox2
             // 
-            this.textBox2.Font = new System.Drawing.Font("SimSun", 15F);
-            this.textBox2.Location = new System.Drawing.Point(148, 177);
+            this.textBox2.Font = new System.Drawing.Font("Consolas", 15F);
+            this.textBox2.Location = new System.Drawing.Point(148, 176);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(240, 30);
+            this.textBox2.Size = new System.Drawing.Size(240, 31);
             this.textBox2.TabIndex = 4;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox2_KeyDown);
             this.textBox2.MouseEnter += new System.EventHandler(this.textBox2_MouseEnter);
             // 
             // label5
@@ -135,7 +133,7 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
-            this.label8.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label8.ForeColor = System.Drawing.Color.Cyan;
             this.label8.Location = new System.Drawing.Point(-1, 329);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(114, 19);
@@ -154,6 +152,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
             this.checkBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.ForeColor = System.Drawing.Color.DarkRed;
             this.checkBox1.Location = new System.Drawing.Point(221, 223);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(95, 20);
@@ -167,7 +166,7 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label7.ForeColor = System.Drawing.Color.Cyan;
             this.label7.Location = new System.Drawing.Point(454, 329);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(93, 19);
@@ -177,25 +176,6 @@
             this.label7.MouseLeave += new System.EventHandler(this.label7_MouseLeave);
             this.label7.MouseMove += new System.Windows.Forms.MouseEventHandler(this.label7_MouseMove);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(18, 223);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(112, 50);
-            this.pictureBox1.TabIndex = 17;
-            this.pictureBox1.TabStop = false;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(30, 279);
-            this.richTextBox1.Multiline = false;
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(100, 31);
-            this.richTextBox1.TabIndex = 18;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.Visible = false;
-            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -204,8 +184,6 @@
             this.BackColor = System.Drawing.Color.Thistle;
             this.BackgroundImage = global::platform.Properties.Resources.bgpic3;
             this.ClientSize = new System.Drawing.Size(545, 350);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -217,7 +195,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Name = "FormLogin";
             this.Load += new System.EventHandler(this.FormLogin_Load);
             this.Controls.SetChildIndex(this.button_min, 0);
@@ -232,9 +209,6 @@
             this.Controls.SetChildIndex(this.label7, 0);
             this.Controls.SetChildIndex(this.label8, 0);
             this.Controls.SetChildIndex(this.checkBox1, 0);
-            this.Controls.SetChildIndex(this.pictureBox1, 0);
-            this.Controls.SetChildIndex(this.richTextBox1, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,8 +227,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

@@ -130,6 +130,7 @@ namespace platform.chess_lobby
             button_surrender.Enabled = false;
             label_ready.Visible = false;
             chessboard_initialize_pieces();
+            play_book.clear();
         }
 
         private void listening_thread()
@@ -302,6 +303,11 @@ namespace platform.chess_lobby
             }
         }
 
+        public void play_book_add(String move)
+        {
+            play_book.add(move);
+        }
+
         private void button_ready_Click(object sender, EventArgs e)
         {
             server_socket.Send(new Dictionary<String, String>()
@@ -339,6 +345,7 @@ namespace platform.chess_lobby
 
         private void button_draw_Click(object sender, EventArgs e)
         {
+            MessageBoxBase.Show("敬请期待求和功能.");
             /*
             server_socket.Send(new Dictionary<String, String>()
             {

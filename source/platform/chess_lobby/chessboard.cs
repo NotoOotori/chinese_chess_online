@@ -536,6 +536,7 @@ namespace platform.chess_lobby
 
         public new ChessboardContainer Parent {
             get { return base.Parent as ChessboardContainer; } }
+        public ChessLobby chess_lobby { get { return Parent.Parent; } }
         public Socket server_socket { get { return Parent.server_socket; } }
         public UInt32 lobby_id { get { return Parent.lobby_id; } }
 
@@ -716,7 +717,7 @@ namespace platform.chess_lobby
             this.last_click = null;
             this.refresh_pieces(new[] { start, end });
             if (!chess_position.has_king(lobby_player))
-                Parent.Parent.surrender();
+                chess_lobby.surrender();
         }
 
         public MoveType get_move_type(Coordinate start, Coordinate end)
@@ -770,6 +771,8 @@ namespace platform.chess_lobby
                     {
                         audios.Add(chess_position.get_audio_string(
                             last_click, abs_click));
+                        chess_lobby.play_book_add(
+                            chess_position.get_chinese_string(last_click, abs_click));
                         this.move(this.last_click, abs_click, from_server);
                         this.set_mask(abs_click);
                     }

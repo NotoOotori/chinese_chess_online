@@ -7854,6 +7854,16 @@ namespace platform.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap greenmushroom {
+            get {
+                object obj = ResourceManager.GetObject("greenmushroom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream mibpad1 {
@@ -11104,6 +11114,16 @@ namespace platform.Properties {
             get {
                 object obj = ResourceManager.GetObject("refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] replay {
+            get {
+                object obj = ResourceManager.GetObject("replay", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

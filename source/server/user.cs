@@ -197,8 +197,13 @@ namespace server
                 }
             }
             quit_lobby();
-            Console.WriteLine($"System: {email_address}({client_end_point}) " +
-                $"logged out successfully.");
+            try
+            {
+                Console.WriteLine($"System: {email_address}({client_end_point}) " +
+                    $"logged out successfully.");
+            }
+            catch (ObjectDisposedException)
+            {; }
         }
 
         #endregion

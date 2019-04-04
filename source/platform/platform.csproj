@@ -88,6 +88,12 @@
     <Compile Include="chess_lobby\form_result.Designer.cs">
       <DependentUpon>form_result.cs</DependentUpon>
     </Compile>
+    <Compile Include="chess_lobby\play_book.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="chess_lobby\play_book.Designer.cs">
+      <DependentUpon>play_book.cs</DependentUpon>
+    </Compile>
     <Compile Include="chess_lobby\grid_rect.cs" />
     <Compile Include="chess_lobby\misc.cs" />
     <Compile Include="chess_lobby\piece.cs" />
@@ -105,11 +111,23 @@
     <Compile Include="common\message_box_base.Designer.cs">
       <DependentUpon>message_box_base.cs</DependentUpon>
     </Compile>
-    <Compile Include="dating\FormDating.cs">
+    <Compile Include="dating\form_dating.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="dating\FormDating.Designer.cs">
-      <DependentUpon>FormDating.cs</DependentUpon>
+    <Compile Include="dating\form_dating.Designer.cs">
+      <DependentUpon>form_dating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dating\form_info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dating\form_info.Designer.cs">
+      <DependentUpon>form_info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dating\recent_games.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dating\recent_games.Designer.cs">
+      <DependentUpon>recent_games.cs</DependentUpon>
     </Compile>
     <Compile Include="dating\ZBW.cs" />
     <Compile Include="common\glossy_button.cs">
@@ -119,6 +137,12 @@
       <DependentUpon>glossy_button.cs</DependentUpon>
     </Compile>
     <Compile Include="chess_lobby\rect.cs" />
+    <Compile Include="login\Admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\Admin.Designer.cs">
+      <DependentUpon>Admin.cs</DependentUpon>
+    </Compile>
     <Compile Include="login\form_forgetpassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,20 +170,32 @@
     <EmbeddedResource Include="chess_lobby\chess_lobby.resx">
       <DependentUpon>chess_lobby.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="chess_lobby\play_book.resx">
+      <DependentUpon>play_book.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="common\form_base.resx">
       <DependentUpon>form_base.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="common\message_box_base.resx">
       <DependentUpon>message_box_base.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dating\FormDating.resx">
-      <DependentUpon>FormDating.cs</DependentUpon>
+    <EmbeddedResource Include="dating\form_dating.resx">
+      <DependentUpon>form_dating.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="chess_lobby\form_result.resx">
       <DependentUpon>form_result.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="common\glossy_button.resx">
       <DependentUpon>glossy_button.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dating\form_info.resx">
+      <DependentUpon>form_info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dating\recent_games.resx">
+      <DependentUpon>recent_games.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login\Admin.resx">
+      <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="login\form_forgetpassword.resx">
       <DependentUpon>form_forgetpassword.cs</DependentUpon>
@@ -1849,6 +1885,7 @@
     <Content Include="dating\resources\bgpic5.jpg" />
     <Content Include="dating\resources\chessboard.jpg" />
     <Content Include="dating\resources\bgpic.jpg" />
+    <None Include="dating\resources\greenmushroom.gif" />
     <Content Include="dating\resources\refresh.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />

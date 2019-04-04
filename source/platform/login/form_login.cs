@@ -23,14 +23,11 @@ namespace platform.login
         Socket socket_client = null;
         static int cin_count = 0;
         static int click_count = 0;
-        static int captcha_state = 0;
 
         public FormLogin()
         {
             InitializeComponent();
             Text = "";
-            //关闭对文本框的非法线程操作检查
-            TextBox.CheckForIllegalCrossThreadCalls = false;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -63,7 +60,7 @@ namespace platform.login
             socket_client.Send(arr_data);
         }
         
-        private void link_server()
+        private Boolean link_server()
         {
             //连接服务器
             //定义一个套字节监听  包含3个参数(IP4寻址协议,流式连接,TCP协议)
@@ -80,9 +77,9 @@ namespace platform.login
             catch(SocketException)
             {
                 MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
-                //Application.Exit();
+                return false;
             }
-           
+            return true;
         }
 
 
@@ -102,50 +99,31 @@ namespace platform.login
             }
         }
 
-        private void prod_captcha()
-        {
-            //captcha_state = 1;
-            //Label label4 = new Label();
-            //label4.Font = new Font("宋体", 15);
-            //label4.Location = new Point(109, 236);
-            //label4.Size = new Size(69, 20);
-            ////label4.Text = "验证码";
-            //this.Controls.Add(label4);
-
-            //TextBox textBox3 = new TextBox();
-            //textBox3.Font = new Font("宋体", 15);
-            //textBox3.Location = new Point(184, 233);
-            //textBox3.Size = new Size(77, 30);
-            //textBox3.Visible = true;
-            richTextBox1.Text = "请输入验证码！";
-            richTextBox1.Visible = true;
-            //this.Controls.Add(textBox3);
-
-            //PictureBox pictureBox1 = new PictureBox();
-            //pictureBox1.Location = new Point(306, 233);
-            //pictureBox1.Size = new Size(150, 30);
-            //加入图片
-            //this.Controls.Add(pictureBox1);
-            glossyButton3.Location = new Point(160, 290);
-            //checkBox1.Location = new Point(220, 270);
-        }
+        //private void prod_captcha()
+        //{
+        //    //captcha_state = 1;
+            
+        //    richTextBox1.Text = "请输入验证码！";
+        //    richTextBox1.Visible = true;           
+        //    button_login.Location = new Point(160, 290);            
+        //}
 
         //检查验证码，0正确，1错误
-        private int check_captcha(string str)
-        {
-            if (richTextBox1.Text == str)
-                return 0;
-            else
-                return 1;
-        }
+        //private int check_captcha(string str)
+        //{
+        //    if (richTextBox1.Text == str)
+        //        return 0;
+        //    else
+        //        return 1;
+        //}
 
-        private void reaction(int state, Dictionary<string, string> di)
+        private void reaction(int state, Dictionary<string, string> di,string email)
         {
             switch (state)
             {
                 case 0:
                     {
-                        platform.dating.FormDating f1 = new dating.FormDating(socket_client);
+                        platform.dating.FormDating f1 = new dating.FormDating(socket_client,email);
                         f1.Show(); 
                         this.Hide();
                     }
@@ -159,7 +137,10 @@ namespace platform.login
                     cin_count++;
                     break;
                 case 3:
-                    prod_captcha();
+                    //prod_captcha();
+                    break;
+                case 4:
+                    MessageBoxBase.Show("该用户已经登录!");
                     break;
                 default:
                     //MessageBoxBase.Show(di["response"]);
@@ -167,26 +148,34 @@ namespace platform.login
             }
         }
 
-        private GlossyButton glossyButton3 = new GlossyButton();
+        private GlossyButton button_login = new GlossyButton();
         private void FormLogin_Load(object sender, EventArgs e)
         {
             label5.Text = "";
             label6.Text = "";
             click_count = 0;
             cin_count = 0;         
-            glossyButton3.Location = new Point(160, 240);
-            glossyButton3.Text = "登录";
-            glossyButton3.Font = new Font("Microsoft Sans Serif", 15);
-            glossyButton3.Size = new Size(207, 40);
-            glossyButton3.Click += new EventHandler(glossyButton3_Click);
-            glossyButton3.label1.Click += glossyButton3_Click;
-            this.Controls.Add(glossyButton3);
+            button_login.Location = new Point(160, 240);
+            button_login.Text = "登录";
+            button_login.Font = new Font("Microsoft Sans Serif", 15);
+            button_login.Size = new Size(207, 40);
+            button_login.Click += new EventHandler(button_login_click);
+            button_login.label1.Click += button_login_click;
+            this.Controls.Add(button_login);
             textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*
         }
 
-        private void glossyButton3_Click(object sender, EventArgs e)
+        private void button_login_click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             //判断是否输入用户名密码
+            if(textBox1.Text == "admin"&&textBox2.Text == "123456")
+            {
+                Admin admin = new Admin();
+                admin.Show();
+                this.Hide();
+                return;
+            }       
             foreach (Control con in this.Controls)
             {
                 if (con is TextBox)
@@ -216,26 +205,24 @@ namespace platform.login
                     return;
                 }
             //产生验证码，进行检验
-            if (cin_count >= 3)
-            {
-                ValidateCode vc = new ValidateCode();
-                string s = vc.CreateValidateCode(4);
-                MemoryStream stream = new MemoryStream();
-                stream = vc.CreateValidateGraphic(s);
-                pictureBox1.Image = Image.FromStream(stream);
-                prod_captcha();
-                if (captcha_state == 1)
-                {
-                    int captcha_result = check_captcha(s);
-                    if (captcha_result == 1)
-                    {
-                        MessageBoxBase.Show("验证码输入错误,请重新输入");
-                        return;
-                    }
-                }
-            }
-            //
-            link_server();//连接服务器
+            //if (cin_count >= 3)
+            //{
+            //    ValidateCode vc = new ValidateCode();
+            //    string s = vc.CreateValidateCode(4);
+            //    MemoryStream stream = new MemoryStream();
+            //    stream = vc.CreateValidateGraphic(s);
+            //    pictureBox1.Image = Image.FromStream(stream);
+            //    prod_captcha();
+            //    int captcha_result = check_captcha(s);
+            //    if (captcha_result == 1)
+            //    {
+            //        MessageBoxBase.Show("验证码输入错误,请重新输入");
+            //        return;
+            //    }                
+            //}
+            //连接服务器
+            if (!link_server())
+                return;
             Dictionary<String, String> dict = new Dictionary<String, String>();
             dict.Add("identifier", "login");
             dict.Add("email", textBox1.Text);
@@ -244,9 +231,15 @@ namespace platform.login
             //发送密码,用户名
             send_data(send_string);
             //接受信息
-            Dictionary<String, String> dict_back = receive_data();
-            int login_result = receive_dict_check(dict_back);           
-            reaction(login_result, dict_back);            
+            try
+            {
+                Dictionary<String, String> dict_back = receive_data();
+                int login_result = receive_dict_check(dict_back);
+                reaction(login_result, dict_back, textBox1.Text);
+            }
+            catch (SocketException ex)
+            { MessageBoxBase.Show(ex.Message); }
+            Cursor = Cursors.Arrow;
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -258,6 +251,7 @@ namespace platform.login
 
         private void label7_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("请联系管理员！");
             // form_forgetpassword f1 = new form_forgetpassword();
             // this.Hide();
             // f1.Show();
@@ -295,6 +289,14 @@ namespace platform.login
                 textBox2.PasswordChar = new char();
             else
                 textBox2.PasswordChar = '*';
+        }
+
+        private void TextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button_login_click(button_login, new EventArgs());
+            }
         }
     }
 }
