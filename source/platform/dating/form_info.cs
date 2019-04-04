@@ -105,36 +105,57 @@ namespace platform.dating
                 foreach(DataRow dr in data.Rows)
                 {
                     game_strings.Add(dr["game_string"].ToString());
-                    usernames.Add(dr["username"].ToString());
+                    //usernames.Add(dr["username"].ToString());
                     red_results.Add(Convert.ToInt32(dr["result"]));
-                    if (dr["email_address"].ToString() == dr["red_email_address"].ToString())
+                    if (dr["email_address"].ToString() == dr["red_email_address"].ToString())//这局对局中是红方
                     {
                         is_reds.Add(true);
+                        string select_user_name = "select username,avatar from platform_user where email_address = '" + dr["black_email_address"].ToString() + "'";
+                        DataTable namedata = new DataTable();
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(select_user_name,connection);
+                        adapter.Fill(namedata);
+                        usernames.Add(namedata.Rows[0].ItemArray[0].ToString());
                         email_addresses.Add(dr["black_email_address"].ToString());
+                        if (Convert.IsDBNull(namedata.Rows[0].ItemArray[1]))
+                        {
+                            avatars.Add(Properties.Resources.default_avatar);
+                        }
+                        else
+                        {
+                            byte[] mydata; MemoryStream myPic = null;
+                            mydata = (byte[])(namedata.Rows[0].ItemArray[1]);
+                            myPic = new MemoryStream(mydata);
+                            avatars.Add(Image.FromStream(myPic));
+                        }
                     }
                     else
                     {
                         is_reds.Add(false);
+                        string select_user_name = "select username,avatar from platform_user where email_address = '" + dr["red_email_address"].ToString() + "'";
+                        DataTable namedata = new DataTable();
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(select_user_name, connection);
+                        adapter.Fill(namedata);
+                        usernames.Add(namedata.Rows[0].ItemArray[0].ToString());
                         email_addresses.Add(dr["red_email_address"].ToString());
+                        if (Convert.IsDBNull(namedata.Rows[0].ItemArray[1]))
+                        {
+                            avatars.Add(Properties.Resources.default_avatar);
+                        }
+                        else
+                        {
+                            byte[] mydata; MemoryStream myPic = null;
+                            mydata = (byte[])(namedata.Rows[0].ItemArray[1]);
+                            myPic = new MemoryStream(mydata);
+                            avatars.Add(Image.FromStream(myPic));
+                        }
                     }
-                    if (Convert.IsDBNull(dr["avatar"]))
-                    {
-                        avatars.Add(Properties.Resources.default_avatar);
-                    }
-                    else
-                    {
-                        byte[] mydata; MemoryStream myPic = null;
-                        mydata = (byte[])dr["avatar"];
-                        myPic = new MemoryStream(mydata);
-                        avatars.Add( Image.FromStream(myPic));
-                    }
+                    
                 }
             }
             new RecentGames(red_results, is_reds, game_strings, avatars, usernames, email_addresses)
             {
                 Parent = this,
-                Location = new Point(
-                    groupBox3.Location.X + 29, groupBox3.Location.Y + 22)
+                Location = new Point(groupBox3.Location.X + 29, groupBox3.Location.Y + 22)
             }.Show();
             groupBox3.SendToBack();
         }
