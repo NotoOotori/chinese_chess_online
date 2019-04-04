@@ -4,6 +4,7 @@ mono:
   - latest
 install:
   - travis_retry npm install
+  - nuget restore source/platform/platform.sln
 jobs:
   include:
     - stage: release
