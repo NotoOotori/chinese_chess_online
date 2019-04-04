@@ -4,7 +4,6 @@
   "description": "An online platform for chinese chess.",
   "main": "source/platform/Program.cs",
   "scripts": {
-    "test": "exit 0",
     "semantic-release": "semantic-release"
   },
   "repository": {
