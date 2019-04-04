@@ -64,11 +64,9 @@ namespace platform.dating
                     }
                     else
                     {
-                        {
-                            mydata = (byte[])pic.Value;
-                            myPic = new MemoryStream(mydata);
-                            user_avatar.BackgroundImage = Image.FromStream(myPic);
-                        }
+                        mydata = (byte[])pic.Value;
+                        myPic = new MemoryStream(mydata);
+                        user_avatar.BackgroundImage = Image.FromStream(myPic);
                     }
                 }//头像
                 {
@@ -79,6 +77,7 @@ namespace platform.dating
                     cmd1.ExecuteNonQuery();
 
                     label_name.Text = name.Value.ToString();
+                    this.Text = $"{label_name.Text}的信息";
                 }//名字
                 MySqlDataAdapter adapter = new MySqlDataAdapter("select elo from platform_user where email_address = '" + user_email + "'", connection);
                 DataTable data = new DataTable();
@@ -97,37 +96,55 @@ namespace platform.dating
                 label_lose.Text = data2.Rows[0].ItemArray[0].ToString();
                 label_ratio.Text = ((Convert.ToDouble(label_win.Text) / ((Convert.ToDouble(label_lose.Text))+ Convert.ToDouble(label_win.Text)))*100).ToString("0.00") +"%";
             }
+
+            #region ' Recent Games '
+
             using (MySqlConnection connection = new MySqlConnection(connection_string)) {
                 DataTable data = new DataTable();               
-                select_name = "select * from game_record,platform_user where (email_address=red_email_address or email_address = black_email_address) and email_address = '" + user_email + "' order by game_id desc";
-                MySqlDataAdapter adapter_name = new MySqlDataAdapter(select_name,connection);
+                select_name = @"
+                    SELECT
+                        record.result AS red_result,
+                        CASE
+                            WHEN self.email_address = red_email_address THEN TRUE
+                            ELSE FALSE
+                        END AS is_red,
+                        record.game_string,
+                        opponent.avatar AS opponent_avatar,
+                        opponent.username AS opponent_username,
+                        opponent.email_address AS opponent_email_address
+                    FROM platform_user AS opponent, platform_user AS self, game_record AS record
+                    WHERE
+                        (
+                            (self.email_address = record.red_email_address AND opponent.email_address = record.black_email_address)
+                            OR
+                            (self.email_address = record.black_email_address AND opponent.email_address = record.red_email_address)
+                        )
+                        AND
+                            self.email_address = @email_address
+                    ORDER BY record.game_id DESC;";
+                MySqlCommand cmd = new MySqlCommand(select_name, connection);
+                cmd.Parameters.Add(new MySqlParameter("@email_address", MySqlDbType.VarString, 254)
+                {
+                    Value = user_email
+                });
+                MySqlDataAdapter adapter_name = new MySqlDataAdapter(cmd);
                 adapter_name.Fill(data);
                 foreach(DataRow dr in data.Rows)
                 {
+                    red_results.Add(Convert.ToInt32(dr["red_result"]));
+                    is_reds.Add(Convert.ToBoolean(dr["is_red"]));
                     game_strings.Add(dr["game_string"].ToString());
-                    usernames.Add(dr["username"].ToString());
-                    red_results.Add(Convert.ToInt32(dr["result"]));
-                    if (dr["email_address"].ToString() == dr["red_email_address"].ToString())
-                    {
-                        is_reds.Add(true);
-                        email_addresses.Add(dr["black_email_address"].ToString());
-                    }
-                    else
-                    {
-                        is_reds.Add(false);
-                        email_addresses.Add(dr["red_email_address"].ToString());
-                    }
-                    if (Convert.IsDBNull(dr["avatar"]))
+                    if (Convert.IsDBNull(dr["opponent_avatar"]))
                     {
                         avatars.Add(Properties.Resources.default_avatar);
                     }
                     else
                     {
-                        byte[] mydata; MemoryStream myPic = null;
-                        mydata = (byte[])dr["avatar"];
-                        myPic = new MemoryStream(mydata);
-                        avatars.Add( Image.FromStream(myPic));
+                        byte[] mydata = (byte[])dr["opponent_avatar"];
+                        avatars.Add(Image.FromStream(new MemoryStream(mydata)));
                     }
+                    usernames.Add(dr["opponent_username"].ToString());
+                    email_addresses.Add(dr["opponent_email_address"].ToString());
                 }
             }
             new RecentGames(red_results, is_reds, game_strings, avatars, usernames, email_addresses)
@@ -137,6 +154,8 @@ namespace platform.dating
                     groupBox3.Location.X + 29, groupBox3.Location.Y + 22)
             }.Show();
             groupBox3.SendToBack();
+
+            #endregion
         }
     }
 }
