@@ -1,0 +1,4 @@
+language: csharp
+solution: source/platform/platform.sln
+mono:
+  - latest

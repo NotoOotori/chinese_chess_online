@@ -302,6 +302,5 @@ FakesAssemblies/
 ## Include resource files
 !**/resources/*.exe
 
-## Installer files
-**/ccol_client_installer-SetupFiles/
-**/ccol_client_installer-cache/
+## Advanced installer tool
+**/*installer*/

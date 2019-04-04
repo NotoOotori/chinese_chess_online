@@ -1,0 +1,25 @@
+{
+  "name": "chinese_chess_online",
+  "version": "0.0.0-development",
+  "description": "An online platform for chinese chess.",
+  "main": "source/platform/Program.cs",
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NotoOotori/chinese_chess_online.git"
+  },
+  "keywords": [
+    "chinese_chess"
+  ],
+  "author": "Chen Xuyang, Zheng Bowen, Huang Qiguang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NotoOotori/chinese_chess_online/issues"
+  },
+  "homepage": "https://github.com/NotoOotori/chinese_chess_online#readme",
+  "devDependencies": {
+    "semantic-release": "^15.13.3"
+  }
+}
