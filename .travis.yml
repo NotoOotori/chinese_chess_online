@@ -2,6 +2,10 @@ language: csharp
 solution: source/platform/platform.sln
 mono:
   - latest
+install:
+  - travis_retry npm install
+before_script:
+  - npm prune
 jobs:
   include:
     - stage: release
