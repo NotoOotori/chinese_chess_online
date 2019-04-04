@@ -30,6 +30,7 @@ namespace platform.common
             MouseMove += form_mouse_move;
 
             Icon = Properties.Resources.chess_icon;
+            ForeColor = Color.White;
 
             ToolTip tool_tip = new ToolTip();
             tool_tip.AutoPopDelay = 2500;

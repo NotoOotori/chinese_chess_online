@@ -133,7 +133,7 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
-            this.label8.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label8.ForeColor = System.Drawing.Color.Cyan;
             this.label8.Location = new System.Drawing.Point(-1, 329);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(114, 19);
@@ -152,6 +152,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
             this.checkBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.ForeColor = System.Drawing.Color.DarkRed;
             this.checkBox1.Location = new System.Drawing.Point(221, 223);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(95, 20);
@@ -165,7 +166,7 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("FangSong", 14F, System.Drawing.FontStyle.Bold);
-            this.label7.ForeColor = System.Drawing.Color.DarkBlue;
+            this.label7.ForeColor = System.Drawing.Color.Cyan;
             this.label7.Location = new System.Drawing.Point(454, 329);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(93, 19);
@@ -194,7 +195,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Name = "FormLogin";
             this.Load += new System.EventHandler(this.FormLogin_Load);
             this.Controls.SetChildIndex(this.button_min, 0);

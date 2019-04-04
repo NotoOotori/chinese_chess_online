@@ -19,6 +19,7 @@ namespace platform.dating
         {
             user_email = email;
             text_exit = "";
+            ForeColor = Color.DarkCyan;
             InitializeComponent();
         }
 
@@ -37,7 +38,6 @@ namespace platform.dating
             user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
             using (MySqlConnection connection = new MySqlConnection(connection_string))
             {
-
                 MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
                 MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
                 MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
