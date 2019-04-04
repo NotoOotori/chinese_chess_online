@@ -81,24 +81,10 @@ namespace platform.chess_lobby
 
         public void play_infinitely(String name)
         {
-            output_device.PlaybackStopped += on_infinite_playback_stopped;
-            Stream stream = Properties.Resources.ResourceManager.
-                GetStream(name);
-            readers = new WaveFileReader[] { new WaveFileReader(stream) };
-            enumerator = readers.GetEnumerator();
-            on_infinite_playback_stopped(new Object(), new EventArgs());
-        }
-
-        private void on_infinite_playback_stopped(Object sender, EventArgs e)
-        {
-            if (!enumerator.MoveNext())
-            {
-                enumerator = readers.GetEnumerator();
-                enumerator.MoveNext();
-            }
-            output_device.Init(enumerator.Current);
-            output_device.Volume = volume;
-            output_device.Play();
+            List<String> names = new List<String>();
+            for (Int32 i = 0; i < 10; i++)
+                names.Add(name);
+            play(names);
         }
 
         #endregion
