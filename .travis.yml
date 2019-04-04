@@ -1,0 +1,13 @@
+language: csharp
+
+csharp:
+  - 7.0
+
+jobs:
+  include:
+    - stage: release
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - git clone "https://github.com/NotoOotori/chinese_chess_online.git"
