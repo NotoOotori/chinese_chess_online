@@ -43,12 +43,10 @@
             // 
             // label_text
             // 
-            this.label_text.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_text.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_text.Location = new System.Drawing.Point(0, 0);
+            this.label_text.Location = new System.Drawing.Point(12, 60);
             this.label_text.Name = "label_text";
-            this.label_text.Padding = new System.Windows.Forms.Padding(0, 0, 0, 25);
-            this.label_text.Size = new System.Drawing.Size(400, 300);
+            this.label_text.Size = new System.Drawing.Size(376, 150);
             this.label_text.TabIndex = 9;
             this.label_text.Text = "text";
             this.label_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
