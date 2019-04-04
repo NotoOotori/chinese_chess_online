@@ -27,3 +27,8 @@ class Constant():
              'wn': '马', 'wp': '兵', 'wr': '车',
              'ba': '士', 'bb': '象', 'bc': '炮', 'bk': '将',
              'bn': '马', 'bp': '卒', 'br': '车'}
+    # Server related constants
+    host = 'localhost'
+    port = 21566
+    bufsiz = 1024
+    addr = (host, port)
