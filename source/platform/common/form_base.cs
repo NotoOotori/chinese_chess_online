@@ -18,7 +18,7 @@ namespace platform.common
 
         public FormBase()
         {
-            TextBox.CheckForIllegalCrossThreadCalls = false;
+            CheckForIllegalCrossThreadCalls = false;
 
             InitializeComponent();
 

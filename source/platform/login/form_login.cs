@@ -23,7 +23,6 @@ namespace platform.login
         Socket socket_client = null;
         static int cin_count = 0;
         static int click_count = 0;
-        static int captcha_state = 0;
 
         public FormLogin()
         {
