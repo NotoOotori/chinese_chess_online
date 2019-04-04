@@ -5,12 +5,14 @@
 import getopt
 import os
 import re
+import socket
 import sys
 import tkinter as tk
 from copy import deepcopy
 from itertools import product
 from tkinter.messagebox import askyesnocancel  # pylint: disable=C0412
 
+import _thread as thread
 import functions as func
 from constants import Constant
 
@@ -22,13 +24,11 @@ def main(argv):
     try:
         opts, _ = getopt.getopt(argv, 'hg:s:', ['help', 'gamestring=', 'state='])
     except getopt.GetoptError:
-        sys.stdout.write(help)
-        sys.stdout.flush()
+        print(help)
         sys.exit(1)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            sys.stdout.write(help_str)
-            sys.stdout.flush()
+            print(help_str)
             sys.exit()
         elif opt in ('-g', '--gamestring'):
             kwargs['game_string'] = arg
@@ -43,13 +43,16 @@ class Chessboard(tk.Canvas):
         super().__init__(master=root, width=456, height=512,
                          borderwidth=2, relief=tk.RIDGE)
         if 'state' in kwargs.keys():
-            state = kwargs['state']
+            self.state = kwargs['state']
         else:
-            state = 'normal'
+            self.state = 'normal'
         if 'game_string' in kwargs.keys():
             game_string = kwargs['game_string']
         else:
             game_string = Constant.initial_fen + ';'
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.connect(Constant.addr)
+        thread.start_new_thread(self.listen_thread, ())
         self.root = root
         self.images = images
         self.chess_state = None
@@ -62,13 +65,21 @@ class Chessboard(tk.Canvas):
                 self._move(move)
             self._reset_masks()
         self.last_name = None
-        if state == 'normal':
-            for (_, xname), (_, yname) in Constant.iter_chessboard_id_name:
-                name = xname + yname
-                self.tag_bind(
-                    name, '<Button-1>',
-                    lambda event, name=name: self._on_click(event, name))
+        for (_, xname), (_, yname) in Constant.iter_chessboard_id_name:
+            name = xname + yname
+            self.tag_bind(
+                name, '<Button-1>',
+                lambda event, name=name: self._on_click(event, name))
         # self.bind('<Motion>', print)
+
+    def listen_thread(self):
+        ''' Listen from the server.'''
+        while True:
+            data = self.server_socket.recv(Constant.bufsiz)
+            if not data:
+                break
+            self._move(data.decode('utf-8'), True)
+        self.server_socket.close()
 
     def _create_image_at_square(self, name, **kwargs):
         items = self.find_withtag(name)
@@ -228,7 +239,9 @@ class Chessboard(tk.Canvas):
         self.chess_states = [deepcopy(self.chess_state)]
         return moves
 
-    def _move(self, move):
+    def _move(self, move, recieved=False):
+        if not recieved:
+            self.server_socket.send(move.encode('utf-8'))
         self.root.chess_manual.insert_move(self.chess_state, self.turn, move)
         names = move[:2], move[-2:]
         squares = self.find_withtag('square')
@@ -254,6 +267,8 @@ class Chessboard(tk.Canvas):
         self.last_name = None
 
     def _on_click(self, _, name):
+        if self.state == 'readonly':
+            return
         if self.last_name is None:
             if self.chess_state[name] is None:
                 return
@@ -310,6 +325,8 @@ class Chessboard(tk.Canvas):
 
     def on_select(self, index):
         ''' React when the listbox's selection is changed.'''
+        if self.state == 'battle':
+            return
         self.turn = index
         self.chess_state = deepcopy(self.chess_states[index])
         self.last_name = None
@@ -489,7 +506,6 @@ class ChineseChess(tk.Tk):
         super().__init__()
         self._setup_widgets(**kwargs)
         self._bind_events()
-        self.kwargs = kwargs
 
     def _add_menu(self, menu):
         ''' Add the menu.'''
@@ -500,10 +516,6 @@ class ChineseChess(tk.Tk):
         self.protocol('WM_DELETE_WINDOW', self._on_closing)
 
     def _on_closing(self):
-        if "state" in self.kwargs.keys():
-            if self.kwargs["state"] != "normal":
-                self.destroy()
-                sys.exit(0)
         answer = askyesnocancel('Quit', 'Do you want to save the chess manual?')
         if answer is None:
             pass
@@ -551,10 +563,7 @@ class Images(dict):
     ''' Preload the images.'''
     def __init__(self):
         super().__init__()
-        try:
-            dirname = sys._MEIPASS
-        except AttributeError:
-            dirname = os.path.dirname(os.path.abspath(__file__))
+        dirname = os.path.dirname(os.path.abspath(__file__))
         self._load_images(dirname + '/resources', 'png')
 
     def _load_images(self, path, extension):
