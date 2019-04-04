@@ -21,5 +21,9 @@
   "homepage": "https://github.com/NotoOotori/chinese_chess_online#readme",
   "devDependencies": {
     "semantic-release": "^15.13.3"
+  },
+  "engines": {
+    "node": ">=6",
+    "npm": ">=3"
   }
 }
