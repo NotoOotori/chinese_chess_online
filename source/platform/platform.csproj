@@ -1887,6 +1887,12 @@
     <Content Include="dating\resources\bgpic.jpg" />
     <None Include="dating\resources\greenmushroom.gif" />
     <Content Include="dating\resources\refresh.png" />
+    <None Include="login\resources\kings.jpeg" />
+    <None Include="login\resources\bgimage_login.png" />
+    <None Include="login\resources\signup_br.png" />
+    <None Include="login\resources\signup_rr.png" />
+    <Content Include="login\resources\scroll_raw.jpg" />
+    <Content Include="login\resources\scroll_transparent.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\netcoreapp2.0\FastDeepCloner.dll" />

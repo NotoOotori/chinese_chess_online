@@ -22,9 +22,7 @@ namespace platform
             InitializeComponent();
             
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
-            //this.label1.MouseDown += new MouseEventHandler(mymousedown);
             NormalStyle();
-            //setFont();
             label1.MouseEnter += onMouseEnter;
             label1.MouseLeave += onMouseLeave;
             label1.MouseDown += onMouseDown;
@@ -71,9 +69,14 @@ namespace platform
             catch(FileNotFoundException) { ; }
         }
 
-        public Color EnterColor { get; set; } = Color.Pink;
-        public Color DownColor { get; set; } = Color.Blue;
-        public Color NormalColor { get; set; } = Color.Orange;
+        public Color EnterColor { get; set; } = Color.Olive;
+        public Color DownColor { get; set; } = Color.DarkOliveGreen;
+        public Color NormalColor { get; set; } = Color.DarkGoldenrod;
+        public Color TextColor
+        {
+            get { return label1.ForeColor; }
+            set { label1.ForeColor = value; }
+        }
         private void onMouseEnter(object sender, EventArgs e)
         {
             p.Color = EnterColor;
@@ -183,6 +186,5 @@ namespace platform
             base.OnMouseUp(e);
             onMouseUp(this, e);
         }
-
     }
 }

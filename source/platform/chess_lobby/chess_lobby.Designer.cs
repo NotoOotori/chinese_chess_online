@@ -78,6 +78,7 @@
             this.button_surrender.NormalColor = System.Drawing.Color.Orange;
             this.button_surrender.Size = new System.Drawing.Size(100, 50);
             this.button_surrender.TabIndex = 3;
+            this.button_surrender.TextColor = System.Drawing.Color.Transparent;
             this.button_surrender.Click += new System.EventHandler(this.button_surrender_Click);
             // 
             // button_draw
@@ -97,6 +98,7 @@
             this.button_draw.NormalColor = System.Drawing.Color.Orange;
             this.button_draw.Size = new System.Drawing.Size(100, 50);
             this.button_draw.TabIndex = 2;
+            this.button_draw.TextColor = System.Drawing.Color.Transparent;
             this.button_draw.Click += new System.EventHandler(this.button_draw_Click);
             // 
             // button_ready
@@ -108,14 +110,15 @@
             this.button_ready.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_ready.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_ready.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.button_ready.DownColor = System.Drawing.Color.Blue;
-            this.button_ready.EnterColor = System.Drawing.Color.Pink;
+            this.button_ready.DownColor = System.Drawing.Color.Empty;
+            this.button_ready.EnterColor = System.Drawing.Color.Empty;
             this.button_ready.Location = new System.Drawing.Point(1275, 520);
             this.button_ready.Margin = new System.Windows.Forms.Padding(2);
             this.button_ready.Name = "button_ready";
-            this.button_ready.NormalColor = System.Drawing.Color.Orange;
+            this.button_ready.NormalColor = System.Drawing.Color.Empty;
             this.button_ready.Size = new System.Drawing.Size(100, 50);
             this.button_ready.TabIndex = 1;
+            this.button_ready.TextColor = System.Drawing.Color.White;
             this.button_ready.Click += new System.EventHandler(this.button_ready_Click);
             // 
             // chessboard_container

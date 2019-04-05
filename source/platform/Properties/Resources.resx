@@ -5035,4 +5035,19 @@
   <data name="replay" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\dating\resources\replay.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="kings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login\resources\kings.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bgimage_login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login\resources\bgimage_login.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="signup_br" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login\resources\signup_br.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="signup_rr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login\resources\signup_rr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scroll_transparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\login\resources\scroll_transparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

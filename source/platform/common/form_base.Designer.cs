@@ -40,6 +40,7 @@
             this.label_title.AutoSize = true;
             this.label_title.BackColor = System.Drawing.Color.Transparent;
             this.label_title.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_title.ForeColor = System.Drawing.Color.White;
             this.label_title.Location = new System.Drawing.Point(50, 7);
             this.label_title.Name = "label_title";
             this.label_title.Size = new System.Drawing.Size(80, 16);
@@ -66,6 +67,7 @@
             this.button_exit.FlatAppearance.BorderSize = 0;
             this.button_exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_exit.Font = new System.Drawing.Font("Microsoft YaHei", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_exit.ForeColor = System.Drawing.Color.White;
             this.button_exit.Location = new System.Drawing.Point(755, 0);
             this.button_exit.Name = "button_exit";
             this.button_exit.Size = new System.Drawing.Size(46, 41);
@@ -81,6 +83,7 @@
             this.button_min.FlatAppearance.BorderSize = 0;
             this.button_min.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_min.Font = new System.Drawing.Font("Microsoft YaHei", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_min.ForeColor = System.Drawing.Color.White;
             this.button_min.Location = new System.Drawing.Point(704, 0);
             this.button_min.Name = "button_min";
             this.button_min.Size = new System.Drawing.Size(46, 41);
@@ -92,7 +95,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label_title);
             this.Controls.Add(this.picture_box_icon);

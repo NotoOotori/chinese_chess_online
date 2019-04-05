@@ -3313,6 +3313,16 @@ namespace platform.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bgimage_login {
+            get {
+                object obj = ResourceManager.GetObject("bgimage_login", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream bgm_roggy {
@@ -7859,6 +7869,16 @@ namespace platform.Properties {
         internal static System.Drawing.Bitmap greenmushroom {
             get {
                 object obj = ResourceManager.GetObject("greenmushroom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap kings {
+            get {
+                object obj = ResourceManager.GetObject("kings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -14827,6 +14847,36 @@ namespace platform.Properties {
         internal static System.IO.UnmanagedMemoryStream rr9wi9 {
             get {
                 return ResourceManager.GetStream("rr9wi9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scroll_transparent {
+            get {
+                object obj = ResourceManager.GetObject("scroll_transparent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap signup_br {
+            get {
+                object obj = ResourceManager.GetObject("signup_br", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap signup_rr {
+            get {
+                object obj = ResourceManager.GetObject("signup_rr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

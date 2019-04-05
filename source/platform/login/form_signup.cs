@@ -24,6 +24,13 @@ namespace platform.login
             //关闭对文本框的非法线程操作检查
             TextBox.CheckForIllegalCrossThreadCalls = false;
             this.form_login = form_login;
+
+            ToolTip tool_tip = new ToolTip();
+            tool_tip.AutoPopDelay = 2500;
+            tool_tip.InitialDelay = 125;
+            tool_tip.ReshowDelay = 125;
+            tool_tip.ShowAlways = true;
+            tool_tip.SetToolTip(textBox_user, "请勿输入<,>,/");
         }
 
         FormLogin form_login;
@@ -76,11 +83,6 @@ namespace platform.login
             }
             
             SendFileBytesToDatabase();
-        }
-
-        private void textBox1_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(this.textBox_user, "请勿输入<,>,/");
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
