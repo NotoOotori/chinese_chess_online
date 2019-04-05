@@ -1892,6 +1892,7 @@
     <None Include="login\resources\signup_br.png" />
     <None Include="login\resources\signup_rr.png" />
     <Content Include="login\resources\scroll_raw.jpg" />
+    <None Include="login\resources\scroll_text.png" />
     <Content Include="login\resources\scroll_transparent.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />

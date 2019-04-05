@@ -29,7 +29,7 @@ namespace platform.login
             InitializeComponent();
             Text = "";
 
-            button_login.Location = new Point(105, 235);
+            button_login.Location = new Point(105, 265);
             button_login.Text = "登录";
             button_login.Font = new Font("Microsoft Sans Serif", 15, FontStyle.Bold);
             button_login.Size = new Size(207, 40);
@@ -43,6 +43,8 @@ namespace platform.login
             tool_tip.ReshowDelay = 125;
             tool_tip.ShowAlways = true;
             tool_tip.SetToolTip(textBox2, "请勿输入<,>,/");
+
+            pictureBox_scroll.SendToBack();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
