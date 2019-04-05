@@ -67,7 +67,7 @@
             this.button_surrender.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_surrender.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_surrender.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.button_surrender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_surrender.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_surrender.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -87,7 +87,7 @@
             this.button_draw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_draw.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_draw.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.button_draw.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_draw.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_draw.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -107,7 +107,7 @@
             this.button_ready.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_ready.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_ready.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.button_ready.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_ready.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_ready.Cursor = System.Windows.Forms.Cursors.Arrow;

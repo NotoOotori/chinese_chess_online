@@ -54,7 +54,7 @@ namespace platform.chess_lobby
                         Top = Convert.ToInt32(this.top),
                         Left = Convert.ToInt32(this.left),
                         BackColor = Color.Transparent,
-                        SizeMode = PictureBoxSizeMode.CenterImage,
+                        SizeMode = PictureBoxSizeMode.StretchImage,
                         Image = value,
                         Parent = parent,
                     };
