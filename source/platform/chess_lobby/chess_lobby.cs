@@ -128,7 +128,7 @@ namespace platform.chess_lobby
             button_draw.Enabled = false;
             button_ready.Enabled = true;
             button_surrender.Enabled = false;
-            label_ready.Visible = false;
+            label_ready.Text = "请准备";
             chessboard_initialize_pieces();
             play_book.clear();
         }
@@ -315,8 +315,9 @@ namespace platform.chess_lobby
                 ["identifier"] = "lobby_ready",
                 ["lobby_id"] = lobby_id.ToString()
             });
+            button_ready.BackColor = button_ready.NormalColor;
             button_ready.Enabled = false;
-            label_ready.Visible = true;
+            label_ready.Text = "准备就绪";
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

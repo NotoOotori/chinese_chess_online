@@ -7884,6 +7884,16 @@ namespace platform.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lobby_misc_blur {
+            get {
+                object obj = ResourceManager.GetObject("lobby_misc_blur", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream mibpad1 {
@@ -14856,16 +14866,6 @@ namespace platform.Properties {
         internal static System.Drawing.Bitmap scroll_text {
             get {
                 object obj = ResourceManager.GetObject("scroll_text", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap scroll_transparent {
-            get {
-                object obj = ResourceManager.GetObject("scroll_transparent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

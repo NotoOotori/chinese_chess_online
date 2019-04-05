@@ -34,6 +34,8 @@
             this.button_ready = new platform.GlossyButton();
             this.chessboard_container = new platform.chess_lobby.ChessboardContainer();
             this.play_book = new platform.chess_lobby.PlayBook();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button_exit
@@ -49,17 +51,16 @@
             this.label_ready.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_ready.AutoSize = true;
             this.label_ready.BackColor = System.Drawing.Color.Transparent;
             this.label_ready.Font = new System.Drawing.Font("FZShuTi", 50F);
-            this.label_ready.ForeColor = System.Drawing.Color.Cyan;
+            this.label_ready.ForeColor = System.Drawing.Color.White;
             this.label_ready.Location = new System.Drawing.Point(80, 570);
             this.label_ready.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_ready.Name = "label_ready";
             this.label_ready.Size = new System.Drawing.Size(298, 70);
             this.label_ready.TabIndex = 5;
             this.label_ready.Text = "准备就绪";
-            this.label_ready.Visible = false;
+            this.label_ready.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button_surrender
             // 
@@ -139,6 +140,17 @@
             this.play_book.Size = new System.Drawing.Size(200, 400);
             this.play_book.TabIndex = 9;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::platform.Properties.Resources.lobby_misc_blur;
+            this.pictureBox1.Location = new System.Drawing.Point(53, 98);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(336, 252);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
+            // 
             // ChessLobby
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -146,6 +158,7 @@
             this.BackgroundImage = global::platform.Properties.Resources.bgpic2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1540, 845);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.play_book);
             this.Controls.Add(this.label_ready);
             this.Controls.Add(this.button_surrender);
@@ -162,6 +175,8 @@
             this.Controls.SetChildIndex(this.button_min, 0);
             this.Controls.SetChildIndex(this.button_exit, 0);
             this.Controls.SetChildIndex(this.play_book, 0);
+            this.Controls.SetChildIndex(this.pictureBox1, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,5 +190,6 @@
         private GlossyButton button_surrender;
         private System.Windows.Forms.Label label_ready;
         private PlayBook play_book;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
