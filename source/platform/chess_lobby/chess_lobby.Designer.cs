@@ -66,19 +66,19 @@
             this.button_surrender.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_surrender.BackColor = System.Drawing.Color.Orange;
+            this.button_surrender.BackColor = System.Drawing.Color.DarkOliveGreen;
             this.button_surrender.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_surrender.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_surrender.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.button_surrender.DownColor = System.Drawing.Color.Blue;
-            this.button_surrender.EnterColor = System.Drawing.Color.Pink;
+            this.button_surrender.DownColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_surrender.EnterColor = System.Drawing.Color.Olive;
             this.button_surrender.Location = new System.Drawing.Point(1275, 720);
             this.button_surrender.Margin = new System.Windows.Forms.Padding(2);
             this.button_surrender.Name = "button_surrender";
-            this.button_surrender.NormalColor = System.Drawing.Color.Orange;
+            this.button_surrender.NormalColor = System.Drawing.Color.DarkGoldenrod;
             this.button_surrender.Size = new System.Drawing.Size(100, 50);
             this.button_surrender.TabIndex = 3;
-            this.button_surrender.TextColor = System.Drawing.Color.Transparent;
+            this.button_surrender.TextColor = System.Drawing.Color.White;
             this.button_surrender.Click += new System.EventHandler(this.button_surrender_Click);
             // 
             // button_draw
@@ -86,19 +86,19 @@
             this.button_draw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_draw.BackColor = System.Drawing.Color.Orange;
+            this.button_draw.BackColor = System.Drawing.Color.DarkOliveGreen;
             this.button_draw.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_draw.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_draw.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.button_draw.DownColor = System.Drawing.Color.Blue;
-            this.button_draw.EnterColor = System.Drawing.Color.Pink;
+            this.button_draw.DownColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_draw.EnterColor = System.Drawing.Color.Olive;
             this.button_draw.Location = new System.Drawing.Point(1275, 620);
             this.button_draw.Margin = new System.Windows.Forms.Padding(2);
             this.button_draw.Name = "button_draw";
-            this.button_draw.NormalColor = System.Drawing.Color.Orange;
+            this.button_draw.NormalColor = System.Drawing.Color.DarkGoldenrod;
             this.button_draw.Size = new System.Drawing.Size(100, 50);
             this.button_draw.TabIndex = 2;
-            this.button_draw.TextColor = System.Drawing.Color.Transparent;
+            this.button_draw.TextColor = System.Drawing.Color.White;
             this.button_draw.Click += new System.EventHandler(this.button_draw_Click);
             // 
             // button_ready
@@ -106,16 +106,16 @@
             this.button_ready.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_ready.BackColor = System.Drawing.Color.Orange;
+            this.button_ready.BackColor = System.Drawing.Color.DarkOliveGreen;
             this.button_ready.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_ready.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.button_ready.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.button_ready.DownColor = System.Drawing.Color.Empty;
-            this.button_ready.EnterColor = System.Drawing.Color.Empty;
+            this.button_ready.DownColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_ready.EnterColor = System.Drawing.Color.Olive;
             this.button_ready.Location = new System.Drawing.Point(1275, 520);
             this.button_ready.Margin = new System.Windows.Forms.Padding(2);
             this.button_ready.Name = "button_ready";
-            this.button_ready.NormalColor = System.Drawing.Color.Empty;
+            this.button_ready.NormalColor = System.Drawing.Color.DarkGoldenrod;
             this.button_ready.Size = new System.Drawing.Size(100, 50);
             this.button_ready.TabIndex = 1;
             this.button_ready.TextColor = System.Drawing.Color.White;
@@ -141,8 +141,7 @@
             // 
             // ChessLobby
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.BackgroundImage = global::platform.Properties.Resources.bgpic2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
