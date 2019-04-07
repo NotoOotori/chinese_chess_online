@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,10 +49,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBox_confirm = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label13 = new System.Windows.Forms.Label();
             this.pictureBox_avatar = new System.Windows.Forms.PictureBox();
+            this.pictureBox_br = new System.Windows.Forms.PictureBox();
+            this.pictureBox_rr = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_avatar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_br)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_rr)).BeginInit();
             this.SuspendLayout();
             // 
             // button_exit
@@ -120,7 +122,6 @@
             this.textBox_user.Name = "textBox_user";
             this.textBox_user.Size = new System.Drawing.Size(207, 30);
             this.textBox_user.TabIndex = 1;
-            this.textBox_user.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
             // 
             // textBox_email
             // 
@@ -247,10 +248,10 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.button1.BackColor = System.Drawing.Color.Tan;
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("YouYuan", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.ForeColor = System.Drawing.Color.DarkCyan;
+            this.button1.Font = new System.Drawing.Font("YouYuan", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.ForeColor = System.Drawing.Color.Red;
             this.button1.Location = new System.Drawing.Point(296, 373);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 43);
@@ -258,8 +259,6 @@
             this.button1.Text = "完成";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
-            this.button1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button1_MouseMove);
             // 
             // label10
             // 
@@ -332,14 +331,35 @@
             this.pictureBox_avatar.TabStop = false;
             this.pictureBox_avatar.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // form_signup
+            // pictureBox_br
+            // 
+            this.pictureBox_br.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_br.Image = global::platform.Properties.Resources.signup_br;
+            this.pictureBox_br.Location = new System.Drawing.Point(78, 295);
+            this.pictureBox_br.Name = "pictureBox_br";
+            this.pictureBox_br.Size = new System.Drawing.Size(54, 54);
+            this.pictureBox_br.TabIndex = 23;
+            this.pictureBox_br.TabStop = false;
+            // 
+            // pictureBox_rr
+            // 
+            this.pictureBox_rr.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_rr.Image = global::platform.Properties.Resources.signup_rr;
+            this.pictureBox_rr.Location = new System.Drawing.Point(41, 245);
+            this.pictureBox_rr.Name = "pictureBox_rr";
+            this.pictureBox_rr.Size = new System.Drawing.Size(54, 54);
+            this.pictureBox_rr.TabIndex = 24;
+            this.pictureBox_rr.TabStop = false;
+            // 
+            // FormSignup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Thistle;
-            this.BackgroundImage = global::platform.Properties.Resources.bgpic1;
+            this.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox_rr);
+            this.Controls.Add(this.pictureBox_br);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.pictureBox_avatar);
             this.Controls.Add(this.label12);
@@ -363,7 +383,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "form_signup";
+            this.Name = "FormSignup";
             this.Load += new System.EventHandler(this.form_signup_Load);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
@@ -390,7 +410,11 @@
             this.Controls.SetChildIndex(this.label13, 0);
             this.Controls.SetChildIndex(this.button_min, 0);
             this.Controls.SetChildIndex(this.button_exit, 0);
+            this.Controls.SetChildIndex(this.pictureBox_br, 0);
+            this.Controls.SetChildIndex(this.pictureBox_rr, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_avatar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_br)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_rr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,8 +443,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox_confirm;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.PictureBox pictureBox_avatar;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.PictureBox pictureBox_br;
+        private System.Windows.Forms.PictureBox pictureBox_rr;
     }
 }

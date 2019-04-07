@@ -28,6 +28,20 @@ namespace platform.login
         {
             InitializeComponent();
             Text = "";
+
+            button_login.Text = "登录";
+            button_login.Font = new Font("Microsoft Sans Serif", 15, FontStyle.Bold);
+            button_login.Click += new EventHandler(button_login_click);
+            button_login.label1.Click += button_login_click;
+
+            ToolTip tool_tip = new ToolTip();
+            tool_tip.AutoPopDelay = 2500;
+            tool_tip.InitialDelay = 125;
+            tool_tip.ReshowDelay = 125;
+            tool_tip.ShowAlways = true;
+            tool_tip.SetToolTip(textBox2, "请勿输入<,>,/");
+
+            pictureBox_scroll.SendToBack();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -77,6 +91,7 @@ namespace platform.login
             catch(SocketException)
             {
                 MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
+                this.Cursor = Cursors.Arrow;
                 return false;
             }
             return true;
@@ -147,21 +162,12 @@ namespace platform.login
                     break;
             }
         }
-
-        private GlossyButton button_login = new GlossyButton();
         private void FormLogin_Load(object sender, EventArgs e)
         {
             label5.Text = "";
             label6.Text = "";
             click_count = 0;
-            cin_count = 0;         
-            button_login.Location = new Point(160, 240);
-            button_login.Text = "登录";
-            button_login.Font = new Font("Microsoft Sans Serif", 15);
-            button_login.Size = new Size(207, 40);
-            button_login.Click += new EventHandler(button_login_click);
-            button_login.label1.Click += button_login_click;
-            this.Controls.Add(button_login);
+            cin_count = 0;
             textBox2.PasswordChar = '*'; //设置文本框的PasswordChar属性为字符*
         }
 
@@ -251,7 +257,7 @@ namespace platform.login
 
         private void label7_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("请联系管理员！");
+            MessageBoxBase.Show("请联系管理员！");
             // form_forgetpassword f1 = new form_forgetpassword();
             // this.Hide();
             // f1.Show();
@@ -275,11 +281,6 @@ namespace platform.login
         private void label8_MouseLeave(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Arrow;
-        }
-
-        private void textBox2_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(this.textBox2, "请勿输入<,>,/");
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

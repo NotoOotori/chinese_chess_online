@@ -20,7 +20,7 @@ namespace platform.chess_lobby
     public partial class ChessboardContainer : UserControl
     {
         #region ' Constructors '
- 
+
         public ChessboardContainer()
         {
             InitializeComponent();
@@ -36,8 +36,8 @@ namespace platform.chess_lobby
             #endregion
 
             #region ' Prepaint the Board '
-            
-            Bitmap bitmap = new Bitmap(this.Size.Width, this.Size.Height);
+
+            Bitmap bitmap = new Bitmap(720, 810);
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 // 高质量
@@ -56,7 +56,7 @@ namespace platform.chess_lobby
             this.chessboard = new Chessboard(
                 this.grid_side_length, this.grid_points)
             {
-                Size = this.Size,
+                Size = new Size(720, 810),
                 Location = new Point(0, 0),
                 BackgroundImage = global::platform.Properties.Resources.wood_grain,
                 BackgroundImageLayout = ImageLayout.Tile,
@@ -64,7 +64,7 @@ namespace platform.chess_lobby
             };
             this.Controls.Add(this.chessboard);
             this.chessboard.BringToFront();
-            
+
             this.ResumeLayout(true);
 
             #endregion
@@ -94,7 +94,7 @@ namespace platform.chess_lobby
         {
             get
             {
-                return Math.Min(this.Width / 9, this.Height / 10);
+                return Math.Min(720 / 9, 810 / 10);
             }
         }
 
@@ -119,7 +119,7 @@ namespace platform.chess_lobby
                 return this._edge_points;
             }
         }
-        
+
         /// <summary>
         /// 普通线的宽度
         /// </summary>
@@ -164,7 +164,7 @@ namespace platform.chess_lobby
             get
             {
                 Int32[] xs = new Int32[9];
-                xs[0] = (this.Width - this.grid_side_length * 8) / 2;
+                xs[0] = (720 - this.grid_side_length * 8) / 2;
                 for (Int32 i = 1; i < 9; i++)
                 {
                     xs[i] = xs[i - 1] + this.grid_side_length;
@@ -178,7 +178,7 @@ namespace platform.chess_lobby
             get
             {
                 Int32[] ys = new Int32[10];
-                ys[0] = (this.Height - this.grid_side_length * 9) / 2;
+                ys[0] = (810 - this.grid_side_length * 9) / 2;
                 for (Int32 i = 1; i < 10; i++)
                 {
                     ys[i] = ys[i - 1] + this.grid_side_length;
@@ -234,7 +234,7 @@ namespace platform.chess_lobby
             Int32 x = -1;
             Int32 y = -1;
             for (Int32 i = 0; i < 9; i++)
-                if(is_near_x(_grid_xs[i]))
+                if (is_near_x(_grid_xs[i]))
                 {
                     x = i;
                     break;
@@ -528,14 +528,19 @@ namespace platform.chess_lobby
         #region ' Properties '
 
         private List<ChessPosition> chess_positions { get; set; }
-        private ChessPosition chess_position { get
-            { return this.chess_positions[this.turns]; } }
+        private ChessPosition chess_position
+        {
+            get
+            { return this.chess_positions[this.turns]; }
+        }
 
         private Int32 grid_side_length { get; set; }
         private Point[,] grid_points { get; set; }
 
-        public new ChessboardContainer Parent {
-            get { return base.Parent as ChessboardContainer; } }
+        public new ChessboardContainer Parent
+        {
+            get { return base.Parent as ChessboardContainer; }
+        }
         public ChessLobby chess_lobby { get { return Parent.Parent; } }
         public Socket server_socket { get { return Parent.server_socket; } }
         public UInt32 lobby_id { get { return Parent.lobby_id; } }
@@ -584,8 +589,11 @@ namespace platform.chess_lobby
         /// <summary>
         /// 轮到走子的那一方
         /// </summary>
-        private ChessColour current_player { get
-            { return this.chess_position.current_player; } }
+        private ChessColour current_player
+        {
+            get
+            { return this.chess_position.current_player; }
+        }
 
         #region ' Decorator '
 
@@ -776,7 +784,7 @@ namespace platform.chess_lobby
                         this.move(this.last_click, abs_click, from_server);
                         this.set_mask(abs_click);
                     }
-                    if((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
+                    if ((move_type & MoveType.CAPTURE) == MoveType.CAPTURE)
                     {
                         audios.Add("capture");
                     }

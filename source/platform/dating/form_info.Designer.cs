@@ -125,7 +125,7 @@
             this.label_ratio.AutoSize = true;
             this.label_ratio.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_ratio.ForeColor = System.Drawing.Color.Navy;
-            this.label_ratio.Location = new System.Drawing.Point(325, 25);
+            this.label_ratio.Location = new System.Drawing.Point(334, 25);
             this.label_ratio.Name = "label_ratio";
             this.label_ratio.Size = new System.Drawing.Size(30, 22);
             this.label_ratio.TabIndex = 12;
@@ -137,7 +137,7 @@
             this.label_elo.AutoSize = true;
             this.label_elo.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_elo.ForeColor = System.Drawing.Color.Navy;
-            this.label_elo.Location = new System.Drawing.Point(175, 25);
+            this.label_elo.Location = new System.Drawing.Point(184, 25);
             this.label_elo.Name = "label_elo";
             this.label_elo.Size = new System.Drawing.Size(30, 22);
             this.label_elo.TabIndex = 11;
@@ -185,7 +185,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Purple;
-            this.label5.Location = new System.Drawing.Point(260, 25);
+            this.label5.Location = new System.Drawing.Point(269, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 22);
             this.label5.TabIndex = 7;
@@ -194,12 +194,11 @@
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Purple;
-            this.label4.Location = new System.Drawing.Point(91, 25);
+            this.label4.Location = new System.Drawing.Point(100, 25);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 22);
+            this.label4.Size = new System.Drawing.Size(80, 22);
             this.label4.TabIndex = 6;
             this.label4.Text = "等级分";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -254,7 +253,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.BackColor = System.Drawing.Color.Tan;
             this.ClientSize = new System.Drawing.Size(748, 420);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);

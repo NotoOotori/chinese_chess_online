@@ -37,8 +37,8 @@
     <ApplicationIcon>common\resources\chess_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.7.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.7.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=8.0.15.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>packages\MySql.Data.8.0.15\lib\net452\MySql.Data.dll</HintPath>
@@ -211,6 +211,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="chess_lobby\resources\images\lobby_misc_blur.png" />
     <None Include="packages.config" />
     <None Include="packages\FastDeepCloner.1.1.3\.signature.p7s" />
     <None Include="packages\FastDeepCloner.1.1.3\FastDeepCloner.1.1.3.nupkg" />
@@ -1886,7 +1887,15 @@
     <Content Include="dating\resources\chessboard.jpg" />
     <Content Include="dating\resources\bgpic.jpg" />
     <None Include="dating\resources\greenmushroom.gif" />
+    <None Include="dating\resources\chessboard_none.jpg" />
     <Content Include="dating\resources\refresh.png" />
+    <None Include="login\resources\kings.jpeg" />
+    <None Include="login\resources\bgimage_login.png" />
+    <None Include="login\resources\signup_br.png" />
+    <None Include="login\resources\signup_rr.png" />
+    <Content Include="login\resources\scroll_raw.jpg" />
+    <None Include="login\resources\scroll_text.png" />
+    <Content Include="login\resources\scroll_transparent.png" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.dll" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\net451\FastDeepCloner.xml" />
     <Content Include="packages\FastDeepCloner.1.1.3\lib\netcoreapp2.0\FastDeepCloner.dll" />
