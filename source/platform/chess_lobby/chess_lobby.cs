@@ -54,6 +54,8 @@ namespace platform.chess_lobby
             button_surrender.Enabled = false;
 
             label_ready.Text = "请准备";
+
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private const String HOST = "45.32.82.133";

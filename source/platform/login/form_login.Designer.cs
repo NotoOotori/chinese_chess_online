@@ -40,6 +40,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox_scroll = new System.Windows.Forms.PictureBox();
+            this.button_login = new platform.GlossyButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_scroll)).BeginInit();
             this.SuspendLayout();
@@ -184,6 +185,22 @@
             this.pictureBox_scroll.TabIndex = 18;
             this.pictureBox_scroll.TabStop = false;
             // 
+            // button_login
+            // 
+            this.button_login.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.button_login.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button_login.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button_login.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.button_login.DownColor = System.Drawing.Color.DarkOliveGreen;
+            this.button_login.EnterColor = System.Drawing.Color.Olive;
+            this.button_login.Location = new System.Drawing.Point(105, 279);
+            this.button_login.Margin = new System.Windows.Forms.Padding(2);
+            this.button_login.Name = "button_login";
+            this.button_login.NormalColor = System.Drawing.Color.DarkGoldenrod;
+            this.button_login.Size = new System.Drawing.Size(207, 50);
+            this.button_login.TabIndex = 19;
+            this.button_login.TextColor = System.Drawing.Color.Transparent;
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,6 +209,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::platform.Properties.Resources.bgimage_login;
             this.ClientSize = new System.Drawing.Size(782, 380);
+            this.Controls.Add(this.button_login);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label8);
@@ -219,6 +237,7 @@
             this.Controls.SetChildIndex(this.pictureBox1, 0);
             this.Controls.SetChildIndex(this.button_min, 0);
             this.Controls.SetChildIndex(this.button_exit, 0);
+            this.Controls.SetChildIndex(this.button_login, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_scroll)).EndInit();
             this.ResumeLayout(false);
@@ -238,6 +257,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox_scroll;
+        private GlossyButton button_login;
     }
 }
 
