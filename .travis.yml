@@ -10,4 +10,4 @@ jobs:
     - stage: release
       script:
         - nvm install lts/*
-        - npx node --max-old-space-size=2048 semantic-release
+        - npx --max-old-space-size=2048 semantic-release
