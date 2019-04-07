@@ -52,6 +52,8 @@ namespace platform.chess_lobby
             button_surrender.label1.Click += button_surrender_Click;
             button_draw.Enabled = false;
             button_surrender.Enabled = false;
+
+            label_ready.Text = "请准备";
         }
 
         private const String HOST = "45.32.82.133";
