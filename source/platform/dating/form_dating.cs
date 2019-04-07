@@ -39,6 +39,13 @@ namespace platform.dating
             tip.InitialDelay = 500;
             tip.ReshowDelay = 250;
             tip.ShowAlways = true;
+            for (uint i = 0; i < tot_board; i++)
+            {
+                ZBW myzbw = new ZBW(this, Convert.ToInt32(i));
+                myzbw.blackimage.Click += new EventHandler(black_onclick);
+                myzbw.redimage.Click += new EventHandler(red_onclick);
+                ZBWs.Add(myzbw);
+            }//显示桌子椅子 onclick
         }
 
         void server_send_renew(Socket socket_server)
@@ -96,6 +103,7 @@ namespace platform.dating
 
             using (MySqlConnection connection = new MySqlConnection(connection_string))
             {
+                int is_OK_execute = 0;
                 MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
                 MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
                 e_address.Value = user_email;
@@ -108,12 +116,12 @@ namespace platform.dating
                 try
                 {
                     connection.Open();
-                    cmd.ExecuteNonQuery();
+                    is_OK_execute = cmd.ExecuteNonQuery();
                 }
                 catch (MySqlException) { }
                 MemoryStream myPic = null;
                 byte[] mydata;
-                if (Convert.IsDBNull(pic.Value))
+                if (Convert.IsDBNull(pic.Value)&&is_OK_execute!=-1)
                 {
                     user_avatar.BackgroundImage = Properties.Resources.default_avatar;
                 }
@@ -128,13 +136,7 @@ namespace platform.dating
                 }
             }
 
-            for (uint i = 0; i < tot_board; i++)
-            {
-                ZBW myzbw = new ZBW(this, Convert.ToInt32(i));
-                myzbw.blackimage.Click += new EventHandler(black_onclick);
-                myzbw.redimage.Click += new EventHandler(red_onclick);
-                ZBWs.Add(myzbw);
-            }//显示桌子椅子 onclick
+            
         }
 
         private void button_renew_Click(object sender, EventArgs e)
@@ -305,7 +307,7 @@ namespace platform.dating
                             }
                             if (!flag)
                             {
-                                ZBWs[i].chessboard.BackgroundImage = null;
+                                ZBWs[i].chessboard.BackgroundImage = Properties.Resources.chessboard_none;
                             }
                         }
                     }

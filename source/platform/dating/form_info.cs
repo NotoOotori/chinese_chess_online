@@ -36,8 +36,10 @@ namespace platform.dating
             List<string> email_addresses = new List<string>();
             string select_name;
             user_avatar.BackgroundImageLayout = ImageLayout.Stretch;
+            //MessageBox.Show(Convert.ToDouble("").ToString());
             using (MySqlConnection connection = new MySqlConnection(connection_string))
             {
+                int is_OK_execute = 1;
                 MySqlParameter e_address = new MySqlParameter("_email_address", MySqlDbType.String);
                 MySqlParameter pic = new MySqlParameter("_avatar", MySqlDbType.MediumBlob);
                 MySqlParameter name = new MySqlParameter("_username", MySqlDbType.String);
@@ -53,12 +55,14 @@ namespace platform.dating
                     try
                     {
                         connection.Open();
-                        cmd.ExecuteNonQuery();
+                        is_OK_execute = cmd.ExecuteNonQuery();
                     }
-                    catch (MySqlException) { }
+                    
+                    catch (MySqlException ex) { MessageBox.Show(ex.ToString()); }
+                    //MessageBox.Show(is_OK_execute.ToString());
                     MemoryStream myPic = null;
                     byte[] mydata;
-                    if (Convert.IsDBNull(pic.Value))
+                    if (Convert.IsDBNull(pic.Value)&& is_OK_execute!=-1)
                     {
                         user_avatar.BackgroundImage = Properties.Resources.default_avatar;
                     }
@@ -79,22 +83,36 @@ namespace platform.dating
                     label_name.Text = name.Value.ToString();
                     this.Text = $"{label_name.Text}的信息";
                 }//名字
+                
                 MySqlDataAdapter adapter = new MySqlDataAdapter("select elo from platform_user where email_address = '" + user_email + "'", connection);
                 DataTable data = new DataTable();
                 DataTable data1 = new DataTable();
                 DataTable data2 = new DataTable();
                 adapter.Fill(data);
                 label_elo.Text = data.Rows[0].ItemArray[0].ToString();
-                string select_win = "select count(result) from game_record where (red_email_address = '" + user_email + "' or black_email_address = '" + user_email + "') and result =2"; 
-                string select_lose = "select count(result) from game_record where (red_email_address = '" + user_email + "' or black_email_address = '" + user_email + "') and result =0";
+                string select_win = "select count(result) from game_record where (red_email_address = '" + user_email + "' and result =2) or (black_email_address = '" + user_email + "' and result = 0) "; 
+                string select_lose = "select count(result) from game_record where (red_email_address = '" + user_email + "' and result =0) or (black_email_address = '" + user_email + "' and result = 2) ";
                 MySqlDataAdapter adapter1 = new MySqlDataAdapter(select_win,connection);
                 adapter1.Fill(data1);
-                
-                label_win.Text = data1.Rows[0].ItemArray[0].ToString();
+                if (Convert.IsDBNull(data1.Rows[0].ItemArray[0]))
+                    label_win.Text = "0";
+                else
+                {
+                    label_win.Text = data1.Rows[0].ItemArray[0].ToString();
+                }
                 MySqlDataAdapter adapter2 = new MySqlDataAdapter(select_lose, connection);
                 adapter2.Fill(data2);
-                label_lose.Text = data2.Rows[0].ItemArray[0].ToString();
-                label_ratio.Text = ((Convert.ToDouble(label_win.Text) / ((Convert.ToDouble(label_lose.Text))+ Convert.ToDouble(label_win.Text)))*100).ToString("0.00") +"%";
+                if (Convert.IsDBNull(data2.Rows[0].ItemArray[0]))
+                    label_lose.Text = "0";
+                else
+                {
+                    label_lose.Text = data2.Rows[0].ItemArray[0].ToString();
+                }
+                double win = Convert.ToDouble(label_win.Text);double lose = Convert.ToDouble(label_lose.Text);
+                if (Math.Abs(win) < 0.01 && Math.Abs(lose) < 0.01)
+                    label_ratio.Text = "0";
+                else
+                    label_ratio.Text = ((win/ (win+lose))*100).ToString("0.00") +"%";
             }
 
             #region ' Recent Games '

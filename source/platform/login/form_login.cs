@@ -94,6 +94,7 @@ namespace platform.login
             catch(SocketException)
             {
                 MessageBoxBase.Show("与服务器连接出现问题，请稍后再试！");
+                this.Cursor = Cursors.Arrow;
                 return false;
             }
             return true;

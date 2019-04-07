@@ -1887,6 +1887,7 @@
     <Content Include="dating\resources\chessboard.jpg" />
     <Content Include="dating\resources\bgpic.jpg" />
     <None Include="dating\resources\greenmushroom.gif" />
+    <None Include="dating\resources\chessboard_none.jpg" />
     <Content Include="dating\resources\refresh.png" />
     <None Include="login\resources\kings.jpeg" />
     <None Include="login\resources\bgimage_login.png" />
