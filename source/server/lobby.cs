@@ -263,6 +263,7 @@ namespace server
 
         public void initialize()
         {
+            this.chess_moves.Clear();
             foreach (User user in seats.Values)
             {
                 user.lobby_init();
