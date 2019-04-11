@@ -1,7 +1,29 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-# chinese_chess_online
+# 中国象棋在线对战平台 ![图标](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/icon.png)
 
-It will be an online platform and database of chinese chess.
+## 截图
+
+### 注册
+
+![注册](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/signup.png)
+
+### 登录
+
+![登录](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/login.png)
+
+### 大厅
+
+![空大厅](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/plaza_empty.png)
+![大厅](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/plaza.png)
+
+### 房间
+
+![房间](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/lobby.png)
+![房间](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/gaming.png)
+
+### 其它
+
+![消息框](https://github.com/NotoOotori/chinese_chess_online/blob/master/resources/message_box.png)
 
 ## 硬件环境和操作系统
 
