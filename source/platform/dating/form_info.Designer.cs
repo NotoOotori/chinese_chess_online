@@ -44,6 +44,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label_level = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.user_avatar)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -102,6 +104,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label_level);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label_ratio);
             this.groupBox2.Controls.Add(this.label_elo);
             this.groupBox2.Controls.Add(this.label_none);
@@ -113,9 +117,9 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Font = new System.Drawing.Font("楷体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox2.Location = new System.Drawing.Point(256, 59);
+            this.groupBox2.Location = new System.Drawing.Point(256, 47);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(458, 101);
+            this.groupBox2.Size = new System.Drawing.Size(458, 135);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "数据统计";
@@ -125,9 +129,9 @@
             this.label_ratio.AutoSize = true;
             this.label_ratio.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_ratio.ForeColor = System.Drawing.Color.Navy;
-            this.label_ratio.Location = new System.Drawing.Point(334, 25);
+            this.label_ratio.Location = new System.Drawing.Point(384, 38);
             this.label_ratio.Name = "label_ratio";
-            this.label_ratio.Size = new System.Drawing.Size(30, 22);
+            this.label_ratio.Size = new System.Drawing.Size(38, 28);
             this.label_ratio.TabIndex = 12;
             this.label_ratio.Text = "胜";
             this.label_ratio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -137,9 +141,9 @@
             this.label_elo.AutoSize = true;
             this.label_elo.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_elo.ForeColor = System.Drawing.Color.Navy;
-            this.label_elo.Location = new System.Drawing.Point(184, 25);
+            this.label_elo.Location = new System.Drawing.Point(106, 38);
             this.label_elo.Name = "label_elo";
-            this.label_elo.Size = new System.Drawing.Size(30, 22);
+            this.label_elo.Size = new System.Drawing.Size(38, 28);
             this.label_elo.TabIndex = 11;
             this.label_elo.Text = "胜";
             this.label_elo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -149,9 +153,9 @@
             this.label_none.AutoSize = true;
             this.label_none.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_none.ForeColor = System.Drawing.Color.Navy;
-            this.label_none.Location = new System.Drawing.Point(406, 61);
+            this.label_none.Location = new System.Drawing.Point(406, 78);
             this.label_none.Name = "label_none";
-            this.label_none.Size = new System.Drawing.Size(30, 22);
+            this.label_none.Size = new System.Drawing.Size(38, 28);
             this.label_none.TabIndex = 10;
             this.label_none.Text = "胜";
             this.label_none.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -161,9 +165,9 @@
             this.label_lose.AutoSize = true;
             this.label_lose.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_lose.ForeColor = System.Drawing.Color.Navy;
-            this.label_lose.Location = new System.Drawing.Point(243, 61);
+            this.label_lose.Location = new System.Drawing.Point(243, 78);
             this.label_lose.Name = "label_lose";
-            this.label_lose.Size = new System.Drawing.Size(30, 22);
+            this.label_lose.Size = new System.Drawing.Size(38, 28);
             this.label_lose.TabIndex = 9;
             this.label_lose.Text = "胜";
             this.label_lose.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -173,9 +177,9 @@
             this.label_win.AutoSize = true;
             this.label_win.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_win.ForeColor = System.Drawing.Color.Navy;
-            this.label_win.Location = new System.Drawing.Point(80, 61);
+            this.label_win.Location = new System.Drawing.Point(80, 78);
             this.label_win.Name = "label_win";
-            this.label_win.Size = new System.Drawing.Size(30, 22);
+            this.label_win.Size = new System.Drawing.Size(38, 28);
             this.label_win.TabIndex = 8;
             this.label_win.Text = "胜";
             this.label_win.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -185,9 +189,9 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Purple;
-            this.label5.Location = new System.Drawing.Point(269, 25);
+            this.label5.Location = new System.Drawing.Point(318, 38);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 22);
+            this.label5.Size = new System.Drawing.Size(64, 28);
             this.label5.TabIndex = 7;
             this.label5.Text = "胜率";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -196,7 +200,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Purple;
-            this.label4.Location = new System.Drawing.Point(100, 25);
+            this.label4.Location = new System.Drawing.Point(22, 38);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 22);
             this.label4.TabIndex = 6;
@@ -208,9 +212,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Purple;
-            this.label3.Location = new System.Drawing.Point(356, 61);
+            this.label3.Location = new System.Drawing.Point(356, 78);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 22);
+            this.label3.Size = new System.Drawing.Size(38, 28);
             this.label3.TabIndex = 5;
             this.label3.Text = "平";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -220,9 +224,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Purple;
-            this.label2.Location = new System.Drawing.Point(193, 61);
+            this.label2.Location = new System.Drawing.Point(193, 78);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 22);
+            this.label2.Size = new System.Drawing.Size(38, 28);
             this.label2.TabIndex = 4;
             this.label2.Text = "负";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -232,9 +236,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Purple;
-            this.label1.Location = new System.Drawing.Point(30, 61);
+            this.label1.Location = new System.Drawing.Point(30, 78);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 22);
+            this.label1.Size = new System.Drawing.Size(38, 28);
             this.label1.TabIndex = 3;
             this.label1.Text = "胜";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -249,9 +253,33 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "历史交手";
             // 
+            // label_level
+            // 
+            this.label_level.AutoSize = true;
+            this.label_level.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_level.ForeColor = System.Drawing.Color.Navy;
+            this.label_level.Location = new System.Drawing.Point(245, 38);
+            this.label_level.Name = "label_level";
+            this.label_level.Size = new System.Drawing.Size(38, 28);
+            this.label_level.TabIndex = 14;
+            this.label_level.Text = "胜";
+            this.label_level.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Purple;
+            this.label7.Location = new System.Drawing.Point(178, 38);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 28);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "等级";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Tan;
             this.ClientSize = new System.Drawing.Size(748, 420);
@@ -292,5 +320,7 @@
         private System.Windows.Forms.Label label_none;
         private System.Windows.Forms.Label label_lose;
         private System.Windows.Forms.Label label_win;
+        private System.Windows.Forms.Label label_level;
+        private System.Windows.Forms.Label label7;
     }
 }

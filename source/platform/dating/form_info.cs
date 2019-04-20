@@ -89,7 +89,41 @@ namespace platform.dating
                 DataTable data1 = new DataTable();
                 DataTable data2 = new DataTable();
                 adapter.Fill(data);
-                label_elo.Text = data.Rows[0].ItemArray[0].ToString();
+                int elo = Convert.ToInt32(data.Rows[0].ItemArray[0]);
+                label_elo.Text = elo.ToString();
+                switch ((elo-1500)/100)
+                {
+                    case 1:
+                        label_level.Text = "县丞";
+                        break;
+                    case 2:
+                        label_level.Text = "县令";
+                        break;
+                    case 3:
+                        label_level.Text = "都尉";
+                        break;
+                    case 4:
+                        label_level.Text = "校尉";
+                        break;
+                    case 5:
+                        label_level.Text = "常侍";
+                        break;
+                    case 6:
+                        label_level.Text = "太守";
+                        break;
+                    case 7:
+                        label_level.Text = "刺史";
+                        break;
+                    case 8:
+                        label_level.Text = "将军";
+                        break;
+                    case 9:
+                        label_level.Text = "帝王";
+                        break;
+                    default:
+                        label_level.Text = "平民";
+                        break;
+                }
                 string select_win = "select count(result) from game_record where (red_email_address = '" + user_email + "' and result =2) or (black_email_address = '" + user_email + "' and result = 0) "; 
                 string select_lose = "select count(result) from game_record where (red_email_address = '" + user_email + "' and result =0) or (black_email_address = '" + user_email + "' and result = 2) ";
                 MySqlDataAdapter adapter1 = new MySqlDataAdapter(select_win,connection);
